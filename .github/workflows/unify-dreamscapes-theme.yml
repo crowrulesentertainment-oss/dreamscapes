@@ -1,0 +1,73 @@
+name: Unify Dreamscapes Theme
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Apply global Dreamscapes theme to every HTML page
+        shell: python
+        run: |
+          from pathlib import Path
+
+          css = 'assets/css/dreamscapes-global.css'
+          js = 'assets/js/dreamscapes-global.js'
+          css_tag = f'  <link rel="stylesheet" href="{css}">\n'
+          js_tag = f'  <script src="{js}"></script>\n'
+
+          changed = []
+          for path in sorted(Path('.').rglob('*.html')):
+              text = path.read_text(encoding='utf-8')
+              original = text
+
+              # Root-level Dreamscapes pages currently live in the repository root.
+              # Keep this calculation correct if pages are moved into subdirectories later.
+              depth = len(path.parent.parts)
+              rel_css = '../' * depth + css
+              rel_js = '../' * depth + js
+              css_tag = f'  <link rel="stylesheet" href="{rel_css}">\n'
+              js_tag = f'  <script src="{rel_js}"></script>\n'
+
+              if 'dreamscapes-global.css' not in text and '</head>' in text.lower():
+                  marker = '</head>'
+                  idx = text.lower().rfind(marker)
+                  text = text[:idx] + css_tag + text[idx:]
+
+              if 'dreamscapes-global.js' not in text:
+                  marker = '</body>'
+                  idx = text.lower().rfind(marker)
+                  if idx >= 0:
+                      text = text[:idx] + js_tag + text[idx:]
+                  else:
+                      text += '\n' + js_tag
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed.append(str(path))
+
+          print(f'Updated {len(changed)} HTML pages')
+          for item in changed:
+              print(f' - {item}')
+
+      - name: Commit unified theme changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' assets/css/dreamscapes-global.css assets/js/dreamscapes-global.js
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Unify Dreamscapes navigation and theme [skip ci]"
+          git push
