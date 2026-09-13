@@ -61,7 +61,7 @@
       html += '</div></div>';
     });
 
-    html += link('Donate','donation-success.html','ds-nav-link ds-nav-support');
+    html += link('Donate','index.html#donation','ds-nav-link ds-nav-support');
     html += '</div></div>';
     nav.innerHTML=html;
 
