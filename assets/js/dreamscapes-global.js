@@ -8,7 +8,8 @@
   const groups = [
     {label:'Explore',items:[
       ['Home','index.html'],['About','about.html'],['Creators','creators.html'],
-      ['Projects','projects.html'],['Trending','trending.html'],['How It Works','how-it-works.html']
+      ['Projects','projects.html'],['Trending','trending.html'],['How It Works','how-it-works.html'],
+      ['Memorials','https://crowrulesentertainment-oss.github.io/memorials/']
     ]},
     {label:'Create',items:[
       ['Submit a Dream','submit.html'],['Creator Portal','creator-portal.html'],
@@ -35,7 +36,10 @@
 
   function link(label,href,extra){
     const active = href.toLowerCase() === path;
-    return '<a class="'+(extra||'')+(active?' ds-active':'')+'" href="'+href+'"'+(active?' aria-current="page"':'')+'>'+label+'</a>';
+    const external = /^https?:\/\//i.test(href);
+    return '<a class="'+(extra||'')+(active?' ds-active':'')+'" href="'+href+'"'+
+      (external?' target="_blank" rel="noopener noreferrer"':'')+
+      (active?' aria-current="page"':'')+'>'+label+'</a>';
   }
 
   function render(){
