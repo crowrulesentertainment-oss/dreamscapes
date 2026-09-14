@@ -32,6 +32,9 @@
     {label:'Admin',items:[['Admin Dashboard','admin.html']]}
   ];
 
+  // Standalone donation page: works from every root-level Dreamscapes page.
+  const DONATE_URL = 'donation.html';
+
   const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
   function link(label,href,extra){
@@ -61,7 +64,7 @@
       html += '</div></div>';
     });
 
-    html += link('Donate','index.html#donation','ds-nav-link ds-nav-support');
+    html += link('Donate',DONATE_URL,'ds-nav-link ds-nav-support');
     html += '</div></div>';
     nav.innerHTML=html;
 
