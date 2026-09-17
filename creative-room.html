@@ -5050,6 +5050,10 @@ $("#addWorldButton")
         async ()=>{
 
             if(!state.project){
+                toast(
+                    "Create or select a dream first.",
+                    "error"
+                );
                 return;
             }
 
@@ -5062,10 +5066,38 @@ $("#addWorldButton")
                 return;
             }
 
-            const type =
+            const allowedWorldTypes = [
+                "overview",
+                "location",
+                "history",
+                "rule",
+                "mythology",
+                "culture",
+                "technology",
+                "organization",
+                "timeline",
+                "other"
+            ];
+
+            let type =
                 prompt(
-                    "Type: location, history, rule, mythology, culture, technology, organization, timeline, other"
+                    "Type: overview, location, history, rule, mythology, culture, technology, organization, timeline, other"
                 ) || "other";
+
+            type =
+                type
+                    .trim()
+                    .toLowerCase();
+
+            if(!allowedWorldTypes.includes(type)){
+
+                toast(
+                    `"${type}" is not a valid world entry type. Using "other".`,
+                    "error"
+                );
+
+                type = "other";
+            }
 
             const content =
                 prompt(
@@ -5080,19 +5112,26 @@ $("#addWorldButton")
                     .insert({
                         project_id:
                             state.project.id,
+
                         entry_type:
                             type,
+
                         title:
                             title.trim(),
+
                         content:
                             content.trim(),
+
                         status:
                             "draft",
+
                         created_by:
                             state.user.id
                     });
 
             if(error){
+
+                console.error(error);
 
                 toast(
                     error.message,
@@ -5107,6 +5146,7 @@ $("#addWorldButton")
             );
 
             await loadWorld();
+
             updateStats();
 
             await logActivity(
