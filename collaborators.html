@@ -1223,6 +1223,28 @@ footer{
    RESPONSIVE
    ========================================================= */
 
+/* =========================================================
+   UNIVERSAL MEMBER EXPERIENCE
+   =========================================================
+.memberWelcome{display:none;margin:18px 0 28px;padding:20px 22px;border:1px solid rgba(98,231,255,.22);border-radius:20px;background:linear-gradient(135deg,rgba(98,231,255,.07),rgba(155,124,255,.08)),rgba(8,8,20,.78);box-shadow:0 20px 70px rgba(0,0,0,.25)}
+.memberWelcome.show{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.memberIdentity{display:flex;align-items:center;gap:14px;min-width:0}
+.memberAvatar{width:52px;height:52px;flex:0 0 52px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(98,231,255,.28);background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.22),rgba(95,72,190,.3));font-family:Orbitron,sans-serif;font-size:14px;overflow:hidden}
+.memberAvatar img{width:100%;height:100%;object-fit:cover}
+.memberKicker{color:var(--cyan);font:700 9px Orbitron,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+.memberName{font-weight:800;font-size:14px;margin-top:4px}
+.memberEmail{color:#7f8299;font-size:10px;margin-top:3px;overflow:hidden;text-overflow:ellipsis}
+.memberPlan{margin-top:5px;color:#bdbfe0;font-size:10px}
+.memberActions{display:flex;gap:8px;flex-wrap:wrap}
+.memberActions a,.memberActions button{white-space:nowrap}
+.network-note{display:flex;align-items:center;gap:10px;margin:0 0 18px;padding:12px 15px;border:1px solid var(--line);border-radius:12px;color:#9ea0b8;font-size:10px;background:rgba(255,255,255,.025)}
+.network-note i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green);flex:0 0 7px}
+.creator-card.is-me{border-color:rgba(98,231,255,.3);box-shadow:0 15px 60px rgba(98,231,255,.06)}
+.creator-me{color:var(--cyan);font:700 8px Orbitron,sans-serif;letter-spacing:.14em;margin-top:4px}
+.detail-section{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.detail-section h3{margin:0 0 9px;font:700 12px Orbitron,sans-serif;color:#dfe0ef}
+@media(max-width:680px){.memberWelcome.show{align-items:flex-start;flex-direction:column}.memberActions{width:100%}.memberActions .btn{flex:1}}
+
 @media(max-width:1050px){
 
   .creator-grid,
@@ -1462,6 +1484,8 @@ footer{
 
 
   <!-- AUTH -->
+
+  <div class="memberWelcome" id="memberWelcome" aria-live="polite"></div>
 
   <div class="status-bar" id="statusBar">
 
@@ -2376,7 +2400,7 @@ const SUPABASE_URL =
   "https://cevylpnoexugwgygvtgu.supabase.co";
 
 const SUPABASE_ANON_KEY =
-  "YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY";
+  "sb_publishable_AdfM5y6RqvF3tbvEVzDZSg_JuGTQLD-";
 
 
 let supabaseClient = null;
@@ -2442,6 +2466,25 @@ function escapeHTML(value){
     .replaceAll("'","&#039;");
 }
 
+
+function renderMemberWelcome(){
+  const box=$("memberWelcome"); if(!box)return;
+  const user=state.user;
+  if(!user){box.classList.remove("show");box.innerHTML="";return;}
+  const meta=user.user_metadata||{};
+  const name=meta.full_name||meta.name||user.email?.split("@")[0]||"CrowRules Member";
+  const email=user.email||"";
+  const avatar=meta.avatar_url||meta.picture||"";
+  const membership=window.CrowRulesMembership?.getCurrentMembership?.()||null;
+  const plan=membership?.membership_plans?.name||membership?.plan_name||membership?.plan?.name||"Universal CrowRules Account";
+  box.classList.add("show");
+  box.innerHTML=`
+    <div class="memberIdentity">
+      <div class="memberAvatar">${avatar?'<img src="'+escapeHTML(avatar)+'" alt="">':escapeHTML(initials(name))}</div>
+      <div><div class="memberKicker">Universal CrowRules Member</div><div class="memberName">${escapeHTML(name)}</div><div class="memberEmail">${escapeHTML(email)}</div><div class="memberPlan">${escapeHTML(plan)}</div></div>
+    </div>
+    <div class="memberActions"><a class="btn" href="creator-dashboard.html">Creator Hub</a><a class="btn primary" href="creator-portal.html">My Creator Portal</a></div>`;
+}
 
 function initials(name){
 
@@ -2646,6 +2689,8 @@ async function initializeAuth(){
 
   if(!state.user){
 
+    renderMemberWelcome();
+
     $("statusTitle").textContent =
       "Creator session required";
 
@@ -2667,6 +2712,8 @@ async function initializeAuth(){
 
     return false;
   }
+
+  renderMemberWelcome();
 
   $("statusTitle").textContent =
     "Dreamscapes creator session active";
@@ -3153,7 +3200,7 @@ function renderCreatorCard(
       .slice(0,7);
 
   return `
-    <article class="creator-card">
+    <article class="creator-card ${creator.id===state.user?.id?"is-me":""}">
 
       <div class="creator-top">
 
@@ -3204,6 +3251,8 @@ function renderCreatorCard(
             )}
 
           </div>
+
+          ${creator.id===state.user?.id?'<div class="creator-me">YOUR CREATOR PROFILE</div>':""}
 
         </div>
 
@@ -3722,7 +3771,7 @@ function renderRequests(){
 
                       <button
                         class="btn primary"
-                        onclick="expressInterest('${request.id}')">
+                        onclick="expressInterest('${request.id}')" ${request.requester_id===state.user?.id?"disabled":""}>
 
                         I'm Interested
 
@@ -4352,11 +4401,11 @@ function subscribeAuth(){
         state.user =
           session?.user || null;
 
-        if(state.user){
+        renderMemberWelcome();
 
-          await loadEverything();
-
-        }
+        setTimeout(() => {
+          if(state.user) loadEverything();
+        }, 0);
 
       }
     );
@@ -4475,6 +4524,10 @@ async function init(){
     subscribeRealtime();
 
     subscribeAuth();
+
+    if(window.CrowRulesMembership?.refresh){
+      window.CrowRulesMembership.refresh().then(()=>renderMemberWelcome()).catch(()=>{});
+    }
 
   }
 
