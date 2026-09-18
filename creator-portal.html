@@ -1,18 +1,37 @@
 <!doctype html>
 <html lang="en">
 <head>
+
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  >
 
   <title>Creator Portal | CrowRules Dreamscapes</title>
+
   <meta
     name="description"
-    content="CrowRules Dreamscapes Creator Portal — manage your dreams, projects, collaborations, creator profile, rights, credits and earnings."
+    content="CrowRules Dreamscapes Creator Portal — manage your dreams, projects, collaborations, creator profile, rights, credits, earnings and universal CrowRules membership."
   >
-  <meta name="theme-color" content="#05050b">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta
+    name="theme-color"
+    content="#05050b"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
   <link
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap"
     rel="stylesheet"
@@ -21,20 +40,26 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+
     :root {
       --bg: #05050b;
-      --panel: rgba(14, 14, 25, .88);
-      --panel-2: rgba(21, 20, 38, .92);
-      --border: rgba(157, 108, 255, .24);
+      --panel: rgba(14,14,25,.88);
+      --panel-2: rgba(21,20,38,.94);
+
+      --border: rgba(157,108,255,.24);
+
       --cyan: #55e7ff;
       --purple: #9b6cff;
       --pink: #ff5fba;
       --gold: #ffd166;
       --green: #69f0ae;
       --red: #ff5c7c;
+
       --text: #f6f4ff;
       --muted: #aaa7bd;
+
       --shadow: 0 20px 60px rgba(0,0,0,.45);
+
       --radius: 20px;
     }
 
@@ -49,25 +74,51 @@
     body {
       margin: 0;
       min-height: 100vh;
+
       color: var(--text);
+
       font-family: "Montserrat", sans-serif;
+
       background:
-        radial-gradient(circle at 15% 10%, rgba(85,231,255,.08), transparent 30%),
-        radial-gradient(circle at 85% 15%, rgba(155,108,255,.12), transparent 32%),
-        radial-gradient(circle at 50% 80%, rgba(255,95,186,.06), transparent 35%),
+        radial-gradient(
+          circle at 15% 10%,
+          rgba(85,231,255,.08),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 15%,
+          rgba(155,108,255,.12),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 50% 80%,
+          rgba(255,95,186,.06),
+          transparent 35%
+        ),
         var(--bg);
+
       overflow-x: hidden;
     }
 
     body::before {
       content: "";
+
       position: fixed;
       inset: 0;
+
       pointer-events: none;
+
       background-image:
-        radial-gradient(circle, rgba(255,255,255,.5) 1px, transparent 1px);
+        radial-gradient(
+          circle,
+          rgba(255,255,255,.5) 1px,
+          transparent 1px
+        );
+
       background-size: 85px 85px;
+
       opacity: .08;
+
       z-index: -1;
     }
 
@@ -91,891 +142,1773 @@
       min-height: 100vh;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        TOP BAR
-    -------------------------------------------------- */
+    ================================================== */
 
     .topbar {
+
       position: sticky;
       top: 0;
       z-index: 100;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       gap: 20px;
+
       padding: 14px 24px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      background: rgba(5,5,11,.82);
-      backdrop-filter: blur(20px);
+
+      border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+      background:
+        rgba(5,5,11,.82);
+
+      backdrop-filter:
+        blur(20px);
     }
 
     .brand {
+
       display: flex;
       align-items: center;
+
       gap: 12px;
+
       min-width: 230px;
     }
 
     .brand-mark {
+
       width: 42px;
       height: 42px;
+
       display: grid;
       place-items: center;
+
       border-radius: 13px;
-      border: 1px solid rgba(85,231,255,.3);
+
+      border:
+        1px solid rgba(85,231,255,.3);
+
       background:
-        linear-gradient(135deg, rgba(85,231,255,.15), rgba(155,108,255,.2));
-      box-shadow: 0 0 25px rgba(85,231,255,.08);
+        linear-gradient(
+          135deg,
+          rgba(85,231,255,.15),
+          rgba(155,108,255,.2)
+        );
+
+      box-shadow:
+        0 0 25px rgba(85,231,255,.08);
+
       font-family: Orbitron, sans-serif;
+
       font-weight: 800;
+
       color: var(--cyan);
     }
 
     .brand-text strong {
+
       display: block;
+
       font-family: Orbitron, sans-serif;
+
       font-size: 14px;
+
       letter-spacing: .08em;
     }
 
     .brand-text span {
+
       color: var(--muted);
+
       font-size: 11px;
     }
 
     .top-actions {
+
       display: flex;
       align-items: center;
-      gap: 10px;
+
+      gap: 9px;
+    }
+
+    .membership-top {
+
+      display: inline-flex;
+      align-items: center;
+
+      gap: 7px;
+
+      min-height: 38px;
+
+      padding: 0 12px;
+
+      border:
+        1px solid rgba(85,231,255,.2);
+
+      border-radius: 11px;
+
+      background:
+        rgba(85,231,255,.045);
+
+      color: var(--cyan);
+
+      font-size: 9px;
+      font-weight: 800;
+
+      letter-spacing: .08em;
+
+      text-transform: uppercase;
+    }
+
+    .membership-top .dot {
+
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow:
+        0 0 12px rgba(105,240,174,.7);
     }
 
     .icon-btn,
     .avatar-btn {
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.04);
+
+      border:
+        1px solid rgba(255,255,255,.1);
+
+      background:
+        rgba(255,255,255,.04);
+
       color: var(--text);
+
       border-radius: 12px;
+
       min-width: 42px;
       height: 42px;
     }
 
     .icon-btn:hover,
     .avatar-btn:hover {
-      border-color: rgba(85,231,255,.35);
-      background: rgba(85,231,255,.07);
+
+      border-color:
+        rgba(85,231,255,.35);
+
+      background:
+        rgba(85,231,255,.07);
     }
 
     .avatar-btn {
+
       width: 42px;
+
       overflow: hidden;
+
       padding: 0;
+
       display: grid;
       place-items: center;
+
       font-weight: 800;
+
       color: var(--cyan);
     }
 
     .avatar-btn img {
+
       width: 100%;
       height: 100%;
+
       object-fit: cover;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        LAYOUT
-    -------------------------------------------------- */
+    ================================================== */
 
     .layout {
+
       display: grid;
-      grid-template-columns: 255px minmax(0,1fr);
-      min-height: calc(100vh - 71px);
+
+      grid-template-columns:
+        255px minmax(0,1fr);
+
+      min-height:
+        calc(100vh - 71px);
     }
 
     .sidebar {
+
       position: sticky;
+
       top: 71px;
-      height: calc(100vh - 71px);
+
+      height:
+        calc(100vh - 71px);
+
       padding: 22px 15px;
-      border-right: 1px solid rgba(255,255,255,.07);
-      background: rgba(5,5,11,.55);
+
+      border-right:
+        1px solid rgba(255,255,255,.07);
+
+      background:
+        rgba(5,5,11,.55);
+
       overflow-y: auto;
     }
 
     .nav-label {
-      padding: 10px 12px 8px;
+
+      padding:
+        10px 12px 8px;
+
       color: #77748a;
+
       font-size: 10px;
+
       font-weight: 800;
+
       letter-spacing: .16em;
+
       text-transform: uppercase;
     }
 
     .nav {
+
       display: grid;
+
       gap: 5px;
     }
 
     .nav a {
+
       display: flex;
+
       align-items: center;
+
       gap: 12px;
+
       padding: 12px;
+
       border-radius: 12px;
+
       color: #bbb7c9;
+
       font-size: 13px;
+
       font-weight: 600;
+
       transition: .2s ease;
     }
 
     .nav a:hover,
     .nav a.active {
+
       color: white;
-      background: linear-gradient(
-        90deg,
-        rgba(85,231,255,.11),
-        rgba(155,108,255,.12)
-      );
-      box-shadow: inset 2px 0 0 var(--cyan);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(85,231,255,.11),
+          rgba(155,108,255,.12)
+        );
+
+      box-shadow:
+        inset 2px 0 0 var(--cyan);
     }
 
     .nav-icon {
+
       width: 25px;
+
       text-align: center;
+
       font-size: 16px;
     }
 
     .sidebar-card {
+
       margin-top: 25px;
+
       padding: 15px;
-      border: 1px solid var(--border);
+
+      border:
+        1px solid var(--border);
+
       border-radius: 16px;
-      background: linear-gradient(
-        145deg,
-        rgba(85,231,255,.05),
-        rgba(155,108,255,.07)
-      );
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(85,231,255,.05),
+          rgba(155,108,255,.07)
+        );
     }
 
     .sidebar-card h4 {
-      margin: 0 0 7px;
+
+      margin:
+        0 0 7px;
+
       font-family: Orbitron, sans-serif;
+
       font-size: 12px;
     }
 
     .sidebar-card p {
-      margin: 0 0 12px;
+
+      margin:
+        0 0 12px;
+
       color: var(--muted);
+
       font-size: 11px;
+
       line-height: 1.55;
     }
 
     .main {
+
       width: 100%;
+
       max-width: 1500px;
+
       margin: auto;
+
       padding: 34px;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
+       UNIVERSAL MEMBERSHIP CARD
+    ================================================== */
+
+    .membership-card {
+
+      position: relative;
+
+      margin-bottom: 20px;
+
+      padding: 20px;
+
+      overflow: hidden;
+
+      border:
+        1px solid rgba(85,231,255,.2);
+
+      border-radius: 20px;
+
+      background:
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(155,108,255,.16),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(85,231,255,.055),
+          rgba(155,108,255,.07)
+        );
+
+      box-shadow:
+        0 10px 40px rgba(0,0,0,.18);
+    }
+
+    .membership-card::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 180px;
+      height: 180px;
+
+      right: -80px;
+      bottom: -100px;
+
+      border:
+        1px solid rgba(85,231,255,.1);
+
+      border-radius: 50%;
+
+      box-shadow:
+        0 0 0 25px rgba(85,231,255,.025),
+        0 0 0 50px rgba(155,108,255,.018);
+    }
+
+    .membership-layout {
+
+      position: relative;
+
+      z-index: 2;
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0,1fr) auto;
+
+      align-items: center;
+
+      gap: 20px;
+    }
+
+    .membership-kicker {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      margin-bottom: 7px;
+
+      color: var(--cyan);
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: .16em;
+
+      text-transform: uppercase;
+    }
+
+    .membership-kicker::before {
+
+      content: "";
+
+      width: 20px;
+      height: 1px;
+
+      background:
+        var(--cyan);
+    }
+
+    .membership-title {
+
+      margin: 0;
+
+      font-family: Orbitron, sans-serif;
+
+      font-size: 18px;
+    }
+
+    .membership-description {
+
+      max-width: 700px;
+
+      margin:
+        7px 0 0;
+
+      color: var(--muted);
+
+      font-size: 11px;
+
+      line-height: 1.55;
+    }
+
+    .membership-badges {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 7px;
+
+      margin-top: 12px;
+    }
+
+    .membership-badge {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 6px;
+
+      padding: 6px 10px;
+
+      border:
+        1px solid rgba(255,255,255,.1);
+
+      border-radius: 999px;
+
+      background:
+        rgba(255,255,255,.035);
+
+      color: #c9c5d8;
+
+      font-size: 9px;
+
+      font-weight: 700;
+    }
+
+    .membership-badge.primary {
+
+      color: var(--cyan);
+
+      border-color:
+        rgba(85,231,255,.22);
+
+      background:
+        rgba(85,231,255,.055);
+    }
+
+    .membership-badge.active {
+
+      color: var(--green);
+
+      border-color:
+        rgba(105,240,174,.2);
+    }
+
+    .membership-side {
+
+      min-width: 210px;
+
+      padding: 15px;
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      border-radius: 15px;
+
+      background:
+        rgba(5,5,11,.35);
+
+      text-align: center;
+    }
+
+    .membership-plan-label {
+
+      color: #858196;
+
+      font-size: 8px;
+
+      font-weight: 800;
+
+      letter-spacing: .14em;
+
+      text-transform: uppercase;
+    }
+
+    .membership-plan {
+
+      margin-top: 5px;
+
+      font-family: Orbitron, sans-serif;
+
+      font-size: 22px;
+
+      color: var(--cyan);
+    }
+
+    .membership-level {
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+    .membership-actions {
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      margin-top: 11px;
+    }
+
+    /* ==================================================
        HERO
-    -------------------------------------------------- */
+    ================================================== */
 
     .hero {
+
       position: relative;
+
       padding: 32px;
+
       margin-bottom: 25px;
+
       overflow: hidden;
-      border: 1px solid rgba(155,108,255,.2);
+
+      border:
+        1px solid rgba(155,108,255,.2);
+
       border-radius: 26px;
+
       background:
-        radial-gradient(circle at 80% 30%, rgba(155,108,255,.18), transparent 35%),
-        radial-gradient(circle at 20% 80%, rgba(85,231,255,.1), transparent 35%),
+        radial-gradient(
+          circle at 80% 30%,
+          rgba(155,108,255,.18),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 20% 80%,
+          rgba(85,231,255,.1),
+          transparent 35%
+        ),
         rgba(14,14,25,.78);
-      box-shadow: var(--shadow);
+
+      box-shadow:
+        var(--shadow);
     }
 
     .hero::after {
+
       content: "";
+
       position: absolute;
+
       width: 280px;
       height: 280px;
+
       right: -80px;
       top: -100px;
-      border: 1px solid rgba(85,231,255,.14);
+
+      border:
+        1px solid rgba(85,231,255,.14);
+
       border-radius: 50%;
+
       box-shadow:
         0 0 0 35px rgba(85,231,255,.025),
         0 0 0 70px rgba(155,108,255,.02);
     }
 
     .hero-content {
+
       position: relative;
+
       z-index: 2;
+
       max-width: 850px;
     }
 
     .eyebrow {
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 7px;
+
       margin-bottom: 12px;
+
       color: var(--cyan);
+
       font-size: 10px;
+
       font-weight: 800;
+
       letter-spacing: .18em;
+
       text-transform: uppercase;
     }
 
     .eyebrow::before {
+
       content: "";
+
       width: 22px;
       height: 1px;
-      background: var(--cyan);
+
+      background:
+        var(--cyan);
     }
 
     .hero h1 {
-      margin: 0 0 10px;
+
+      margin:
+        0 0 10px;
+
       font-family: Orbitron, sans-serif;
-      font-size: clamp(28px, 4vw, 52px);
+
+      font-size:
+        clamp(28px,4vw,52px);
+
       line-height: 1.05;
+
       letter-spacing: -.02em;
     }
 
     .hero h1 span {
+
       color: var(--cyan);
     }
 
     .hero p {
+
       max-width: 700px;
+
       margin: 0;
+
       color: var(--muted);
+
       line-height: 1.7;
+
       font-size: 14px;
     }
 
     .hero-actions {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 10px;
+
       margin-top: 22px;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        BUTTONS
-    -------------------------------------------------- */
+    ================================================== */
 
     .btn {
+
       display: inline-flex;
+
       align-items: center;
+
       justify-content: center;
+
       gap: 8px;
+
       min-height: 42px;
+
       padding: 0 16px;
-      border: 1px solid rgba(255,255,255,.12);
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
       border-radius: 12px;
-      background: rgba(255,255,255,.05);
+
+      background:
+        rgba(255,255,255,.05);
+
       color: white;
+
       font-size: 12px;
+
       font-weight: 800;
+
       transition: .2s ease;
     }
 
     .btn:hover {
-      transform: translateY(-1px);
-      border-color: rgba(85,231,255,.4);
+
+      transform:
+        translateY(-1px);
+
+      border-color:
+        rgba(85,231,255,.4);
     }
 
     .btn-primary {
-      border-color: rgba(85,231,255,.45);
-      background: linear-gradient(
-        135deg,
-        rgba(85,231,255,.17),
-        rgba(155,108,255,.2)
-      );
+
+      border-color:
+        rgba(85,231,255,.45);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(85,231,255,.17),
+          rgba(155,108,255,.2)
+        );
+
       color: white;
-      box-shadow: 0 8px 25px rgba(85,231,255,.08);
+
+      box-shadow:
+        0 8px 25px rgba(85,231,255,.08);
     }
 
     .btn-danger {
-      border-color: rgba(255,92,124,.3);
+
+      border-color:
+        rgba(255,92,124,.3);
+
       color: #ff9aae;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        DASHBOARD CARDS
-    -------------------------------------------------- */
+    ================================================== */
 
     .stats {
+
       display: grid;
-      grid-template-columns: repeat(4,1fr);
+
+      grid-template-columns:
+        repeat(4,1fr);
+
       gap: 15px;
+
       margin-bottom: 25px;
     }
 
     .stat {
+
       padding: 20px;
-      border: 1px solid rgba(255,255,255,.08);
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
       border-radius: 18px;
-      background: var(--panel);
+
+      background:
+        var(--panel);
     }
 
     .stat-label {
+
       color: var(--muted);
+
       font-size: 10px;
+
       font-weight: 800;
+
       letter-spacing: .1em;
+
       text-transform: uppercase;
     }
 
     .stat-value {
+
       margin-top: 8px;
+
       font-family: Orbitron, sans-serif;
+
       font-size: 27px;
     }
 
     .stat-sub {
+
       margin-top: 5px;
+
       color: #7e7a91;
+
       font-size: 10px;
     }
 
-    /* --------------------------------------------------
-       GRID
-    -------------------------------------------------- */
-
     .dashboard-grid {
+
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(300px, .75fr);
+
+      grid-template-columns:
+        minmax(0,1.45fr)
+        minmax(300px,.75fr);
+
       gap: 20px;
     }
 
     .stack {
+
       display: grid;
+
       gap: 20px;
     }
 
     .card {
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: var(--radius);
-      background: var(--panel);
-      box-shadow: 0 10px 40px rgba(0,0,0,.18);
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
+      border-radius:
+        var(--radius);
+
+      background:
+        var(--panel);
+
+      box-shadow:
+        0 10px 40px rgba(0,0,0,.18);
+
       overflow: hidden;
     }
 
     .card-head {
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       gap: 12px;
-      padding: 19px 20px;
-      border-bottom: 1px solid rgba(255,255,255,.07);
+
+      padding:
+        19px 20px;
+
+      border-bottom:
+        1px solid rgba(255,255,255,.07);
     }
 
     .card-head h2,
     .card-head h3 {
+
       margin: 0;
-      font-family: Orbitron, sans-serif;
+
+      font-family:
+        Orbitron, sans-serif;
+
       font-size: 14px;
     }
 
     .card-head span {
+
       color: var(--muted);
+
       font-size: 10px;
     }
 
     .card-body {
+
       padding: 20px;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        PROFILE
-    -------------------------------------------------- */
+    ================================================== */
 
     .profile {
+
       display: flex;
+
       align-items: center;
+
       gap: 17px;
     }
 
     .profile-avatar {
+
       flex: 0 0 auto;
+
       width: 76px;
       height: 76px;
+
       display: grid;
+
       place-items: center;
+
       overflow: hidden;
-      border: 1px solid rgba(85,231,255,.3);
+
+      border:
+        1px solid rgba(85,231,255,.3);
+
       border-radius: 20px;
-      background: linear-gradient(
-        135deg,
-        rgba(85,231,255,.12),
-        rgba(155,108,255,.16)
-      );
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(85,231,255,.12),
+          rgba(155,108,255,.16)
+        );
+
       color: var(--cyan);
-      font-family: Orbitron, sans-serif;
+
+      font-family:
+        Orbitron, sans-serif;
+
       font-size: 24px;
+
       font-weight: 800;
     }
 
     .profile-avatar img {
+
       width: 100%;
       height: 100%;
+
       object-fit: cover;
     }
 
     .profile-info h2 {
-      margin: 0 0 4px;
-      font-family: Orbitron, sans-serif;
+
+      margin:
+        0 0 4px;
+
+      font-family:
+        Orbitron, sans-serif;
+
       font-size: 19px;
     }
 
     .profile-info p {
+
       margin: 0;
+
       color: var(--muted);
+
       font-size: 12px;
     }
 
     .profile-meta {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 7px;
+
       margin-top: 9px;
     }
 
     .pill {
+
       display: inline-flex;
+
       align-items: center;
-      padding: 5px 9px;
-      border: 1px solid rgba(255,255,255,.1);
+
+      padding:
+        5px 9px;
+
+      border:
+        1px solid rgba(255,255,255,.1);
+
       border-radius: 999px;
+
       color: #c5c1d3;
-      background: rgba(255,255,255,.035);
+
+      background:
+        rgba(255,255,255,.035);
+
       font-size: 9px;
+
       font-weight: 700;
     }
 
     .pill.green {
-      color: var(--green);
-      border-color: rgba(105,240,174,.22);
+
+      color:
+        var(--green);
+
+      border-color:
+        rgba(105,240,174,.22);
     }
 
     .pill.cyan {
-      color: var(--cyan);
-      border-color: rgba(85,231,255,.22);
+
+      color:
+        var(--cyan);
+
+      border-color:
+        rgba(85,231,255,.22);
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        QUICK ACTIONS
-    -------------------------------------------------- */
+    ================================================== */
 
     .quick-actions {
+
       display: grid;
-      grid-template-columns: repeat(2,1fr);
+
+      grid-template-columns:
+        repeat(2,1fr);
+
       gap: 10px;
     }
 
     .quick {
+
       min-height: 94px;
+
       padding: 14px;
-      border: 1px solid rgba(255,255,255,.08);
+
+      border:
+        1px solid rgba(255,255,255,.08);
+
       border-radius: 15px;
-      background: rgba(255,255,255,.025);
+
+      background:
+        rgba(255,255,255,.025);
+
       transition: .2s ease;
     }
 
     .quick:hover {
-      transform: translateY(-2px);
-      border-color: rgba(85,231,255,.25);
-      background: rgba(85,231,255,.04);
+
+      transform:
+        translateY(-2px);
+
+      border-color:
+        rgba(85,231,255,.25);
+
+      background:
+        rgba(85,231,255,.04);
     }
 
     .quick-icon {
+
       font-size: 20px;
     }
 
     .quick strong {
+
       display: block;
+
       margin-top: 8px;
+
       font-size: 12px;
     }
 
     .quick span {
+
       display: block;
+
       margin-top: 3px;
+
       color: var(--muted);
+
       font-size: 10px;
+
       line-height: 1.4;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        DREAMS
-    -------------------------------------------------- */
+    ================================================== */
 
     .dream {
+
       display: flex;
+
       align-items: center;
+
       gap: 13px;
+
       padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+
+      border-bottom:
+        1px solid rgba(255,255,255,.06);
     }
 
     .dream:last-child {
+
       border-bottom: 0;
+
       padding-bottom: 0;
     }
 
     .dream-art {
+
       width: 55px;
       height: 55px;
+
       flex: 0 0 auto;
+
       display: grid;
+
       place-items: center;
+
+      border:
+        1px solid rgba(155,108,255,.18);
+
       border-radius: 14px;
-      border: 1px solid rgba(155,108,255,.18);
+
       background:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,.16), transparent 25%),
-        linear-gradient(135deg, rgba(85,231,255,.08), rgba(155,108,255,.16));
+        radial-gradient(
+          circle at 35% 30%,
+          rgba(255,255,255,.16),
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          rgba(85,231,255,.08),
+          rgba(155,108,255,.16)
+        );
+
       font-size: 21px;
     }
 
     .dream-main {
+
       min-width: 0;
+
       flex: 1;
     }
 
     .dream-main strong {
+
       display: block;
+
       margin-bottom: 4px;
+
       font-size: 12px;
+
       white-space: nowrap;
+
       overflow: hidden;
+
       text-overflow: ellipsis;
     }
 
     .dream-main span {
+
       color: var(--muted);
+
       font-size: 10px;
     }
 
     .status {
-      padding: 5px 8px;
+
+      padding:
+        5px 8px;
+
       border-radius: 999px;
-      background: rgba(255,255,255,.05);
+
+      background:
+        rgba(255,255,255,.05);
+
       color: var(--muted);
+
       font-size: 8px;
+
       font-weight: 800;
+
       white-space: nowrap;
+
       text-transform: uppercase;
     }
 
     .status.idea {
-      color: var(--cyan);
-      background: rgba(85,231,255,.08);
+
+      color:
+        var(--cyan);
+
+      background:
+        rgba(85,231,255,.08);
     }
 
     .status.development {
-      color: var(--purple);
-      background: rgba(155,108,255,.09);
+
+      color:
+        var(--purple);
+
+      background:
+        rgba(155,108,255,.09);
     }
 
     .status.pitch {
-      color: var(--gold);
-      background: rgba(255,209,102,.08);
+
+      color:
+        var(--gold);
+
+      background:
+        rgba(255,209,102,.08);
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        PROGRESS
-    -------------------------------------------------- */
+    ================================================== */
 
     .progress-wrap {
+
       margin-top: 15px;
     }
 
     .progress-label {
+
       display: flex;
+
       justify-content: space-between;
+
       gap: 10px;
+
       margin-bottom: 7px;
+
       color: var(--muted);
+
       font-size: 10px;
     }
 
     .progress {
+
       height: 7px;
+
       overflow: hidden;
+
       border-radius: 999px;
-      background: rgba(255,255,255,.07);
+
+      background:
+        rgba(255,255,255,.07);
     }
 
     .progress > div {
+
       height: 100%;
+
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--cyan),
+          var(--purple),
+          var(--pink)
+        );
+
+      transition:
+        width .5s ease;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        ACTIVITY
-    -------------------------------------------------- */
+    ================================================== */
 
     .activity {
+
       display: grid;
+
       gap: 0;
     }
 
     .activity-item {
+
       display: flex;
+
       gap: 12px;
+
       padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+
+      border-bottom:
+        1px solid rgba(255,255,255,.06);
     }
 
     .activity-item:last-child {
+
       border-bottom: 0;
     }
 
     .activity-dot {
+
       width: 9px;
       height: 9px;
+
       margin-top: 5px;
+
       flex: 0 0 auto;
+
       border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 15px rgba(85,231,255,.5);
+
+      background:
+        var(--cyan);
+
+      box-shadow:
+        0 0 15px rgba(85,231,255,.5);
     }
 
     .activity-item strong {
+
       display: block;
+
       font-size: 11px;
     }
 
     .activity-item span {
+
       display: block;
+
       margin-top: 4px;
+
       color: var(--muted);
+
       font-size: 10px;
+
       line-height: 1.45;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        EMPTY / LOADING
-    -------------------------------------------------- */
+    ================================================== */
 
     .loading {
+
       color: var(--muted);
+
       text-align: center;
-      padding: 30px 10px;
+
+      padding:
+        30px 10px;
+
       font-size: 11px;
     }
 
     .empty {
-      padding: 28px 10px;
+
+      padding:
+        28px 10px;
+
       text-align: center;
     }
 
     .empty-icon {
+
       font-size: 30px;
+
       opacity: .65;
     }
 
     .empty strong {
+
       display: block;
+
       margin-top: 9px;
-      font-family: Orbitron, sans-serif;
+
+      font-family:
+        Orbitron, sans-serif;
+
       font-size: 12px;
     }
 
     .empty p {
+
       max-width: 400px;
-      margin: 8px auto 15px;
+
+      margin:
+        8px auto 15px;
+
       color: var(--muted);
+
       font-size: 10px;
+
       line-height: 1.6;
     }
 
-    /* --------------------------------------------------
-       LOGIN
-    -------------------------------------------------- */
+    /* ==================================================
+       AUTH
+    ================================================== */
 
     .auth-overlay {
+
       position: fixed;
+
       inset: 0;
+
       z-index: 1000;
+
       display: none;
+
       place-items: center;
+
       padding: 20px;
-      background: rgba(2,2,7,.84);
-      backdrop-filter: blur(18px);
+
+      background:
+        rgba(2,2,7,.88);
+
+      backdrop-filter:
+        blur(18px);
     }
 
     .auth-overlay.show {
+
       display: grid;
     }
 
     .auth-box {
-      width: min(480px, 100%);
+
+      width:
+        min(480px,100%);
+
       padding: 30px;
-      border: 1px solid rgba(155,108,255,.3);
+
+      border:
+        1px solid rgba(155,108,255,.3);
+
       border-radius: 24px;
-      background: #0c0b16;
-      box-shadow: 0 30px 100px rgba(0,0,0,.6);
+
+      background:
+        #0c0b16;
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.6);
+
       text-align: center;
     }
 
     .auth-box .logo {
+
       width: 62px;
       height: 62px;
+
       display: grid;
+
       place-items: center;
-      margin: 0 auto 17px;
-      border: 1px solid rgba(85,231,255,.3);
+
+      margin:
+        0 auto 17px;
+
+      border:
+        1px solid rgba(85,231,255,.3);
+
       border-radius: 19px;
-      color: var(--cyan);
-      font-family: Orbitron, sans-serif;
+
+      color:
+        var(--cyan);
+
+      font-family:
+        Orbitron, sans-serif;
+
       font-size: 22px;
+
       font-weight: 800;
     }
 
     .auth-box h2 {
-      margin: 0 0 9px;
-      font-family: Orbitron, sans-serif;
+
+      margin:
+        0 0 9px;
+
+      font-family:
+        Orbitron, sans-serif;
+
       font-size: 21px;
     }
 
     .auth-box p {
-      margin: 0 0 20px;
+
+      margin:
+        0 0 20px;
+
       color: var(--muted);
+
       font-size: 11px;
+
       line-height: 1.6;
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        TOAST
-    -------------------------------------------------- */
+    ================================================== */
 
     .toast {
+
       position: fixed;
+
       right: 22px;
       bottom: 22px;
+
       z-index: 1100;
+
       max-width: 380px;
-      padding: 13px 16px;
-      border: 1px solid rgba(85,231,255,.25);
+
+      padding:
+        13px 16px;
+
+      border:
+        1px solid rgba(85,231,255,.25);
+
       border-radius: 13px;
-      background: rgba(12,12,23,.95);
-      box-shadow: var(--shadow);
+
+      background:
+        rgba(12,12,23,.95);
+
+      box-shadow:
+        var(--shadow);
+
       color: white;
+
       font-size: 11px;
+
       opacity: 0;
-      transform: translateY(15px);
+
+      transform:
+        translateY(15px);
+
       pointer-events: none;
+
       transition: .25s ease;
     }
 
     .toast.show {
+
       opacity: 1;
-      transform: translateY(0);
+
+      transform:
+        translateY(0);
     }
 
-    /* --------------------------------------------------
+    /* ==================================================
        MOBILE
-    -------------------------------------------------- */
+    ================================================== */
 
-    @media (max-width: 1050px) {
+    @media (max-width:1050px) {
+
       .stats {
-        grid-template-columns: repeat(2,1fr);
+
+        grid-template-columns:
+          repeat(2,1fr);
       }
 
       .dashboard-grid {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
       }
+
     }
 
-    @media (max-width: 800px) {
+    @media (max-width:800px) {
+
       .layout {
+
         display: block;
       }
 
       .sidebar {
+
         position: static;
+
         height: auto;
+
         border-right: 0;
-        border-bottom: 1px solid rgba(255,255,255,.07);
+
+        border-bottom:
+          1px solid rgba(255,255,255,.07);
+
         padding: 10px;
       }
 
       .nav {
+
         display: flex;
+
         overflow-x: auto;
       }
 
       .nav-label,
       .sidebar-card {
+
         display: none;
       }
 
       .nav a {
+
         flex: 0 0 auto;
+
         white-space: nowrap;
       }
 
       .main {
-        padding: 20px 14px;
+
+        padding:
+          20px 14px;
       }
 
       .topbar {
-        padding: 12px 14px;
+
+        padding:
+          12px 14px;
       }
 
       .brand {
+
         min-width: 0;
       }
 
       .brand-text span {
+
         display: none;
       }
 
       .hero {
+
         padding: 23px;
       }
+
+      .membership-layout {
+
+        grid-template-columns: 1fr;
+      }
+
+      .membership-side {
+
+        min-width: 0;
+
+        text-align: left;
+      }
+
+      .membership-actions {
+
+        justify-content: flex-start;
+      }
+
+      .membership-top {
+
+        display: none;
+      }
+
     }
 
-    @media (max-width: 520px) {
+    @media (max-width:520px) {
+
       .stats {
-        grid-template-columns: 1fr 1fr;
+
+        grid-template-columns:
+          1fr 1fr;
+
         gap: 9px;
       }
 
       .stat {
+
         padding: 15px;
       }
 
       .stat-value {
+
         font-size: 21px;
       }
 
       .quick-actions {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
       }
 
       .profile {
-        align-items: flex-start;
+
+        align-items:
+          flex-start;
       }
 
       .profile-avatar {
+
         width: 60px;
         height: 60px;
       }
 
       .hero-actions {
-        flex-direction: column;
+
+        flex-direction:
+          column;
       }
 
       .btn {
+
         width: 100%;
       }
+
     }
+
   </style>
-  <link rel="stylesheet" href="assets/css/dreamscapes-global.css">
+
+  <link
+    rel="stylesheet"
+    href="assets/css/dreamscapes-global.css"
+  >
+
 </head>
 
 <body>
@@ -988,21 +1921,52 @@
 
   <header class="topbar">
 
-    <a class="brand" href="index.html">
-      <div class="brand-mark">CR</div>
-      <div class="brand-text">
-        <strong>DREAMSCAPES</strong>
-        <span>CrowRules Entertainment</span>
+    <a
+      class="brand"
+      href="index.html"
+    >
+
+      <div class="brand-mark">
+        CR
       </div>
+
+      <div class="brand-text">
+
+        <strong>
+          DREAMSCAPES
+        </strong>
+
+        <span>
+          CrowRules Entertainment
+        </span>
+
+      </div>
+
     </a>
 
     <div class="top-actions">
+
+      <div
+        class="membership-top"
+        id="topMembership"
+      >
+
+        <span class="dot"></span>
+
+        <span id="topMembershipText">
+          UNIVERSAL ACCOUNT
+        </span>
+
+      </div>
+
       <button
         class="icon-btn"
         type="button"
         title="Notifications"
         onclick="showToast('Notifications coming online.')"
-      >🔔</button>
+      >
+        🔔
+      </button>
 
       <button
         class="avatar-btn"
@@ -1010,7 +1974,10 @@
         type="button"
         title="Creator profile"
         onclick="location.href='creator-profile.html'"
-      >CR</button>
+      >
+        CR
+      </button>
+
     </div>
 
   </header>
@@ -1023,11 +1990,16 @@
 
     <aside class="sidebar">
 
-      <div class="nav-label">Creator Workspace</div>
+      <div class="nav-label">
+        Creator Workspace
+      </div>
 
       <nav class="nav">
 
-        <a href="creator-portal.html" class="active">
+        <a
+          href="creator-portal.html"
+          class="active"
+        >
           <span class="nav-icon">⌂</span>
           Dashboard
         </a>
@@ -1057,7 +2029,9 @@
           Pitch Room
         </a>
 
-        <div class="nav-label">Creator Management</div>
+        <div class="nav-label">
+          Creator Management
+        </div>
 
         <a href="creator-profile.html">
           <span class="nav-icon">●</span>
@@ -1084,7 +2058,9 @@
           Earnings
         </a>
 
-        <div class="nav-label">Communication</div>
+        <div class="nav-label">
+          Communication
+        </div>
 
         <a href="messages.html">
           <span class="nav-icon">✉</span>
@@ -1101,17 +2077,35 @@
           Submission Status
         </a>
 
+        <div class="nav-label">
+          CrowRules Account
+        </div>
+
+        <a href="membership.html">
+          <span class="nav-icon">♛</span>
+          Universal Membership
+        </a>
+
       </nav>
 
       <div class="sidebar-card">
-        <h4>THE DREAM LIBRARY</h4>
+
+        <h4>
+          THE DREAM LIBRARY
+        </h4>
+
         <p>
-          Every dream starts somewhere. Build it here with CrowRules.
+          Every dream starts somewhere.
+          Build it here with CrowRules.
         </p>
 
-        <a class="btn btn-primary" href="my-dreams.html">
+        <a
+          class="btn btn-primary"
+          href="my-dreams.html"
+        >
           + Submit a Dream
         </a>
+
       </div>
 
     </aside>
@@ -1122,35 +2116,137 @@
 
     <main class="main">
 
-      <!-- HERO -->
+      <!-- ==================================================
+           UNIVERSAL MEMBERSHIP
+      ================================================== -->
+
+      <section class="membership-card">
+
+        <div class="membership-layout">
+
+          <div>
+
+            <div class="membership-kicker">
+              CrowRules Universal Membership
+            </div>
+
+            <h2 class="membership-title">
+              One Account. One CrowRules Universe.
+            </h2>
+
+            <p class="membership-description">
+              Your CrowRules membership follows you across
+              Dreamscapes and the wider CrowRules universe.
+              Dreamscapes does not require a separate membership.
+            </p>
+
+            <div class="membership-badges">
+
+              <span
+                class="membership-badge primary"
+                id="membershipStatusBadge"
+              >
+                ● Membership Loading
+              </span>
+
+              <span
+                class="membership-badge"
+                id="membershipAccessBadge"
+              >
+                Dreamscapes Access
+              </span>
+
+              <span
+                class="membership-badge"
+                id="membershipMultiplierBadge"
+              >
+                CrowPoints ×1
+              </span>
+
+            </div>
+
+          </div>
+
+          <div class="membership-side">
+
+            <div class="membership-plan-label">
+              Current Universal Plan
+            </div>
+
+            <div
+              class="membership-plan"
+              id="membershipPlan"
+            >
+              CROW
+            </div>
+
+            <div
+              class="membership-level"
+              id="membershipLevel"
+            >
+              Level 1
+            </div>
+
+            <div class="membership-actions">
+
+              <a
+                class="btn btn-primary"
+                href="membership.html"
+              >
+                Manage Membership
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ==================================================
+           HERO
+      ================================================== -->
 
       <section class="hero">
 
         <div class="hero-content">
 
-          <div class="eyebrow">Creator Command Center</div>
+          <div class="eyebrow">
+            Creator Command Center
+          </div>
 
           <h1>
-            Welcome to the <span>Dream.</span>
+            Welcome to the
+            <span>Dream.</span>
           </h1>
 
           <p id="heroDescription">
             Your ideas. Your world. Your story.
-            The Dreamscapes Creator Portal is where imagination becomes
-            something we can build together.
+            The Dreamscapes Creator Portal is where
+            imagination becomes something we can build together.
           </p>
 
           <div class="hero-actions">
 
-            <a class="btn btn-primary" href="my-dreams.html">
+            <a
+              class="btn btn-primary"
+              href="my-dreams.html"
+            >
               ✦ Create a Dream
             </a>
 
-            <a class="btn" href="creative-room.html">
+            <a
+              class="btn"
+              href="creative-room.html"
+            >
               ✎ Open Creative Room
             </a>
 
-            <a class="btn" href="creator-profile.html">
+            <a
+              class="btn"
+              href="creator-profile.html"
+            >
               ● Edit Profile
             </a>
 
@@ -1160,37 +2256,96 @@
 
       </section>
 
-      <!-- STATS -->
+      <!-- ==================================================
+           STATS
+      ================================================== -->
 
       <section class="stats">
 
         <div class="stat">
-          <div class="stat-label">Dreams</div>
-          <div class="stat-value" id="dreamCount">—</div>
-          <div class="stat-sub">Ideas in your library</div>
+
+          <div class="stat-label">
+            Dreams
+          </div>
+
+          <div
+            class="stat-value"
+            id="dreamCount"
+          >
+            —
+          </div>
+
+          <div class="stat-sub">
+            Ideas in your library
+          </div>
+
         </div>
 
         <div class="stat">
-          <div class="stat-label">Projects</div>
-          <div class="stat-value" id="projectCount">—</div>
-          <div class="stat-sub">Stories being developed</div>
+
+          <div class="stat-label">
+            Projects
+          </div>
+
+          <div
+            class="stat-value"
+            id="projectCount"
+          >
+            —
+          </div>
+
+          <div class="stat-sub">
+            Stories being developed
+          </div>
+
         </div>
 
         <div class="stat">
-          <div class="stat-label">Collaborators</div>
-          <div class="stat-value" id="collaboratorCount">—</div>
-          <div class="stat-sub">People in your creative network</div>
+
+          <div class="stat-label">
+            Collaborators
+          </div>
+
+          <div
+            class="stat-value"
+            id="collaboratorCount"
+          >
+            —
+          </div>
+
+          <div class="stat-sub">
+            People in your creative network
+          </div>
+
         </div>
 
         <div class="stat">
-          <div class="stat-label">Completion</div>
-          <div class="stat-value" id="profileCompletion">—</div>
-          <div class="stat-sub">Creator profile readiness</div>
+
+          <div class="stat-label">
+            Membership
+          </div>
+
+          <div
+            class="stat-value"
+            id="membershipStat"
+          >
+            CROW
+          </div>
+
+          <div
+            class="stat-sub"
+            id="membershipStatSub"
+          >
+            Universal CrowRules account
+          </div>
+
         </div>
 
       </section>
 
-      <!-- DASHBOARD -->
+      <!-- ==================================================
+           DASHBOARD
+      ================================================== -->
 
       <section class="dashboard-grid">
 
@@ -1201,35 +2356,61 @@
           <section class="card">
 
             <div class="card-head">
-              <h2>Creator Profile</h2>
-              <a class="btn" href="creator-profile.html">Manage</a>
+
+              <h2>
+                Creator Profile
+              </h2>
+
+              <a
+                class="btn"
+                href="creator-profile.html"
+              >
+                Manage
+              </a>
+
             </div>
 
             <div class="card-body">
 
               <div class="profile">
 
-                <div class="profile-avatar" id="profileAvatar">
+                <div
+                  class="profile-avatar"
+                  id="profileAvatar"
+                >
                   CR
                 </div>
 
                 <div class="profile-info">
 
-                  <h2 id="displayName">Loading Creator...</h2>
+                  <h2 id="displayName">
+                    Loading Creator...
+                  </h2>
 
-                  <p id="username">@creator</p>
+                  <p id="username">
+                    @creator
+                  </p>
 
                   <div class="profile-meta">
 
-                    <span class="pill green" id="availability">
+                    <span
+                      class="pill green"
+                      id="availability"
+                    >
                       Open to Collaboration
                     </span>
 
-                    <span class="pill cyan" id="discoverability">
+                    <span
+                      class="pill cyan"
+                      id="discoverability"
+                    >
                       Discoverable
                     </span>
 
-                    <span class="pill" id="location">
+                    <span
+                      class="pill"
+                      id="location"
+                    >
                       Location not set
                     </span>
 
@@ -1242,15 +2423,24 @@
               <div class="progress-wrap">
 
                 <div class="progress-label">
-                  <span>Profile completion</span>
-                  <strong id="completionText">0%</strong>
+
+                  <span>
+                    Profile completion
+                  </span>
+
+                  <strong id="completionText">
+                    0%
+                  </strong>
+
                 </div>
 
                 <div class="progress">
+
                   <div
                     id="completionBar"
                     style="width:0%"
                   ></div>
+
                 </div>
 
               </div>
@@ -1264,36 +2454,95 @@
           <section class="card">
 
             <div class="card-head">
-              <h2>Quick Actions</h2>
-              <span>Build your universe</span>
+
+              <h2>
+                Quick Actions
+              </h2>
+
+              <span>
+                Build your universe
+              </span>
+
             </div>
 
             <div class="card-body">
 
               <div class="quick-actions">
 
-                <a class="quick" href="my-dreams.html">
-                  <div class="quick-icon">✦</div>
-                  <strong>Submit a Dream</strong>
-                  <span>Capture a new idea before it disappears.</span>
+                <a
+                  class="quick"
+                  href="my-dreams.html"
+                >
+
+                  <div class="quick-icon">
+                    ✦
+                  </div>
+
+                  <strong>
+                    Submit a Dream
+                  </strong>
+
+                  <span>
+                    Capture a new idea before it disappears.
+                  </span>
+
                 </a>
 
-                <a class="quick" href="project-development.html">
-                  <div class="quick-icon">◈</div>
-                  <strong>Develop a Project</strong>
-                  <span>Turn a dream into a story, series or film.</span>
+                <a
+                  class="quick"
+                  href="project-development.html"
+                >
+
+                  <div class="quick-icon">
+                    ◈
+                  </div>
+
+                  <strong>
+                    Develop a Project
+                  </strong>
+
+                  <span>
+                    Turn a dream into a story, series or film.
+                  </span>
+
                 </a>
 
-                <a class="quick" href="collaborators.html">
-                  <div class="quick-icon">◎</div>
-                  <strong>Find Collaborators</strong>
-                  <span>Connect with writers, artists and creators.</span>
+                <a
+                  class="quick"
+                  href="collaborators.html"
+                >
+
+                  <div class="quick-icon">
+                    ◎
+                  </div>
+
+                  <strong>
+                    Find Collaborators
+                  </strong>
+
+                  <span>
+                    Connect with writers, artists and creators.
+                  </span>
+
                 </a>
 
-                <a class="quick" href="pitch-room.html">
-                  <div class="quick-icon">◆</div>
-                  <strong>Enter Pitch Room</strong>
-                  <span>Prepare your idea for the next stage.</span>
+                <a
+                  class="quick"
+                  href="pitch-room.html"
+                >
+
+                  <div class="quick-icon">
+                    ◆
+                  </div>
+
+                  <strong>
+                    Enter Pitch Room
+                  </strong>
+
+                  <span>
+                    Prepare your idea for the next stage.
+                  </span>
+
                 </a>
 
               </div>
@@ -1308,7 +2557,9 @@
 
             <div class="card-head">
 
-              <h2>Recent Dreams</h2>
+              <h2>
+                Recent Dreams
+              </h2>
 
               <a
                 href="my-dreams.html"
@@ -1341,40 +2592,92 @@
           <section class="card">
 
             <div class="card-head">
-              <h3>Creative Journey</h3>
-              <span>Dream → Story</span>
+
+              <h3>
+                Creative Journey
+              </h3>
+
+              <span>
+                Dream → Story
+              </span>
+
             </div>
 
             <div class="card-body">
 
               <div class="progress-wrap">
+
                 <div class="progress-label">
-                  <span>Dreams captured</span>
-                  <strong id="journeyDreams">0</strong>
+
+                  <span>
+                    Dreams captured
+                  </span>
+
+                  <strong id="journeyDreams">
+                    0
+                  </strong>
+
                 </div>
+
                 <div class="progress">
-                  <div id="journeyDreamBar" style="width:0%"></div>
+
+                  <div
+                    id="journeyDreamBar"
+                    style="width:0%"
+                  ></div>
+
                 </div>
+
               </div>
 
               <div class="progress-wrap">
+
                 <div class="progress-label">
-                  <span>Projects developing</span>
-                  <strong id="journeyProjects">0</strong>
+
+                  <span>
+                    Projects developing
+                  </span>
+
+                  <strong id="journeyProjects">
+                    0
+                  </strong>
+
                 </div>
+
                 <div class="progress">
-                  <div id="journeyProjectBar" style="width:0%"></div>
+
+                  <div
+                    id="journeyProjectBar"
+                    style="width:0%"
+                  ></div>
+
                 </div>
+
               </div>
 
               <div class="progress-wrap">
+
                 <div class="progress-label">
-                  <span>Pitch-ready projects</span>
-                  <strong id="journeyPitch">0</strong>
+
+                  <span>
+                    Pitch-ready projects
+                  </span>
+
+                  <strong id="journeyPitch">
+                    0
+                  </strong>
+
                 </div>
+
                 <div class="progress">
-                  <div id="journeyPitchBar" style="width:0%"></div>
+
+                  <div
+                    id="journeyPitchBar"
+                    style="width:0%"
+                  ></div>
+
                 </div>
+
               </div>
 
             </div>
@@ -1386,8 +2689,15 @@
           <section class="card">
 
             <div class="card-head">
-              <h3>Recent Activity</h3>
-              <span>Creator timeline</span>
+
+              <h3>
+                Recent Activity
+              </h3>
+
+              <span>
+                Creator timeline
+              </span>
+
             </div>
 
             <div
@@ -1400,10 +2710,15 @@
                 <div class="activity-dot"></div>
 
                 <div>
-                  <strong>Welcome to Dreamscapes</strong>
+
+                  <strong>
+                    Welcome to Dreamscapes
+                  </strong>
+
                   <span>
                     Your Creator Portal is ready.
                   </span>
+
                 </div>
 
               </div>
@@ -1413,10 +2728,34 @@
                 <div class="activity-dot"></div>
 
                 <div>
-                  <strong>Build your creator profile</strong>
+
+                  <strong>
+                    Universal CrowRules membership active
+                  </strong>
+
+                  <span>
+                    Your CrowRules membership follows you
+                    across the CrowRules universe.
+                  </span>
+
+                </div>
+
+              </div>
+
+              <div class="activity-item">
+
+                <div class="activity-dot"></div>
+
+                <div>
+
+                  <strong>
+                    Build your creator profile
+                  </strong>
+
                   <span>
                     Add your skills, interests and creative goals.
                   </span>
+
                 </div>
 
               </div>
@@ -1426,10 +2765,15 @@
                 <div class="activity-dot"></div>
 
                 <div>
-                  <strong>Capture your first dream</strong>
+
+                  <strong>
+                    Capture your first dream
+                  </strong>
+
                   <span>
                     The Dream Library is waiting.
                   </span>
+
                 </div>
 
               </div>
@@ -1443,7 +2787,11 @@
           <section class="card">
 
             <div class="card-head">
-              <h3>Your Creative Rights</h3>
+
+              <h3>
+                Your Creative Rights
+              </h3>
+
             </div>
 
             <div class="card-body">
@@ -1477,8 +2825,15 @@
           <section class="card">
 
             <div class="card-head">
-              <h3>Creator Earnings</h3>
-              <span>Future revenue</span>
+
+              <h3>
+                Creator Earnings
+              </h3>
+
+              <span>
+                Future revenue
+              </span>
+
             </div>
 
             <div class="card-body">
@@ -1505,7 +2860,10 @@
                 project generates creator revenue.
               </div>
 
-              <a class="btn" href="earnings.html">
+              <a
+                class="btn"
+                href="earnings.html"
+              >
                 View Earnings
               </a>
 
@@ -1523,7 +2881,9 @@
 
 </div>
 
-<!-- AUTH OVERLAY -->
+<!-- ==================================================
+     AUTH OVERLAY
+================================================== -->
 
 <div
   class="auth-overlay"
@@ -1532,13 +2892,18 @@
 
   <div class="auth-box">
 
-    <div class="logo">CR</div>
+    <div class="logo">
+      CR
+    </div>
 
-    <h2>Enter Dreamscapes</h2>
+    <h2>
+      Enter Dreamscapes
+    </h2>
 
     <p>
-      Sign in to access your Creator Portal,
-      dreams, projects and creative workspace.
+      Sign in with your universal CrowRules account
+      to access your Creator Portal, dreams, projects
+      and creative workspace.
     </p>
 
     <a
@@ -1550,16 +2915,20 @@
     </a>
 
     <a
-      href="signup.html"
+      href="login.html?mode=signup&redirect=creator-portal.html"
       class="btn"
       style="width:100%;margin-top:10px"
     >
-      Create Creator Account
+      Create CrowRules Account
     </a>
 
   </div>
 
 </div>
+
+<!-- ==================================================
+     TOAST
+================================================== -->
 
 <div
   class="toast"
@@ -1567,15 +2936,35 @@
 ></div>
 
 <script>
+
 /* =====================================================
-   CROW RULES DREAMSCAPES CREATOR PORTAL
+   CROW RULES DREAMSCAPES
+   UNIVERSAL CREATOR PORTAL
    =====================================================
 
-   IMPORTANT:
-   Replace these with your project's actual Supabase
-   public URL and anon/publishable key.
+   UNIVERSAL MEMBERSHIP ARCHITECTURE
+
+   One CrowRules Auth account
+          ↓
+   One Universal Membership
+          ↓
+   ┌───────────────┬───────────────┬───────────────┐
+   │ Dreamscapes  │ CrowRules TV  │ Podcasting    │
+   └───────────────┴───────────────┴───────────────┘
+
+   Membership is NOT recreated for Dreamscapes.
+
+   This page uses the existing universal RPCs:
+
+     ensure_crow_membership()
+     get_my_membership()
 
    NEVER put a service-role key in this file.
+===================================================== */
+
+
+/* =====================================================
+   SUPABASE CONFIGURATION
 ===================================================== */
 
 const SUPABASE_URL =
@@ -1586,74 +2975,196 @@ const SUPABASE_ANON_KEY =
   window.CROW_SUPABASE_ANON_KEY ||
   "sb_publishable_AdfM5y6RqvF3tbvEVzDZSg_JuGTQLD-";
 
+
+/* =====================================================
+   TABLE CONFIGURATION
+===================================================== */
+
+const DREAM_TABLE =
+  "ds_dreams";
+
+const PROJECT_TABLE =
+  "ds_projects";
+
+const CREATOR_PROFILE_TABLE =
+  "ds_creator_profiles";
+
+
+/* =====================================================
+   STATE
+===================================================== */
+
 let db = null;
+
 let currentUser = null;
+
 let currentProfile = null;
+
+let currentMembership = null;
+
+let authSubscription = null;
+
 
 /* =====================================================
    INITIALIZATION
 ===================================================== */
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener(
+  "DOMContentLoaded",
+  init
+);
+
 
 async function init() {
 
   try {
 
     if (
+      !window.supabase ||
+      !window.supabase.createClient
+    ) {
+
+      throw new Error(
+        "Supabase library failed to load."
+      );
+
+    }
+
+    if (
       SUPABASE_URL.includes("YOUR-PROJECT") ||
       SUPABASE_ANON_KEY.includes("YOUR_PUBLIC")
     ) {
-      console.warn(
+
+      throw new Error(
         "Dreamscapes Supabase credentials have not been configured."
       );
 
-      document.getElementById("displayName").textContent =
-        "Creator Portal";
-
-      document.getElementById("username").textContent =
-        "Configure Supabase to load your creator account.";
-
-      return;
     }
 
-    db = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
-    );
+
+    db =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+        {
+          auth: {
+            autoRefreshToken: true,
+            persistSession: true,
+            detectSessionInUrl: true
+          }
+        }
+      );
+
+
+    /*
+      getSession() establishes the browser session.
+
+      getUser() below is then used to obtain the
+      authenticated user from Supabase Auth.
+    */
 
     const {
-      data: {
-        session
-      }
-    } = await db.auth.getSession();
+      data: sessionData,
+      error: sessionError
+    } =
+      await db.auth.getSession();
 
-    if (!session || !session.user) {
-      showAuth();
-      return;
+
+    if (sessionError) {
+
+      throw sessionError;
+
     }
 
-    currentUser = session.user;
 
-    await loadCreatorPortal();
+    if (
+      !sessionData ||
+      !sessionData.session
+    ) {
 
-    db.auth.onAuthStateChange(
-      async (_event, session) => {
+      showAuth();
 
-        if (!session) {
-          currentUser = null;
-          showAuth();
-          return;
+    } else {
+
+      await establishAuthenticatedUser();
+
+    }
+
+
+    /*
+      Avoid doing heavy async work directly inside
+      the auth callback.
+    */
+
+    const {
+      data: authData
+    } =
+      db.auth.onAuthStateChange(
+        (event, session) => {
+
+          console.log(
+            "CrowRules Auth:",
+            event
+          );
+
+          setTimeout(
+            async () => {
+
+              if (!session) {
+
+                currentUser = null;
+
+                currentProfile = null;
+
+                currentMembership = null;
+
+                showAuth();
+
+                return;
+
+              }
+
+
+              if (
+                event === "PASSWORD_RECOVERY"
+              ) {
+
+                return;
+
+              }
+
+
+              try {
+
+                await establishAuthenticatedUser();
+
+              } catch (error) {
+
+                console.error(
+                  "Auth state refresh error:",
+                  error
+                );
+
+              }
+
+            },
+            0
+          );
+
         }
+      );
 
-        currentUser = session.user;
 
-      }
-    );
+    authSubscription =
+      authData?.subscription ||
+      null;
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Dreamscapes initialization error:",
+      error
+    );
 
     showToast(
       error.message ||
@@ -1664,20 +3175,479 @@ async function init() {
 
 }
 
+
 /* =====================================================
-   MAIN LOAD
+   AUTHENTICATED USER
+===================================================== */
+
+async function establishAuthenticatedUser() {
+
+  if (!db) return;
+
+
+  const {
+    data,
+    error
+  } =
+    await db.auth.getUser();
+
+
+  if (error) {
+
+    console.error(
+      "Authenticated user error:",
+      error
+    );
+
+    showAuth();
+
+    return;
+
+  }
+
+
+  if (!data?.user) {
+
+    showAuth();
+
+    return;
+
+  }
+
+
+  currentUser =
+    data.user;
+
+
+  hideAuth();
+
+
+  await loadCreatorPortal();
+
+}
+
+
+/* =====================================================
+   MAIN PORTAL LOAD
 ===================================================== */
 
 async function loadCreatorPortal() {
 
-  await Promise.all([
+  if (!currentUser || !db) {
+
+    return;
+
+  }
+
+
+  /*
+    Membership is loaded first because it is the
+    universal account foundation of the portal.
+  */
+
+  await loadUniversalMembership();
+
+
+  /*
+    Creator-specific data then loads in parallel.
+  */
+
+  await Promise.allSettled([
+
     loadCreatorProfile(),
+
     loadDreams(),
+
     loadProjects(),
+
     loadCollaborators()
+
   ]);
 
 }
+
+
+/* =====================================================
+   UNIVERSAL MEMBERSHIP
+===================================================== */
+
+async function loadUniversalMembership() {
+
+  if (!currentUser || !db) {
+
+    return null;
+
+  }
+
+
+  try {
+
+    /*
+      Make sure every authenticated CrowRules user
+      has the baseline CROW membership.
+
+      This calls the existing RPC rather than
+      inserting membership records directly.
+    */
+
+    const {
+      data: ensureData,
+      error: ensureError
+    } =
+      await db.rpc(
+        "ensure_crow_membership"
+      );
+
+
+    if (ensureError) {
+
+      console.warn(
+        "ensure_crow_membership:",
+        ensureError.message
+      );
+
+    }
+
+
+    /*
+      get_my_membership() is the source of truth
+      for the currently active universal plan.
+    */
+
+    const {
+      data,
+      error
+    } =
+      await db.rpc(
+        "get_my_membership"
+      );
+
+
+    if (error) {
+
+      console.error(
+        "get_my_membership:",
+        error
+      );
+
+      renderMembershipUnavailable();
+
+      return null;
+
+    }
+
+
+    if (Array.isArray(data)) {
+
+      currentMembership =
+        data[0] || null;
+
+    } else {
+
+      currentMembership =
+        data || null;
+
+    }
+
+
+    renderUniversalMembership(
+      currentMembership
+    );
+
+
+    return currentMembership;
+
+  } catch (error) {
+
+    console.error(
+      "Universal membership error:",
+      error
+    );
+
+    renderMembershipUnavailable();
+
+    return null;
+
+  }
+
+}
+
+
+/* =====================================================
+   MEMBERSHIP UI
+===================================================== */
+
+function renderUniversalMembership(
+  membership
+) {
+
+  if (!membership) {
+
+    renderMembershipUnavailable();
+
+    return;
+
+  }
+
+
+  const planKey =
+    String(
+      membership.plan_key ||
+      "crow"
+    ).toLowerCase();
+
+
+  const planName =
+    membership.plan_name ||
+    planKey.toUpperCase();
+
+
+  const level =
+    membership.level ??
+    1;
+
+
+  const status =
+    membership.status ||
+    "active";
+
+
+  const multiplier =
+    membership.crowpoints_multiplier ??
+    1;
+
+
+  const accessLevel =
+    getDreamscapesAccessLevel(
+      planKey
+    );
+
+
+  /*
+    Main membership card
+  */
+
+  setText(
+    "membershipPlan",
+    planName
+  );
+
+
+  setText(
+    "membershipLevel",
+    `Level ${level} · ${formatMembershipStatus(status)}`
+  );
+
+
+  setText(
+    "membershipStatusBadge",
+    `● ${formatMembershipStatus(status)}`
+  );
+
+
+  setText(
+    "membershipAccessBadge",
+    `Dreamscapes · ${formatAccessLevel(accessLevel)}`
+  );
+
+
+  setText(
+    "membershipMultiplierBadge",
+    `CrowPoints ×${multiplier}`
+  );
+
+
+  /*
+    Top navigation
+  */
+
+  setText(
+    "topMembershipText",
+    planName
+  );
+
+
+  /*
+    Membership stat
+  */
+
+  setText(
+    "membershipStat",
+    planName
+  );
+
+
+  setText(
+    "membershipStatSub",
+    `Universal Level ${level}`
+  );
+
+
+  /*
+    Add activity entry.
+  */
+
+  const membershipActivity =
+    document.querySelector(
+      "#activityFeed .activity-item"
+    );
+
+
+  if (
+    membershipActivity
+  ) {
+
+    const title =
+      membershipActivity.querySelector(
+        "strong"
+      );
+
+    const body =
+      membershipActivity.querySelector(
+        "span"
+      );
+
+
+    if (title) {
+
+      title.textContent =
+        "Universal CrowRules membership active";
+
+    }
+
+
+    if (body) {
+
+      body.textContent =
+        `${planName} membership · Dreamscapes access: ${formatAccessLevel(accessLevel)}.`;
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   MEMBERSHIP FALLBACK
+===================================================== */
+
+function renderMembershipUnavailable() {
+
+  setText(
+    "membershipPlan",
+    "CROW"
+  );
+
+  setText(
+    "membershipLevel",
+    "Universal membership"
+  );
+
+  setText(
+    "membershipStatusBadge",
+    "● Account Connected"
+  );
+
+  setText(
+    "membershipAccessBadge",
+    "Dreamscapes Access"
+  );
+
+  setText(
+    "membershipMultiplierBadge",
+    "CrowPoints ×1"
+  );
+
+  setText(
+    "topMembershipText",
+    "CROW"
+  );
+
+  setText(
+    "membershipStat",
+    "CROW"
+  );
+
+  setText(
+    "membershipStatSub",
+    "Universal CrowRules account"
+  );
+
+}
+
+
+/* =====================================================
+   MEMBERSHIP ACCESS
+===================================================== */
+
+function getDreamscapesAccessLevel(
+  planKey
+) {
+
+  const accessMap = {
+
+    crow:
+      "Member",
+
+    crowner:
+      "Premium",
+
+    creator:
+      "Creator",
+
+    founder:
+      "Founder"
+
+  };
+
+
+  return (
+    accessMap[planKey] ||
+    "Member"
+  );
+
+}
+
+
+function formatAccessLevel(
+  value
+) {
+
+  return String(
+    value || "Member"
+  )
+    .charAt(0)
+    .toUpperCase() +
+    String(
+      value || "Member"
+    )
+      .slice(1);
+
+}
+
+
+function formatMembershipStatus(
+  value
+) {
+
+  const normalized =
+    String(
+      value || "active"
+    )
+      .replaceAll("_"," ")
+      .trim();
+
+
+  return normalized
+    .replace(
+      /\b\w/g,
+      character =>
+        character.toUpperCase()
+    );
+
+}
+
 
 /* =====================================================
    CREATOR PROFILE
@@ -1685,112 +3655,176 @@ async function loadCreatorPortal() {
 
 async function loadCreatorProfile() {
 
-  if (!currentUser || !db) return;
+  if (!currentUser || !db) {
 
-  const {
-    data,
-    error
-  } = await db
-    .from("ds_creator_profiles")
-    .select(`
-      id,
-      user_id,
-      display_name,
-      username,
-      headline,
-      bio,
-      avatar_url,
-      location,
-      portfolio_url,
-      availability,
-      is_discoverable,
-      skills,
-      interests,
-      created_at,
-      updated_at
-    `)
-    .eq("user_id", currentUser.id)
-    .maybeSingle();
+    return;
 
-  if (error) {
+  }
+
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await db
+        .from(
+          CREATOR_PROFILE_TABLE
+        )
+        .select(`
+          id,
+          user_id,
+          display_name,
+          username,
+          headline,
+          bio,
+          avatar_url,
+          location,
+          portfolio_url,
+          availability,
+          is_discoverable,
+          skills,
+          interests,
+          created_at,
+          updated_at
+        `)
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+    if (error) {
+
+      console.error(
+        "Creator profile error:",
+        error
+      );
+
+      setProfileDefaults();
+
+      return;
+
+    }
+
+
+    currentProfile =
+      data;
+
+
+    if (!data) {
+
+      setProfileDefaults();
+
+      return;
+
+    }
+
+
+    const name =
+      data.display_name ||
+      currentUser.user_metadata?.full_name ||
+      currentUser.email?.split("@")[0] ||
+      "Dreamer";
+
+
+    const username =
+      data.username
+        ? "@" + data.username
+        : "@creator";
+
+
+    setText(
+      "displayName",
+      name
+    );
+
+
+    setText(
+      "username",
+      username
+    );
+
+
+    setText(
+      "heroDescription",
+      data.headline ||
+      data.bio ||
+      "Your ideas. Your world. Your story."
+    );
+
+
+    const availability =
+      document.getElementById(
+        "availability"
+      );
+
+
+    if (availability) {
+
+      availability.textContent =
+        data.availability ||
+        "Open to Collaboration";
+
+    }
+
+
+    const discoverability =
+      document.getElementById(
+        "discoverability"
+      );
+
+
+    if (discoverability) {
+
+      discoverability.textContent =
+        data.is_discoverable
+          ? "Discoverable"
+          : "Private";
+
+    }
+
+
+    const location =
+      document.getElementById(
+        "location"
+      );
+
+
+    if (location) {
+
+      location.textContent =
+        data.location ||
+        "Location not set";
+
+    }
+
+
+    updateAvatar(
+      data.avatar_url,
+      name
+    );
+
+
+    calculateProfileCompletion(
+      data
+    );
+
+  } catch (error) {
 
     console.error(
-      "Creator profile error:",
+      "Creator profile exception:",
       error
     );
 
-    showToast(
-      "Unable to load creator profile."
-    );
-
-    return;
-  }
-
-  currentProfile = data;
-
-  if (!data) {
-
     setProfileDefaults();
 
-    return;
   }
 
-  const name =
-    data.display_name ||
-    currentUser.user_metadata?.full_name ||
-    currentUser.email?.split("@")[0] ||
-    "Dreamer";
-
-  const username =
-    data.username
-      ? "@" + data.username
-      : "@creator";
-
-  document.getElementById(
-    "displayName"
-  ).textContent = name;
-
-  document.getElementById(
-    "username"
-  ).textContent = username;
-
-  document.getElementById(
-    "heroDescription"
-  ).textContent =
-    data.headline ||
-    data.bio ||
-    "Your ideas. Your world. Your story.";
-
-  const availability =
-    document.getElementById("availability");
-
-  availability.textContent =
-    data.availability ||
-    "Open to Collaboration";
-
-  const discoverability =
-    document.getElementById("discoverability");
-
-  discoverability.textContent =
-    data.is_discoverable
-      ? "Discoverable"
-      : "Private";
-
-  const location =
-    document.getElementById("location");
-
-  location.textContent =
-    data.location ||
-    "Location not set";
-
-  updateAvatar(
-    data.avatar_url,
-    name
-  );
-
-  calculateProfileCompletion(data);
-
 }
+
 
 /* =====================================================
    PROFILE DEFAULTS
@@ -1803,193 +3837,309 @@ function setProfileDefaults() {
     currentUser?.email?.split("@")[0] ||
     "Dreamer";
 
-  document.getElementById(
-    "displayName"
-  ).textContent = fallbackName;
 
-  document.getElementById(
-    "username"
-  ).textContent = "@creator";
+  setText(
+    "displayName",
+    fallbackName
+  );
+
+
+  setText(
+    "username",
+    "@creator"
+  );
+
+
+  setText(
+    "heroDescription",
+    "Your ideas. Your world. Your story."
+  );
+
 
   updateAvatar(
     null,
     fallbackName
   );
 
-  calculateProfileCompletion(null);
+
+  calculateProfileCompletion(
+    null
+  );
 
 }
+
 
 /* =====================================================
    PROFILE COMPLETION
 ===================================================== */
 
-function calculateProfileCompletion(profile) {
+function calculateProfileCompletion(
+  profile
+) {
 
   if (!profile) {
 
     setCompletion(0);
 
     return;
+
   }
 
+
   const fields = [
+
     profile.display_name,
+
     profile.username,
+
     profile.headline,
+
     profile.bio,
+
     profile.avatar_url,
+
     profile.location,
+
     profile.portfolio_url,
-    profile.skills?.length,
-    profile.interests?.length
+
+    Array.isArray(profile.skills)
+      ? profile.skills.length
+      : profile.skills,
+
+    Array.isArray(profile.interests)
+      ? profile.interests.length
+      : profile.interests
+
   ];
+
 
   const complete =
     fields.filter(Boolean).length;
+
 
   const percent =
     Math.round(
       (complete / fields.length) * 100
     );
 
-  setCompletion(percent);
+
+  setCompletion(
+    percent
+  );
 
 }
 
-function setCompletion(percent) {
 
-  document.getElementById(
-    "profileCompletion"
-  ).textContent =
-    percent + "%";
+function setCompletion(
+  percent
+) {
 
-  document.getElementById(
-    "completionText"
-  ).textContent =
-    percent + "%";
+  setText(
+    "completionText",
+    percent + "%"
+  );
 
-  document.getElementById(
-    "completionBar"
-  ).style.width =
-    percent + "%";
+
+  setText(
+    "profileCompletion",
+    percent + "%"
+  );
+
+
+  const bar =
+    document.getElementById(
+      "completionBar"
+    );
+
+
+  if (bar) {
+
+    bar.style.width =
+      percent + "%";
+
+  }
 
 }
+
 
 /* =====================================================
    AVATAR
 ===================================================== */
 
-function updateAvatar(url, name) {
+function updateAvatar(
+  url,
+  name
+) {
 
   const avatar =
     document.getElementById(
       "profileAvatar"
     );
 
+
   const topAvatar =
     document.getElementById(
       "topAvatar"
     );
 
+
   if (url) {
 
-    avatar.innerHTML =
-      `<img src="${escapeAttribute(url)}" alt="Creator avatar">`;
+    avatar.innerHTML = "";
 
-    topAvatar.innerHTML =
-      `<img src="${escapeAttribute(url)}" alt="Creator avatar">`;
+    const image =
+      document.createElement(
+        "img"
+      );
+
+    image.src =
+      url;
+
+    image.alt =
+      "Creator avatar";
+
+    image.loading =
+      "lazy";
+
+    avatar.appendChild(
+      image
+    );
+
+
+    topAvatar.innerHTML = "";
+
+    const topImage =
+      document.createElement(
+        "img"
+      );
+
+    topImage.src =
+      url;
+
+    topImage.alt =
+      "Creator avatar";
+
+    topImage.loading =
+      "lazy";
+
+    topAvatar.appendChild(
+      topImage
+    );
+
 
     return;
+
   }
+
 
   const initials =
     getInitials(name);
 
+
   avatar.textContent =
     initials;
+
 
   topAvatar.textContent =
     initials;
 
 }
 
+
 /* =====================================================
    DREAMS
-=====================================================
-
-   The loader supports several likely Dreamscapes
-   table names. If your actual dream table is different,
-   set DREAM_TABLE below.
 ===================================================== */
-
-const DREAM_TABLE =
-  "ds_dreams";
 
 async function loadDreams() {
 
-  if (!currentUser || !db) return;
+  if (!currentUser || !db) {
+
+    return;
+
+  }
+
 
   const container =
     document.getElementById(
       "recentDreams"
     );
 
+
   try {
 
     const {
       data,
       error
-    } = await db
-      .from(DREAM_TABLE)
-      .select("*")
-      .eq("user_id", currentUser.id)
-      .order(
-        "created_at",
-        {
-          ascending: false
-        }
-      )
-      .limit(5);
+    } =
+      await db
+        .from(DREAM_TABLE)
+        .select("*")
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        )
+        .limit(5);
+
 
     if (error) {
 
       console.warn(
-        "Dream table unavailable:",
+        "Dream table:",
         error.message
       );
 
       renderDreamFallback();
 
       return;
+
     }
 
-    renderDreams(data || []);
 
-    document.getElementById(
-      "dreamCount"
-    ).textContent =
-      data?.length || 0;
+    const dreams =
+      data || [];
 
-    document.getElementById(
-      "journeyDreams"
-    ).textContent =
-      data?.length || 0;
 
-    const dreamProgress =
+    renderDreams(
+      dreams
+    );
+
+
+    setText(
+      "dreamCount",
+      dreams.length
+    );
+
+
+    setText(
+      "journeyDreams",
+      dreams.length
+    );
+
+
+    const progress =
       Math.min(
         100,
-        (data?.length || 0) * 10
+        dreams.length * 10
       );
 
-    document.getElementById(
-      "journeyDreamBar"
-    ).style.width =
-      dreamProgress + "%";
+
+    setProgress(
+      "journeyDreamBar",
+      progress
+    );
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Dream loading:",
+      error
+    );
 
     renderDreamFallback();
 
@@ -1997,36 +4147,56 @@ async function loadDreams() {
 
 }
 
+
 /* =====================================================
    DREAM RENDERER
 ===================================================== */
 
-function renderDreams(dreams) {
+function renderDreams(
+  dreams
+) {
 
   const container =
     document.getElementById(
       "recentDreams"
     );
 
+
   if (!dreams.length) {
 
     container.innerHTML = `
+
       <div class="empty">
-        <div class="empty-icon">✦</div>
-        <strong>Your Dream Library is Empty</strong>
+
+        <div class="empty-icon">
+          ✦
+        </div>
+
+        <strong>
+          Your Dream Library is Empty
+        </strong>
+
         <p>
           Every story begins with an idea.
           Capture your first dream and start building
           your world.
         </p>
-        <a class="btn btn-primary" href="my-dreams.html">
+
+        <a
+          class="btn btn-primary"
+          href="my-dreams.html"
+        >
           + Create Your First Dream
         </a>
+
       </div>
+
     `;
 
     return;
+
   }
+
 
   container.innerHTML =
     dreams.map(
@@ -2037,11 +4207,23 @@ function renderDreams(dreams) {
           dream.name ||
           "Untitled Dream";
 
+
         const status =
-          dream.status ||
-          "idea";
+          String(
+            dream.status ||
+            "idea"
+          )
+            .toLowerCase();
+
+
+        const safeStatus =
+          normalizeStatusClass(
+            status
+          );
+
 
         return `
+
           <div class="dream">
 
             <div class="dream-art">
@@ -2062,11 +4244,14 @@ function renderDreams(dreams) {
 
             </div>
 
-            <span class="status ${escapeAttribute(status)}">
+            <span
+              class="status ${safeStatus}"
+            >
               ${escapeHTML(status)}
             </span>
 
           </div>
+
         `;
 
       }
@@ -2074,119 +4259,166 @@ function renderDreams(dreams) {
 
 }
 
+
 /* =====================================================
    DREAM FALLBACK
 ===================================================== */
 
 function renderDreamFallback() {
 
-  document.getElementById(
-    "recentDreams"
-  ).innerHTML = `
-    <div class="empty">
-      <div class="empty-icon">✦</div>
-      <strong>Ready for Your First Dream</strong>
-      <p>
-        The Creator Portal is ready.
-        Add your first idea to begin building
-        your Dreamscapes library.
-      </p>
-      <a class="btn btn-primary" href="my-dreams.html">
-        + Submit a Dream
-      </a>
-    </div>
-  `;
+  const container =
+    document.getElementById(
+      "recentDreams"
+    );
 
-  document.getElementById(
-    "dreamCount"
-  ).textContent = "0";
+
+  if (container) {
+
+    container.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">
+          ✦
+        </div>
+
+        <strong>
+          Ready for Your First Dream
+        </strong>
+
+        <p>
+          The Creator Portal is ready.
+          Add your first idea to begin building
+          your Dreamscapes library.
+        </p>
+
+        <a
+          class="btn btn-primary"
+          href="my-dreams.html"
+        >
+          + Submit a Dream
+        </a>
+
+      </div>
+
+    `;
+
+  }
+
+
+  setText(
+    "dreamCount",
+    "0"
+  );
+
+
+  setText(
+    "journeyDreams",
+    "0"
+  );
+
+
+  setProgress(
+    "journeyDreamBar",
+    0
+  );
 
 }
+
 
 /* =====================================================
    PROJECTS
 ===================================================== */
 
-const PROJECT_TABLE =
-  "ds_projects";
-
 async function loadProjects() {
 
-  if (!currentUser || !db) return;
+  if (!currentUser || !db) {
+
+    return;
+
+  }
+
 
   try {
 
     const {
       data,
       error
-    } = await db
-      .from(PROJECT_TABLE)
-      .select("*")
-      .eq("user_id", currentUser.id);
+    } =
+      await db
+        .from(PROJECT_TABLE)
+        .select("*")
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
 
     if (error) {
 
       console.warn(
-        "Project table unavailable:",
+        "Project table:",
         error.message
       );
 
       setProjectDefaults();
 
       return;
+
     }
+
 
     const projects =
       data || [];
 
-    document.getElementById(
-      "projectCount"
-    ).textContent =
-      projects.length;
 
-    document.getElementById(
-      "journeyProjects"
-    ).textContent =
-      projects.length;
+    setText(
+      "projectCount",
+      projects.length
+    );
 
-    const developing =
-      projects.filter(
-        p =>
-          String(
-            p.status || ""
-          ).toLowerCase()
-          .includes("development")
-      ).length;
+
+    setText(
+      "journeyProjects",
+      projects.length
+    );
+
 
     const pitchReady =
       projects.filter(
-        p =>
+        project =>
           String(
-            p.status || ""
-          ).toLowerCase()
-          .includes("pitch")
+            project.status ||
+            ""
+          )
+            .toLowerCase()
+            .includes("pitch")
       ).length;
 
-    document.getElementById(
-      "journeyPitch"
-    ).textContent =
-      pitchReady;
 
-    document.getElementById(
-      "journeyProjectBar"
-    ).style.width =
+    setText(
+      "journeyPitch",
+      pitchReady
+    );
+
+
+    setProgress(
+      "journeyProjectBar",
       Math.min(
         100,
         projects.length * 20
-      ) + "%";
+      )
+    );
 
-    document.getElementById(
-      "journeyPitchBar"
-    ).style.width =
+
+    setProgress(
+      "journeyPitchBar",
       Math.min(
         100,
         pitchReady * 25
-      ) + "%";
+      )
+    );
+
 
     if (projects.length) {
 
@@ -2199,7 +4431,10 @@ async function loadProjects() {
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Project loading:",
+      error
+    );
 
     setProjectDefaults();
 
@@ -2207,21 +4442,36 @@ async function loadProjects() {
 
 }
 
+
 function setProjectDefaults() {
 
-  document.getElementById(
-    "projectCount"
-  ).textContent = "0";
+  setText(
+    "projectCount",
+    "0"
+  );
 
-  document.getElementById(
-    "journeyProjects"
-  ).textContent = "0";
+  setText(
+    "journeyProjects",
+    "0"
+  );
 
-  document.getElementById(
-    "journeyPitch"
-  ).textContent = "0";
+  setText(
+    "journeyPitch",
+    "0"
+  );
+
+  setProgress(
+    "journeyProjectBar",
+    0
+  );
+
+  setProgress(
+    "journeyPitchBar",
+    0
+  );
 
 }
+
 
 /* =====================================================
    COLLABORATORS
@@ -2229,87 +4479,154 @@ function setProjectDefaults() {
 
 async function loadCollaborators() {
 
-  if (!currentUser || !db) return;
+  if (!currentUser || !db) {
+
+    return;
+
+  }
+
+
+  /*
+    Keep compatibility with either of the existing
+    Dreamscapes collaborator structures.
+  */
 
   const possibleTables = [
+
     "ds_collaborators",
+
     "ds_project_collaborators"
+
   ];
 
-  for (const table of possibleTables) {
+
+  for (
+    const table
+    of possibleTables
+  ) {
 
     try {
 
       const {
         data,
         error
-      } = await db
-        .from(table)
-        .select("*")
-        .eq("user_id", currentUser.id);
+      } =
+        await db
+          .from(table)
+          .select("*")
+          .eq(
+            "user_id",
+            currentUser.id
+          );
+
 
       if (!error) {
 
-        document.getElementById(
-          "collaboratorCount"
-        ).textContent =
-          data?.length || 0;
+        setText(
+          "collaboratorCount",
+          data?.length || 0
+        );
 
         return;
+
       }
 
     } catch (_) {}
 
   }
 
-  document.getElementById(
-    "collaboratorCount"
-  ).textContent = "0";
+
+  setText(
+    "collaboratorCount",
+    "0"
+  );
 
 }
+
 
 /* =====================================================
    ACTIVITY
 ===================================================== */
 
-function addActivity(title, text) {
+function addActivity(
+  title,
+  text
+) {
 
   const feed =
     document.getElementById(
       "activityFeed"
     );
 
+
+  if (!feed) return;
+
+
   const item =
     document.createElement(
       "div"
     );
 
+
   item.className =
     "activity-item";
 
+
   item.innerHTML = `
+
     <div class="activity-dot"></div>
+
     <div>
-      <strong>${escapeHTML(title)}</strong>
-      <span>${escapeHTML(text)}</span>
+
+      <strong>
+        ${escapeHTML(title)}
+      </strong>
+
+      <span>
+        ${escapeHTML(text)}
+      </span>
+
     </div>
+
   `;
 
-  feed.prepend(item);
+
+  feed.prepend(
+    item
+  );
 
 }
 
+
 /* =====================================================
-   AUTH
+   AUTH UI
 ===================================================== */
 
 function showAuth() {
 
   document
-    .getElementById("authOverlay")
-    .classList.add("show");
+    .getElementById(
+      "authOverlay"
+    )
+    .classList.add(
+      "show"
+    );
 
 }
+
+
+function hideAuth() {
+
+  document
+    .getElementById(
+      "authOverlay"
+    )
+    .classList.remove(
+      "show"
+    );
+
+}
+
 
 /* =====================================================
    TOAST
@@ -2317,74 +4634,168 @@ function showAuth() {
 
 let toastTimer;
 
-function showToast(message) {
+
+function showToast(
+  message
+) {
 
   const toast =
     document.getElementById(
       "toast"
     );
 
+
+  if (!toast) return;
+
+
   toast.textContent =
     message;
+
 
   toast.classList.add(
     "show"
   );
 
+
   clearTimeout(
     toastTimer
   );
 
+
   toastTimer =
     setTimeout(
       () => {
+
         toast.classList.remove(
           "show"
         );
+
       },
       3500
     );
 
 }
 
+
 /* =====================================================
-   HELPERS
+   UI HELPERS
 ===================================================== */
 
-function getInitials(name) {
+function setText(
+  id,
+  value
+) {
 
-  if (!name) return "CR";
+  const element =
+    document.getElementById(
+      id
+    );
+
+
+  if (element) {
+
+    element.textContent =
+      value ?? "";
+
+  }
+
+}
+
+
+function setProgress(
+  id,
+  percent
+) {
+
+  const element =
+    document.getElementById(
+      id
+    );
+
+
+  if (!element) return;
+
+
+  const safe =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Number(percent) || 0
+      )
+    );
+
+
+  element.style.width =
+    safe + "%";
+
+}
+
+
+/* =====================================================
+   INITIALS
+===================================================== */
+
+function getInitials(
+  name
+) {
+
+  if (!name) {
+
+    return "CR";
+
+  }
+
 
   const parts =
-    name
+    String(name)
       .trim()
       .split(/\s+/)
       .slice(0,2);
 
+
   return parts
     .map(
       part =>
-        part.charAt(0)
+        part
+          .charAt(0)
           .toUpperCase()
     )
-    .join("");
+    .join("") ||
+    "CR";
 
 }
 
-function formatDate(value) {
 
-  if (!value) return "Recently";
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(
+  value
+) {
+
+  if (!value) {
+
+    return "Recently";
+
+  }
+
 
   const date =
     new Date(value);
+
 
   if (
     Number.isNaN(
       date.getTime()
     )
   ) {
+
     return "Recently";
+
   }
+
 
   return date.toLocaleDateString(
     undefined,
@@ -2397,26 +4808,80 @@ function formatDate(value) {
 
 }
 
-function escapeHTML(value) {
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function normalizeStatusClass(
+  status
+) {
+
+  const value =
+    String(
+      status || ""
+    )
+      .toLowerCase()
+      .replace(
+        /[^a-z0-9_-]/g,
+        ""
+      );
+
+
+  const supported = [
+
+    "idea",
+
+    "development",
+
+    "pitch"
+
+  ];
+
+
+  return supported.includes(
+    value
+  )
+    ? value
+    : "";
+
+}
+
+
+/* =====================================================
+   HTML ESCAPING
+===================================================== */
+
+function escapeHTML(
+  value
+) {
 
   return String(
     value ?? ""
   )
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
-function escapeAttribute(value) {
-
-  return escapeHTML(value)
-    .replaceAll(" ", "")
-    .replace(/[^a-zA-Z0-9_-]/g, "");
-
-}
 
 /* =====================================================
    GLOBAL DREAMSCAPES API
@@ -2425,25 +4890,75 @@ function escapeAttribute(value) {
 window.DreamscapesCreatorPortal = {
 
   getUser() {
+
     return currentUser;
+
   },
+
 
   getProfile() {
+
     return currentProfile;
+
   },
 
-  reload() {
+
+  getMembership() {
+
+    return currentMembership;
+
+  },
+
+
+  async refreshMembership() {
+
+    return loadUniversalMembership();
+
+  },
+
+
+  async reload() {
+
     return loadCreatorPortal();
+
   },
 
-  toast(message) {
-    showToast(message);
+
+  toast(
+    message
+  ) {
+
+    showToast(
+      message
+    );
+
   }
 
 };
 
+
+/* =====================================================
+   PAGE CLEANUP
+===================================================== */
+
+window.addEventListener(
+  "beforeunload",
+  () => {
+
+    try {
+
+      authSubscription?.unsubscribe?.();
+
+    } catch (_) {}
+
+  }
+);
+
 </script>
 
-  <script src="assets/js/dreamscapes-global.js"></script>
+<script
+  src="assets/js/dreamscapes-global.js"
+></script>
+
 </body>
 </html>
