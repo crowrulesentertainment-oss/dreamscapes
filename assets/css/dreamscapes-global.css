@@ -216,3 +216,63 @@ a{transition:color .2s ease,border-color .2s ease,background .2s ease,transform 
   .ds-brand-sub{display:none}
   .ds-nav-inner{width:min(100% - 22px,1220px)}
 }
+
+/* =========================================================
+   CROWRULES UNIVERSAL MEMBERSHIP BAR
+   Shared across every Dreamscapes page.
+   ========================================================= */
+.crum-bar{
+  position:relative;
+  z-index:9998;
+  width:100%;
+  border-bottom:1px solid rgba(88,232,255,.14);
+  background:linear-gradient(90deg,rgba(6,13,22,.96),rgba(14,9,28,.96),rgba(8,7,18,.96));
+  box-shadow:0 10px 35px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.025);
+}
+.crum-inner{
+  width:min(1220px,calc(100% - 32px));
+  min-height:58px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.crum-brand{display:flex;align-items:center;gap:9px;min-width:245px}
+.crum-orb{
+  width:30px;height:30px;display:grid;place-items:center;flex:0 0 auto;
+  border:1px solid rgba(88,232,255,.4);border-radius:9px;
+  color:#58e8ff;background:rgba(88,232,255,.07);
+  font:900 9px Orbitron,sans-serif;box-shadow:0 0 22px rgba(88,232,255,.08)
+}
+.crum-brand strong{display:block;font:800 9px Orbitron,sans-serif;letter-spacing:.08em;color:#f7f7fb}
+.crum-brand small{display:block;margin-top:3px;color:#777b93;font:700 7px Montserrat,sans-serif;letter-spacing:.11em}
+.crum-copy{flex:1;color:#9da2b8;font-size:10px;line-height:1.45}
+.crum-membership{margin-left:auto;display:flex;align-items:center;gap:9px}
+.crum-plan{font:800 10px Orbitron,sans-serif;letter-spacing:.05em;color:#fff}
+.crum-status{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border:1px solid rgba(255,255,255,.1);border-radius:999px;font:800 8px Montserrat,sans-serif;text-transform:uppercase;letter-spacing:.08em}
+.crum-status i{width:6px;height:6px;border-radius:50%;display:block;background:#777}
+.crum-status-active{color:#7ef3ad;border-color:rgba(126,243,173,.22);background:rgba(126,243,173,.05)}
+.crum-status-active i{background:#43e97b;box-shadow:0 0 9px rgba(67,233,123,.7)}
+.crum-status-pending{color:#ffd166;border-color:rgba(255,209,102,.22);background:rgba(255,209,102,.05)}
+.crum-status-pending i{background:#ffd166}
+.crum-status-inactive{color:#ff8f9b;border-color:rgba(255,99,115,.22);background:rgba(255,99,115,.05)}
+.crum-status-inactive i{background:#ff6373}
+.crum-actions{display:flex;align-items:center;gap:7px;margin-left:auto}
+.crum-link,.crum-button{min-height:34px;display:inline-flex;align-items:center;justify-content:center;padding:8px 10px;border-radius:9px;text-decoration:none!important;font:800 8px Montserrat,sans-serif;letter-spacing:.07em;text-transform:uppercase}
+.crum-link{color:#aeb2c5!important;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.025)}
+.crum-button{color:#061018!important;border:1px solid rgba(88,232,255,.45);background:linear-gradient(135deg,#58e8ff,#a875ff);box-shadow:0 0 22px rgba(88,232,255,.1)}
+.crum-link:hover,.crum-button:hover{transform:translateY(-1px)}
+@media(max-width:980px){
+  .crum-inner{min-height:auto;padding:9px 0;flex-wrap:wrap}
+  .crum-brand{min-width:0;flex:1 1 220px}
+  .crum-copy{order:3;flex:1 1 100%;font-size:9px}
+  .crum-membership{margin-left:0}
+  .crum-actions{margin-left:0}
+}
+@media(max-width:560px){
+  .crum-inner{width:calc(100% - 22px)}
+  .crum-brand small{display:none}
+  .crum-plan{font-size:8px}
+  .crum-actions{width:100%}
+  .crum-link,.crum-button{flex:1}
+}
