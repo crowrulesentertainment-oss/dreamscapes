@@ -3,6 +3,7 @@
 <head>
 
 <meta charset="utf-8">
+
 <meta
   name="viewport"
   content="width=device-width,initial-scale=1,viewport-fit=cover"
@@ -28,7 +29,7 @@
   rel="stylesheet"
 >
 
-<!-- IMPORTANT: lowercase package name -->
+<!-- CORRECT SUPABASE PACKAGE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <link
@@ -108,11 +109,8 @@ body{
 #stars{
   position:fixed;
   inset:0;
-
   pointer-events:none;
-
   z-index:0;
-
   overflow:hidden;
 }
 
@@ -631,7 +629,7 @@ nav{
 
 
 /* ============================================================
-   UNIVERSAL MEMBERSHIP NOTICE
+   UNIVERSAL NOTICE
 ============================================================ */
 
 .universal-notice{
@@ -893,7 +891,6 @@ nav{
 
 .field select option{
   background:#10101b;
-
   color:white;
 }
 
@@ -1261,7 +1258,7 @@ nav{
 
 
 /* ============================================================
-   MEMBERSHIP LINK
+   MEMBERSHIP
 ============================================================ */
 
 .membership-card{
@@ -1373,29 +1370,24 @@ footer a:hover{
    LOADING
 ============================================================ */
 
-.loading{
-  position:relative;
-}
-
 .loading:after{
   content:"";
 
-  position:absolute;
+  display:inline-block;
 
-  width:15px;
-  height:15px;
+  width:12px;
+  height:12px;
 
-  right:15px;
-  top:50%;
+  margin-left:8px;
 
-  margin-top:-7.5px;
+  vertical-align:-2px;
 
   border:
     2px solid
-    rgba(5,5,11,.3);
+    rgba(255,255,255,.15);
 
   border-top-color:
-    #05050b;
+    var(--cyan);
 
   border-radius:50%;
 
@@ -1448,10 +1440,6 @@ footer a:hover{
 <div class="orb two"></div>
 <div class="orb three"></div>
 
-
-<!-- ============================================================
-     NAVIGATION
-============================================================ -->
 
 <nav>
 
@@ -1506,23 +1494,14 @@ footer a:hover{
 </nav>
 
 
-<!-- ============================================================
-     MAIN
-============================================================ -->
-
 <main class="page">
 
-
-  <!-- ==========================================================
-       INTRO
-  =========================================================== -->
 
   <section class="intro">
 
     <div class="eyebrow">
       THE CREATOR NETWORK
     </div>
-
 
     <h1>
 
@@ -1533,7 +1512,6 @@ footer a:hover{
       </span>
 
     </h1>
-
 
     <p>
 
@@ -1547,7 +1525,6 @@ footer a:hover{
 
 
     <div class="network-list">
-
 
       <div class="network-item">
 
@@ -1640,11 +1617,8 @@ footer a:hover{
 
       </div>
 
-
     </div>
 
-
-    <!-- UNIVERSAL MEMBERSHIP -->
 
     <div class="universal-notice">
 
@@ -1668,10 +1642,6 @@ footer a:hover{
 
   </section>
 
-
-  <!-- ==========================================================
-       AUTH CARD
-  =========================================================== -->
 
   <section class="auth-card">
 
@@ -1697,8 +1667,6 @@ footer a:hover{
       aria-live="polite"
     ></div>
 
-
-    <!-- ACCOUNT DETECTED -->
 
     <div
       id="accountInfo"
@@ -1726,8 +1694,6 @@ footer a:hover{
     </div>
 
 
-    <!-- TABS -->
-
     <div class="tabs">
 
       <button
@@ -1749,9 +1715,7 @@ footer a:hover{
     </div>
 
 
-    <!-- ========================================================
-         LOGIN
-    ========================================================= -->
+    <!-- LOGIN -->
 
     <form
       id="loginForm"
@@ -1875,9 +1839,7 @@ footer a:hover{
     </form>
 
 
-    <!-- ========================================================
-         SIGNUP
-    ========================================================= -->
+    <!-- SIGNUP -->
 
     <form
       id="signupForm"
@@ -1885,9 +1847,7 @@ footer a:hover{
       novalidate
     >
 
-
       <div class="two">
-
 
         <div class="field">
 
@@ -1923,7 +1883,6 @@ footer a:hover{
           >
 
         </div>
-
 
       </div>
 
@@ -2038,7 +1997,6 @@ footer a:hover{
 
       <div class="two">
 
-
         <div class="field">
 
           <label for="signupPassword">
@@ -2073,7 +2031,6 @@ footer a:hover{
           >
 
         </div>
-
 
       </div>
 
@@ -2151,10 +2108,6 @@ footer a:hover{
 </main>
 
 
-<!-- ============================================================
-     FOOTER
-============================================================ -->
-
 <footer>
 
   <strong>
@@ -2197,36 +2150,14 @@ footer a:hover{
 <script>
 
 /* ============================================================
-   CROWRULES DREAMSCAPES
-   UNIVERSAL AUTHENTICATION
+   CROWRULES UNIVERSAL AUTH
 ============================================================ */
 
-/*
-  Dreamscapes now uses the UNIVERSAL CrowRules account.
-
-  One account can be used across the CrowRules network.
-
-  New users:
-      auth.users
-          ↓
-      crowrules_handle_new_user()
-          ↓
-      members
-          ↓
-      membership_profiles
-          ↓
-      CROW membership
-
-  Dreamscapes-specific creative information is stored
-  as signup metadata and can be used by the existing
-  Dreamscapes profile/creator systems.
-
-  NEVER put a service_role or secret key in this file.
-*/
+"use strict";
 
 
 /* ============================================================
-   SUPABASE CONFIGURATION
+   SUPABASE
 ============================================================ */
 
 const SUPABASE_URL =
@@ -2236,65 +2167,74 @@ const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_AdfM5y6RqvF3tbvEVzDZSg_JuGTQLD-";
 
 
+if (
+  !window.supabase ||
+  typeof window.supabase.createClient !== "function"
+){
+
+  throw new Error(
+    "Supabase JavaScript library failed to load."
+  );
+
+}
+
+
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY,
+    {
+      auth:{
+        autoRefreshToken:true,
+        persistSession:true,
+        detectSessionInUrl:true
+      }
+    }
+  );
+
+
 /* ============================================================
-   DREAMSCAPES URLS
+   URLS
 ============================================================ */
 
-const DREAMSCAPES_BASE =
+const BASE_URL =
   new URL(
     "./",
     window.location.href
-  ).href;
-
-
-const CREATOR_PORTAL =
-  new URL(
-    "creator-portal.html",
-    DREAMSCAPES_BASE
-  ).href;
+  );
 
 
 const AUTH_CALLBACK =
   new URL(
     "auth-callback.html",
-    DREAMSCAPES_BASE
+    BASE_URL
   ).href;
 
 
 const RESET_PASSWORD =
   new URL(
     "reset-password.html",
-    DREAMSCAPES_BASE
+    BASE_URL
+  ).href;
+
+
+const CREATOR_PORTAL =
+  new URL(
+    "creator-portal.html",
+    BASE_URL
   ).href;
 
 
 const MEMBERSHIP_PAGE =
   new URL(
     "membership.html",
-    DREAMSCAPES_BASE
-  ).href;
-
-
-const PROFILE_PAGE =
-  new URL(
-    "profile.html",
-    DREAMSCAPES_BASE
+    BASE_URL
   ).href;
 
 
 /* ============================================================
-   NEXT URL
+   SAFE NEXT URL
 ============================================================ */
-
-/*
-  Allows another CrowRules page to send the user
-  to Dreamscapes and optionally specify where they
-  should continue.
-
-  Example:
-
-  login.html?next=creator-portal.html
-*/
 
 function getSafeNext(){
 
@@ -2306,19 +2246,11 @@ function getSafeNext(){
   const requested =
     params.get("next");
 
+
   if (!requested){
     return CREATOR_PORTAL;
   }
 
-
-  /*
-    Never allow an absolute URL,
-    protocol-relative URL,
-    backslash,
-    control characters,
-    javascript: URL,
-    or another origin.
-  */
 
   if (
     requested.includes("\\") ||
@@ -2326,7 +2258,9 @@ function getSafeNext(){
     requested.includes("\n") ||
     requested.includes("\0")
   ){
+
     return CREATOR_PORTAL;
+
   }
 
 
@@ -2336,7 +2270,9 @@ function getSafeNext(){
     requested.startsWith("//") ||
     requested.startsWith("javascript:")
   ){
+
     return CREATOR_PORTAL;
+
   }
 
 
@@ -2345,25 +2281,19 @@ function getSafeNext(){
     const resolved =
       new URL(
         requested,
-        DREAMSCAPES_BASE
+        BASE_URL
       );
 
-    const base =
-      new URL(
-        DREAMSCAPES_BASE
-      );
 
     if (
       resolved.origin !==
-      base.origin
+      BASE_URL.origin
     ){
+
       return CREATOR_PORTAL;
+
     }
 
-
-    /*
-      Keep navigation inside the Dreamscapes site.
-    */
 
     return resolved.href;
 
@@ -2381,109 +2311,41 @@ const NEXT_URL =
 
 
 /* ============================================================
-   SUPABASE CLIENT
-============================================================ */
-
-let supabaseClient = null;
-
-
-if (
-  window.supabase &&
-  SUPABASE_URL &&
-  SUPABASE_PUBLISHABLE_KEY &&
-  !SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR")
-){
-
-  supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY,
-      {
-        auth:{
-          autoRefreshToken:true,
-          persistSession:true,
-          detectSessionInUrl:true
-        }
-      }
-    );
-
-}else{
-
-  console.error(
-    "CrowRules universal Supabase client could not be initialized."
-  );
-
-}
-
-
-/* ============================================================
    ELEMENTS
 ============================================================ */
 
 const statusBox =
-  document.getElementById(
-    "status"
-  );
-
+  document.getElementById("status");
 
 const loginForm =
-  document.getElementById(
-    "loginForm"
-  );
-
+  document.getElementById("loginForm");
 
 const signupForm =
-  document.getElementById(
-    "signupForm"
-  );
-
+  document.getElementById("signupForm");
 
 const loginButton =
-  document.getElementById(
-    "loginButton"
-  );
-
+  document.getElementById("loginButton");
 
 const signupButton =
-  document.getElementById(
-    "signupButton"
-  );
-
+  document.getElementById("signupButton");
 
 const googleButton =
-  document.getElementById(
-    "googleButton"
-  );
-
+  document.getElementById("googleButton");
 
 const googleSignupButton =
-  document.getElementById(
-    "googleSignupButton"
-  );
-
+  document.getElementById("googleSignupButton");
 
 const magicLinkButton =
-  document.getElementById(
-    "magicLinkButton"
-  );
-
+  document.getElementById("magicLinkButton");
 
 const accountInfo =
-  document.getElementById(
-    "accountInfo"
-  );
-
+  document.getElementById("accountInfo");
 
 const accountName =
-  document.getElementById(
-    "accountName"
-  );
-
+  document.getElementById("accountName");
 
 const accountPlan =
-  document.getElementById(
-    "accountPlan"
-  );
+  document.getElementById("accountPlan");
 
 
 /* ============================================================
@@ -2517,10 +2379,10 @@ function clearStatus(){
 
 
 /* ============================================================
-   LOADING
+   BUTTON STATE
 ============================================================ */
 
-function setLoading(
+function setButtonLoading(
   button,
   loading,
   loadingText
@@ -2533,21 +2395,11 @@ function setLoading(
 
   if (loading){
 
-    if (
-      !button.dataset.originalText
-    ){
-
-      button.dataset.originalText =
-        button.textContent;
-
-    }
+    button.dataset.originalText =
+      button.textContent;
 
     button.disabled =
       true;
-
-    button.classList.add(
-      "loading"
-    );
 
     button.textContent =
       loadingText;
@@ -2556,10 +2408,6 @@ function setLoading(
 
     button.disabled =
       false;
-
-    button.classList.remove(
-      "loading"
-    );
 
     button.textContent =
       button.dataset.originalText ||
@@ -2571,7 +2419,7 @@ function setLoading(
 
 
 /* ============================================================
-   STARS
+   STARFIELD
 ============================================================ */
 
 function createStars(){
@@ -2580,10 +2428,6 @@ function createStars(){
     document.getElementById(
       "stars"
     );
-
-  if (!container){
-    return;
-  }
 
 
   const count =
@@ -2603,25 +2447,31 @@ function createStars(){
         "div"
       );
 
+
     star.className =
       "star";
+
 
     star.style.left =
       Math.random() * 100 +
       "%";
 
+
     star.style.top =
       Math.random() * 100 +
       "%";
+
 
     star.style.animationDelay =
       Math.random() * 5 +
       "s";
 
+
     star.style.animationDuration =
       2 +
       Math.random() * 5 +
       "s";
+
 
     container.appendChild(
       star
@@ -2666,29 +2516,21 @@ document
           );
 
 
-          const selected =
-            tab.dataset.tab;
+          const isLogin =
+            tab.dataset.tab ===
+            "login";
 
 
-          document
-            .querySelectorAll(".auth-form")
-            .forEach(
-              form =>
-                form.classList.remove(
-                  "active"
-                )
-            );
+          loginForm.classList.toggle(
+            "active",
+            isLogin
+          );
 
 
-          document
-            .getElementById(
-              selected === "login"
-                ? "loginForm"
-                : "signupForm"
-            )
-            .classList.add(
-              "active"
-            );
+          signupForm.classList.toggle(
+            "active",
+            !isLogin
+          );
 
         }
       );
@@ -2698,7 +2540,7 @@ document
 
 
 /* ============================================================
-   USERNAME NORMALIZATION
+   USERNAME
 ============================================================ */
 
 function normalizeUsername(
@@ -2721,131 +2563,76 @@ function normalizeUsername(
 
 
 /* ============================================================
-   MEMBERSHIP DISPLAY
+   ENSURE CROW MEMBERSHIP
 ============================================================ */
 
-async function loadUniversalMembership(
-  user
-){
+async function ensureUniversalMembership(){
 
-  if (
-    !supabaseClient ||
-    !user
-  ){
-    return null;
-  }
-
-
-  try{
-
-    /*
-      This RPC is the universal membership
-      lookup and only returns the caller's
-      membership.
-    */
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .rpc(
-          "get_my_membership"
-        );
-
-
-    if (error){
-
-      console.warn(
-        "Universal membership lookup:",
-        error.message
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .rpc(
+        "ensure_crow_membership"
       );
 
-      return null;
 
-    }
-
-
-    if (
-      Array.isArray(data) &&
-      data.length > 0
-    ){
-
-      return data[0];
-
-    }
-
-
-    return data || null;
-
-  }catch(error){
+  if (error){
 
     console.warn(
-      "Membership lookup failed:",
-      error
+      "ensure_crow_membership:",
+      error.message
     );
 
     return null;
 
   }
+
+
+  return data;
 
 }
 
 
 /* ============================================================
-   ENSURE UNIVERSAL CROW MEMBERSHIP
+   GET MEMBERSHIP
 ============================================================ */
 
-async function ensureUniversalMembership(){
+async function getMembership(){
 
-  if (!supabaseClient){
-    return null;
-  }
-
-
-  try{
-
-    /*
-      This is intentionally idempotent.
-
-      Existing paid members are not downgraded.
-      New users receive the free CROW membership.
-    */
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .rpc(
-          "ensure_crow_membership"
-        );
-
-
-    if (error){
-
-      console.warn(
-        "ensure_crow_membership:",
-        error.message
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .rpc(
+        "get_my_membership"
       );
 
-      return null;
 
-    }
-
-
-    return data;
-
-  }catch(error){
+  if (error){
 
     console.warn(
-      "Universal membership initialization failed:",
-      error
+      "get_my_membership:",
+      error.message
     );
 
     return null;
 
   }
+
+
+  if (
+    Array.isArray(data)
+  ){
+
+    return data[0] || null;
+
+  }
+
+
+  return data || null;
 
 }
 
@@ -2872,7 +2659,7 @@ async function loadAccount(
     user.user_metadata || {};
 
 
-  const displayName =
+  accountName.textContent =
     metadata.display_name ||
     metadata.full_name ||
     metadata.name ||
@@ -2880,45 +2667,30 @@ async function loadAccount(
     "CrowRules Member";
 
 
-  accountName.textContent =
-    displayName;
-
-
   accountPlan.textContent =
     "Universal membership loading...";
 
-
-  /*
-    Ensure every authenticated user has
-    the universal free membership if needed.
-  */
 
   await ensureUniversalMembership();
 
 
   const membership =
-    await loadUniversalMembership(
-      user
-    );
+    await getMembership();
 
 
   if (membership){
 
-    const planName =
-      membership.plan_name ||
-      membership.plan_key ||
-      "CROW";
-
-
-    const level =
-      membership.level ??
-      1;
-
-
     accountPlan.textContent =
-      planName +
+      (
+        membership.plan_name ||
+        membership.plan_key ||
+        "CROW"
+      ) +
       " · Level " +
-      level;
+      (
+        membership.level ??
+        1
+      );
 
   }else{
 
@@ -2931,15 +2703,10 @@ async function loadAccount(
 
 
 /* ============================================================
-   SESSION CHECK
+   CHECK EXISTING SESSION
 ============================================================ */
 
 async function checkExistingSession(){
-
-  if (!supabaseClient){
-    return;
-  }
-
 
   try{
 
@@ -2953,21 +2720,12 @@ async function checkExistingSession(){
 
 
     if (error){
-
-      console.error(
-        "Session check:",
-        error
-      );
-
-      return;
-
+      throw error;
     }
 
 
     if (
-      data &&
-      data.session &&
-      data.session.user
+      data?.session?.user
     ){
 
       await loadAccount(
@@ -2989,7 +2747,7 @@ async function checkExistingSession(){
           );
 
         },
-        400
+        500
       );
 
     }
@@ -2997,7 +2755,7 @@ async function checkExistingSession(){
   }catch(error){
 
     console.error(
-      "Session check failed:",
+      "Session check:",
       error
     );
 
@@ -3010,7 +2768,7 @@ checkExistingSession();
 
 
 /* ============================================================
-   LOGIN
+   PASSWORD LOGIN
 ============================================================ */
 
 loginForm.addEventListener(
@@ -3020,18 +2778,6 @@ loginForm.addEventListener(
     event.preventDefault();
 
     clearStatus();
-
-
-    if (!supabaseClient){
-
-      showStatus(
-        "The CrowRules authentication system could not be loaded. Please refresh the page.",
-        "error"
-      );
-
-      return;
-
-    }
 
 
     const email =
@@ -3052,10 +2798,7 @@ loginForm.addEventListener(
         .value;
 
 
-    if (
-      !email ||
-      !password
-    ){
+    if (!email || !password){
 
       showStatus(
         "Enter your email and password.",
@@ -3067,7 +2810,7 @@ loginForm.addEventListener(
     }
 
 
-    setLoading(
+    setButtonLoading(
       loginButton,
       true,
       "SIGNING IN..."
@@ -3093,23 +2836,17 @@ loginForm.addEventListener(
       }
 
 
-      if (
-        !data ||
-        !data.session
-      ){
+      if (!data?.session){
 
-        showStatus(
-          "Your account was found, but no active session was created.",
-          "error"
+        throw new Error(
+          "Sign-in succeeded but no active session was created."
         );
-
-        return;
 
       }
 
 
       await loadAccount(
-        data.session.user
+        data.user
       );
 
 
@@ -3146,9 +2883,10 @@ loginForm.addEventListener(
         "error"
       );
 
+
     }finally{
 
-      setLoading(
+      setButtonLoading(
         loginButton,
         false,
         "ENTER DREAMSCAPES"
@@ -3161,29 +2899,17 @@ loginForm.addEventListener(
 
 
 /* ============================================================
-   GOOGLE AUTH
+   GOOGLE
 ============================================================ */
 
-async function signInWithGoogle(
+async function startGoogleAuth(
   button
 ){
 
   clearStatus();
 
 
-  if (!supabaseClient){
-
-    showStatus(
-      "The CrowRules authentication system could not be loaded.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  setLoading(
+  setButtonLoading(
     button,
     true,
     "OPENING GOOGLE..."
@@ -3193,23 +2919,21 @@ async function signInWithGoogle(
   try{
 
     /*
-      Use the current page as the OAuth return
-      location so the existing next parameter
-      remains available.
+      Send OAuth through the universal callback.
+      The callback then safely returns the user
+      to NEXT_URL.
     */
 
-    const redirectUrl =
+    const callbackUrl =
       new URL(
-        window.location.href
+        AUTH_CALLBACK
       );
 
 
-    /*
-      Explicitly remove hash fragments.
-    */
-
-    redirectUrl.hash =
-      "";
+    callbackUrl.searchParams.set(
+      "next",
+      NEXT_URL
+    );
 
 
     const {
@@ -3218,12 +2942,16 @@ async function signInWithGoogle(
       await supabaseClient
         .auth
         .signInWithOAuth({
+
           provider:"google",
 
           options:{
+
             redirectTo:
-              redirectUrl.href
+              callbackUrl.href
+
           }
+
         });
 
 
@@ -3248,7 +2976,7 @@ async function signInWithGoogle(
     );
 
 
-    setLoading(
+    setButtonLoading(
       button,
       false,
       "CONTINUE WITH GOOGLE"
@@ -3263,7 +2991,7 @@ googleButton.addEventListener(
   "click",
   () => {
 
-    signInWithGoogle(
+    startGoogleAuth(
       googleButton
     );
 
@@ -3275,7 +3003,7 @@ googleSignupButton.addEventListener(
   "click",
   () => {
 
-    signInWithGoogle(
+    startGoogleAuth(
       googleSignupButton
     );
 
@@ -3284,7 +3012,7 @@ googleSignupButton.addEventListener(
 
 
 /* ============================================================
-   SIGN UP
+   SIGNUP
 ============================================================ */
 
 signupForm.addEventListener(
@@ -3294,18 +3022,6 @@ signupForm.addEventListener(
     event.preventDefault();
 
     clearStatus();
-
-
-    if (!supabaseClient){
-
-      showStatus(
-        "The CrowRules authentication system could not be loaded.",
-        "error"
-      );
-
-      return;
-
-    }
 
 
     const displayName =
@@ -3362,7 +3078,7 @@ signupForm.addEventListener(
         .value;
 
 
-    const confirmPassword =
+    const confirmation =
       document
         .getElementById(
           "signupPasswordConfirm"
@@ -3376,11 +3092,6 @@ signupForm.addEventListener(
           "terms"
         )
         .checked;
-
-
-    /* ========================================================
-       VALIDATION
-    ========================================================= */
 
 
     if (!displayName){
@@ -3436,9 +3147,7 @@ signupForm.addEventListener(
     }
 
 
-    if (
-      password.length < 8
-    ){
+    if (password.length < 8){
 
       showStatus(
         "Your password must be at least 8 characters.",
@@ -3450,10 +3159,7 @@ signupForm.addEventListener(
     }
 
 
-    if (
-      password !==
-      confirmPassword
-    ){
+    if (password !== confirmation){
 
       showStatus(
         "Your passwords do not match.",
@@ -3477,7 +3183,7 @@ signupForm.addEventListener(
     }
 
 
-    setLoading(
+    setButtonLoading(
       signupButton,
       true,
       "CREATING ACCOUNT..."
@@ -3485,21 +3191,6 @@ signupForm.addEventListener(
 
 
     try{
-
-      /*
-        IMPORTANT:
-
-        account_type remains "member".
-
-        The universal auth trigger creates:
-          members
-          membership_profiles
-
-        Dreamscapes is identified through:
-          app: "dreamscapes"
-
-        but the account remains universal.
-      */
 
       const {
         data,
@@ -3521,7 +3212,7 @@ signupForm.addEventListener(
               data:{
 
                 /*
-                  Universal account marker.
+                  Universal account.
                 */
 
                 app:
@@ -3531,7 +3222,7 @@ signupForm.addEventListener(
                   "member",
 
                 /*
-                  Universal profile fields.
+                  Universal profile.
                 */
 
                 display_name:
@@ -3544,8 +3235,7 @@ signupForm.addEventListener(
                   bio,
 
                 /*
-                  Dreamscapes-specific
-                  creator information.
+                  Dreamscapes creator metadata.
                 */
 
                 creator_role:
@@ -3566,27 +3256,16 @@ signupForm.addEventListener(
       }
 
 
-      /*
-        Supabase may require email confirmation.
-      */
-
-      if (
-        !data ||
-        !data.session
-      ){
+      if (!data?.session){
 
         showStatus(
-          "Your CrowRules account has been created. Check your email to confirm your account, then return here to sign in.",
+          "Your CrowRules account was created. Check your email to confirm your account, then return here to sign in.",
           "success"
         );
 
 
         signupForm.reset();
 
-
-        /*
-          Switch back to login.
-        */
 
         document
           .querySelector(
@@ -3595,16 +3274,12 @@ signupForm.addEventListener(
           ?.click();
 
 
-        const loginEmail =
-          document.getElementById(
+        document
+          .getElementById(
             "loginEmail"
-          );
-
-
-        if (loginEmail){
-          loginEmail.value =
-            email;
-        }
+          )
+          .value =
+          email;
 
 
         return;
@@ -3612,15 +3287,8 @@ signupForm.addEventListener(
       }
 
 
-      /*
-        Session was immediately created.
-
-        Make sure the universal CROW membership
-        exists before entering Dreamscapes.
-      */
-
       await loadAccount(
-        data.session.user
+        data.user
       );
 
 
@@ -3660,7 +3328,7 @@ signupForm.addEventListener(
 
     }finally{
 
-      setLoading(
+      setButtonLoading(
         signupButton,
         false,
         "CREATE CROWRULES ACCOUNT"
@@ -3681,18 +3349,6 @@ magicLinkButton.addEventListener(
   async () => {
 
     clearStatus();
-
-
-    if (!supabaseClient){
-
-      showStatus(
-        "The CrowRules authentication system could not be loaded.",
-        "error"
-      );
-
-      return;
-
-    }
 
 
     const email =
@@ -3717,7 +3373,7 @@ magicLinkButton.addEventListener(
     }
 
 
-    setLoading(
+    setButtonLoading(
       magicLinkButton,
       true,
       "SENDING..."
@@ -3725,6 +3381,18 @@ magicLinkButton.addEventListener(
 
 
     try{
+
+      const callbackUrl =
+        new URL(
+          AUTH_CALLBACK
+        );
+
+
+      callbackUrl.searchParams.set(
+        "next",
+        NEXT_URL
+      );
+
 
       const {
         error
@@ -3738,14 +3406,7 @@ magicLinkButton.addEventListener(
             options:{
 
               emailRedirectTo:
-                AUTH_CALLBACK,
-
-              /*
-                IMPORTANT:
-
-                Do not automatically create a second
-                account through magic-link login.
-              */
+                callbackUrl.href,
 
               shouldCreateUser:
                 false
@@ -3769,7 +3430,7 @@ magicLinkButton.addEventListener(
     }catch(error){
 
       console.error(
-        "Magic link:",
+        "Magic link error:",
         error
       );
 
@@ -3784,7 +3445,7 @@ magicLinkButton.addEventListener(
 
     }finally{
 
-      setLoading(
+      setButtonLoading(
         magicLinkButton,
         false,
         "SEND MAGIC LOGIN LINK"
@@ -3797,7 +3458,7 @@ magicLinkButton.addEventListener(
 
 
 /* ============================================================
-   FORGOT PASSWORD
+   PASSWORD RESET
 ============================================================ */
 
 document
@@ -3811,18 +3472,6 @@ document
       event.preventDefault();
 
       clearStatus();
-
-
-      if (!supabaseClient){
-
-        showStatus(
-          "The CrowRules authentication system could not be loaded.",
-          "error"
-        );
-
-        return;
-
-      }
 
 
       const email =
@@ -3848,11 +3497,6 @@ document
 
 
       try{
-
-        /*
-          Preserve the Dreamscapes destination
-          after password reset.
-        */
 
         const resetUrl =
           new URL(
@@ -3913,7 +3557,7 @@ document
 
 
 /* ============================================================
-   AUTH ERROR HANDLING
+   FRIENDLY AUTH ERRORS
 ============================================================ */
 
 function friendlyAuthError(
@@ -3938,8 +3582,7 @@ function friendlyAuthError(
     )
   ){
 
-    return:
-      "The email or password is incorrect.";
+    return "The email or password is incorrect.";
 
   }
 
@@ -3950,8 +3593,7 @@ function friendlyAuthError(
     )
   ){
 
-    return:
-      "Please confirm your email address before signing in.";
+    return "Please confirm your email address before signing in.";
 
   }
 
@@ -3962,28 +3604,10 @@ function friendlyAuthError(
     ) ||
     lower.includes(
       "already registered"
-    ) ||
-    lower.includes(
-      "already been registered"
     )
   ){
 
-    return:
-      "An account with that email already exists. Try signing in instead.";
-
-  }
-
-
-  if (
-    lower.includes(
-      "password"
-    ) &&
-    lower.includes(
-      "characters"
-    )
-  ){
-
-    return message;
+    return "An account with that email already exists. Try signing in instead.";
 
   }
 
@@ -3994,8 +3618,7 @@ function friendlyAuthError(
     )
   ){
 
-    return:
-      "Too many attempts. Please wait a moment and try again.";
+    return "Too many attempts. Please wait a moment and try again.";
 
   }
 
@@ -4009,8 +3632,7 @@ function friendlyAuthError(
     )
   ){
 
-    return:
-      "The authentication redirect is not configured for this Dreamscapes address yet.";
+    return "The CrowRules authentication redirect is not configured for this Dreamscapes address yet.";
 
   }
 
@@ -4024,20 +3646,7 @@ function friendlyAuthError(
     )
   ){
 
-    return:
-      "Google sign-in is not enabled in the CrowRules authentication settings yet.";
-
-  }
-
-
-  if (
-    lower.includes(
-      "username"
-    )
-  ){
-
-    return:
-      "That creator username may already be in use. Try another.";
+    return "Google sign-in is not enabled in the CrowRules authentication settings.";
 
   }
 
@@ -4054,64 +3663,35 @@ function friendlyAuthError(
    AUTH STATE
 ============================================================ */
 
-if (supabaseClient){
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    async (
+      event,
+      session
+    ) => {
 
-  supabaseClient
-    .auth
-    .onAuthStateChange(
-      async (
-        event,
-        session
-      ) => {
+      console.log(
+        "CrowRules Auth:",
+        event
+      );
 
-        console.log(
-          "CrowRules universal auth:",
-          event
+
+      if (
+        session?.user &&
+        event !==
+          "PASSWORD_RECOVERY"
+      ){
+
+        await loadAccount(
+          session.user
         );
 
-
-        /*
-          OAuth and magic-link sessions can arrive
-          after the initial page load.
-
-          Do not immediately redirect during
-          PASSWORD_RECOVERY.
-        */
-
-        if (
-          session &&
-          session.user &&
-          event !==
-            "PASSWORD_RECOVERY"
-        ){
-
-          await loadAccount(
-            session.user
-          );
-
-        }
-
       }
-    );
 
-}
+    }
+  );
 
-
-/* ============================================================
-   GLOBAL ERROR PROTECTION
-============================================================ */
-
-window.addEventListener(
-  "unhandledrejection",
-  event => {
-
-    console.error(
-      "Dreamscapes authentication error:",
-      event.reason
-    );
-
-  }
-);
 
 </script>
 
