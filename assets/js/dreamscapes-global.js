@@ -27,7 +27,7 @@
     ]},
     {label:'Account',items:[
       ['Login','login.html'],['Reset Password','reset-password.html'],
-      ['Auth Callback','auth-callback.html']
+      ['Auth Callback','auth-callback.html'],['Universal Membership','membership.html']
     ]},
     {label:'Admin',items:[['Admin Dashboard','admin.html']]}
   ];
