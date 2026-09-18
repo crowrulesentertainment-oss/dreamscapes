@@ -1,7 +1,6 @@
 <!doctype html>
 <html lang="en">
 <head>
-
 <meta charset="utf-8">
 
 <meta
@@ -25,38 +24,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
 <link
-  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap"
   rel="stylesheet"
 >
 
-<!-- CORRECT SUPABASE PACKAGE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<link
-  rel="stylesheet"
-  href="assets/css/dreamscapes-global.css"
->
 
 <style>
 
 :root{
   --bg:#05050b;
-  --panel:rgba(12,12,25,.86);
-  --panel2:rgba(18,15,38,.9);
-  --border:rgba(255,255,255,.10);
+  --bg2:#090912;
+  --panel:rgba(12,12,24,.88);
+  --panel2:rgba(18,18,34,.78);
+  --line:rgba(255,255,255,.10);
+  --line2:rgba(120,190,255,.18);
 
-  --cyan:#00eaff;
-  --purple:#8b5cff;
-  --pink:#ff3cac;
+  --text:#f5f7ff;
+  --muted:#9da4ba;
+  --soft:#cbd1e2;
+
+  --cyan:#38e8ff;
+  --cyan2:#0ea5e9;
+  --purple:#9b5cff;
+  --pink:#ff4fd8;
   --gold:#ffd166;
 
-  --text:#f7f7ff;
-  --muted:#a7a7bd;
+  --success:#54e38e;
+  --danger:#ff667d;
 
-  --danger:#ff5f6d;
-  --success:#47e6a1;
-
-  --shadow:0 30px 100px rgba(0,0,0,.65);
+  --shadow:
+    0 30px 90px rgba(0,0,0,.55);
 
   --radius:24px;
 }
@@ -66,2099 +64,1690 @@
 }
 
 html{
+  min-height:100%;
   scroll-behavior:smooth;
 }
 
 body{
   margin:0;
   min-height:100vh;
-
   color:var(--text);
-
-  font-family:
-    Montserrat,
-    Arial,
-    sans-serif;
-
+  font-family:Montserrat,Arial,sans-serif;
   background:
-    radial-gradient(
-      circle at 20% 10%,
-      rgba(139,92,255,.18),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(0,234,255,.13),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(255,60,172,.10),
-      transparent 40%
-    ),
-    #05050b;
-
+    radial-gradient(circle at 10% 15%,rgba(56,232,255,.10),transparent 28%),
+    radial-gradient(circle at 85% 10%,rgba(155,92,255,.13),transparent 30%),
+    radial-gradient(circle at 75% 85%,rgba(255,79,216,.08),transparent 30%),
+    linear-gradient(135deg,#030307 0%,#070710 45%,#030309 100%);
   overflow-x:hidden;
 }
 
-
-/* ============================================================
-   STARFIELD
-============================================================ */
-
-#stars{
+body::before{
+  content:"";
   position:fixed;
   inset:0;
   pointer-events:none;
-  z-index:0;
-  overflow:hidden;
-}
-
-.star{
-  position:absolute;
-
-  width:2px;
-  height:2px;
-
-  border-radius:50%;
-
-  background:white;
-
-  opacity:.35;
-
-  animation:
-    twinkle
-    4s
-    infinite
-    ease-in-out;
-}
-
-@keyframes twinkle{
-
-  0%,100%{
-    opacity:.15;
-    transform:scale(.7);
-  }
-
-  50%{
-    opacity:.8;
-    transform:scale(1.5);
-  }
-
-}
-
-
-/* ============================================================
-   AMBIENT ORBS
-============================================================ */
-
-.orb{
-  position:fixed;
-
-  border-radius:50%;
-
-  pointer-events:none;
-
-  filter:blur(2px);
-
   opacity:.45;
-
-  z-index:0;
+  background-image:
+    radial-gradient(circle at 20% 30%,rgba(255,255,255,.75) 0 1px,transparent 1.5px),
+    radial-gradient(circle at 70% 20%,rgba(255,255,255,.55) 0 1px,transparent 1.5px),
+    radial-gradient(circle at 40% 80%,rgba(255,255,255,.45) 0 1px,transparent 1.5px),
+    radial-gradient(circle at 90% 65%,rgba(255,255,255,.5) 0 1px,transparent 1.5px);
+  background-size:
+    240px 240px,
+    310px 310px,
+    370px 370px,
+    420px 420px;
 }
 
-.orb.one{
-  width:320px;
-  height:320px;
-
-  left:-150px;
-  top:10%;
-
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
   background:
-    radial-gradient(
-      circle,
-      rgba(139,92,255,.30),
-      transparent 70%
+    linear-gradient(
+      rgba(255,255,255,.018) 1px,
+      transparent 1px
     );
+  background-size:100% 5px;
+  opacity:.12;
 }
 
-.orb.two{
-  width:400px;
-  height:400px;
-
-  right:-200px;
-  top:35%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(0,234,255,.22),
-      transparent 70%
-    );
+a{
+  color:inherit;
+  text-decoration:none;
 }
 
-.orb.three{
-  width:300px;
-  height:300px;
-
-  left:35%;
-  bottom:-180px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,60,172,.20),
-      transparent 70%
-    );
+button,
+input,
+textarea,
+select{
+  font:inherit;
 }
 
+button{
+  cursor:pointer;
+}
 
-/* ============================================================
-   NAV
-============================================================ */
+.container{
+  width:min(1180px,calc(100% - 32px));
+  margin:auto;
+}
 
-nav{
-  position:relative;
-
-  z-index:10;
-
-  width:min(
-    1200px,
-    calc(100% - 40px)
-  );
-
-  margin:20px auto;
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  gap:15px;
-
-  padding:14px 18px;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:18px;
-
-  background:
-    rgba(5,5,11,.65);
-
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
   backdrop-filter:blur(20px);
+  background:rgba(4,4,10,.76);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.nav{
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
 }
 
 .brand{
   display:flex;
-
   align-items:center;
-
   gap:12px;
-
-  text-decoration:none;
-
-  color:white;
-
   min-width:0;
 }
 
 .brand-mark{
-  width:42px;
-  height:42px;
-
-  flex:0 0 42px;
-
+  width:44px;
+  height:44px;
+  border-radius:14px;
   display:grid;
-
   place-items:center;
-
-  border-radius:12px;
-
-  font-family:
-    Orbitron,
-    sans-serif;
-
-  font-weight:900;
-
-  color:#05050b;
-
   background:
     linear-gradient(
       135deg,
-      var(--cyan),
-      var(--purple),
-      var(--pink)
+      rgba(56,232,255,.20),
+      rgba(155,92,255,.22)
     );
-
+  border:1px solid rgba(56,232,255,.25);
   box-shadow:
-    0 0 25px
-    rgba(0,234,255,.25);
+    0 0 30px rgba(56,232,255,.10),
+    inset 0 0 25px rgba(155,92,255,.08);
+  font-size:22px;
 }
 
-.brand-text{
+.brand-copy{
   min-width:0;
 }
 
-.brand-text strong{
-  display:block;
-
-  font-family:
-    Orbitron,
-    sans-serif;
-
-  font-size:13px;
-
-  letter-spacing:2px;
-
+.brand-title{
+  font-family:Orbitron,sans-serif;
+  font-weight:800;
+  letter-spacing:.06em;
+  font-size:15px;
   white-space:nowrap;
-
-  overflow:hidden;
-
-  text-overflow:ellipsis;
 }
 
-.brand-text span{
-  display:block;
-
-  margin-top:2px;
-
+.brand-sub{
   color:var(--muted);
-
   font-size:10px;
-
-  letter-spacing:1.5px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  margin-top:3px;
 }
 
 .nav-links{
   display:flex;
-
   align-items:center;
-
   gap:8px;
-
-  flex-wrap:wrap;
-
-  justify-content:flex-end;
 }
 
 .nav-links a{
-  color:#dcdcf0;
-
-  text-decoration:none;
-
   padding:10px 13px;
-
+  color:#b9c0d4;
   border-radius:10px;
-
-  font-size:11px;
-
-  font-weight:600;
+  font-size:12px;
+  font-weight:700;
+  transition:.2s ease;
 }
 
 .nav-links a:hover{
-  background:
-    rgba(255,255,255,.06);
-
   color:white;
+  background:rgba(255,255,255,.06);
 }
 
 .nav-membership{
-  border:
-    1px solid
-    rgba(0,234,255,.22);
-
-  background:
-    rgba(0,234,255,.05);
-
-  color:var(--cyan) !important;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(56,232,255,.06);
+  border:1px solid rgba(56,232,255,.16);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#dceeff;
 }
 
-@media(max-width:850px){
-
-  .nav-links a:nth-child(2){
-    display:none;
-  }
-
+.status-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
 }
 
-@media(max-width:700px){
-
-  nav{
-    width:calc(100% - 24px);
-
-    margin:12px auto;
-
-    padding:11px 12px;
-  }
-
-  .brand-mark{
-    width:38px;
-    height:38px;
-
-    flex-basis:38px;
-  }
-
-  .brand-text strong{
-    font-size:10px;
-    letter-spacing:1px;
-  }
-
-  .brand-text span{
-    font-size:8px;
-    letter-spacing:1px;
-  }
-
-  .nav-links a{
-    padding:8px 9px;
-    font-size:9px;
-  }
-
-}
-
-
-/* ============================================================
-   PAGE
-============================================================ */
-
-.page{
+main{
   position:relative;
-
   z-index:2;
+  padding:60px 0 80px;
+}
 
-  width:min(
-    1100px,
-    calc(100% - 30px)
-  );
-
-  margin:50px auto 80px;
-
+.hero-grid{
   display:grid;
-
-  grid-template-columns:
-    1fr
-    1.05fr;
-
-  gap:30px;
-
+  grid-template-columns:1.05fr .95fr;
+  gap:28px;
   align-items:stretch;
 }
 
-@media(max-width:850px){
-
-  .page{
-    grid-template-columns:1fr;
-
-    margin-top:25px;
-  }
-
-}
-
-
-/* ============================================================
-   INTRO
-============================================================ */
-
-.intro{
-  position:relative;
-
-  padding:45px 35px;
-
-  border:
-    1px solid
-    var(--border);
-
-  border-radius:
-    var(--radius);
-
+.panel{
+  border:1px solid var(--line);
   background:
     linear-gradient(
       145deg,
-      rgba(139,92,255,.12),
-      rgba(0,234,255,.04)
-    ),
-    rgba(8,8,18,.72);
-
-  box-shadow:
-    var(--shadow);
-
+      rgba(17,18,34,.91),
+      rgba(7,7,16,.94)
+    );
+  box-shadow:var(--shadow);
+  border-radius:var(--radius);
   overflow:hidden;
 }
 
-.intro:after{
+.intro{
+  position:relative;
+  padding:44px;
+  min-height:690px;
+}
+
+.intro::before{
   content:"";
-
   position:absolute;
-
-  width:300px;
-  height:300px;
-
-  right:-150px;
-  top:-150px;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(0,234,255,.15),
-      transparent 70%
-    );
+  width:420px;
+  height:420px;
+  top:-180px;
+  left:-180px;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(56,232,255,.16),
+    transparent 70%
+  );
+  pointer-events:none;
 }
 
-.eyebrow{
-  font-family:
-    Orbitron,
-    sans-serif;
-
-  font-size:11px;
-
-  letter-spacing:4px;
-
-  color:var(--cyan);
-
-  margin-bottom:20px;
+.intro::after{
+  content:"";
+  position:absolute;
+  width:430px;
+  height:430px;
+  right:-240px;
+  bottom:-220px;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(155,92,255,.14),
+    transparent 70%
+  );
+  pointer-events:none;
 }
 
-.intro h1{
-  margin:0;
+.kicker{
+  position:relative;
+  z-index:1;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(56,232,255,.06);
+  border:1px solid rgba(56,232,255,.18);
+  color:#aeefff;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
 
-  font-family:
-    Orbitron,
-    sans-serif;
+.kicker .dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);
+}
 
-  font-size:
-    clamp(
-      35px,
-      5vw,
-      65px
-    );
-
+h1{
+  position:relative;
+  z-index:1;
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(35px,5vw,65px);
   line-height:1.02;
-
-  letter-spacing:-2px;
+  letter-spacing:-.045em;
+  margin:25px 0 20px;
 }
 
-.gradient{
+.gradient-text{
   background:
     linear-gradient(
       90deg,
-      var(--cyan),
-      var(--purple),
-      var(--pink)
+      #ffffff,
+      #91efff 42%,
+      #bb8aff 75%,
+      #ff8de7
     );
-
   -webkit-background-clip:text;
-
   background-clip:text;
-
   color:transparent;
 }
 
-.intro p{
-  color:#bcbcd0;
-
-  line-height:1.8;
-
+.hero-copy{
+  position:relative;
+  z-index:1;
+  color:#aeb5c9;
+  line-height:1.75;
+  max-width:640px;
   font-size:15px;
-
-  margin:25px 0;
 }
 
-.network-list{
+.hero-copy strong{
+  color:#eef3ff;
+}
+
+.feature-list{
+  position:relative;
+  z-index:1;
   display:grid;
-
   gap:12px;
-
   margin-top:30px;
 }
 
-.network-item{
+.feature{
   display:flex;
-
-  align-items:center;
-
-  gap:12px;
-
-  padding:13px;
-
-  border-radius:14px;
-
-  background:
-    rgba(255,255,255,.035);
-
-  border:
-    1px solid
-    rgba(255,255,255,.06);
-
-  color:#d9d9e9;
-
-  font-size:13px;
+  gap:13px;
+  padding:15px;
+  border-radius:15px;
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.065);
 }
 
-.network-item strong{
-  color:white;
-}
-
-.network-item span{
-  color:#9696ac;
-
-  font-size:11px;
-
-  line-height:1.5;
-}
-
-.network-icon{
-  width:34px;
-  height:34px;
-
-  flex:0 0 34px;
-
-  display:grid;
-
-  place-items:center;
-
+.feature-icon{
+  flex:0 0 35px;
+  width:35px;
+  height:35px;
   border-radius:10px;
-
-  background:
-    rgba(0,234,255,.08);
-
+  display:grid;
+  place-items:center;
+  background:rgba(56,232,255,.07);
+  border:1px solid rgba(56,232,255,.12);
   color:var(--cyan);
-
-  font-size:15px;
+  font-size:14px;
 }
 
+.feature strong{
+  display:block;
+  font-size:13px;
+  margin-bottom:4px;
+}
 
-/* ============================================================
-   UNIVERSAL NOTICE
-============================================================ */
+.feature span{
+  color:#8f97ad;
+  font-size:11px;
+  line-height:1.55;
+}
 
-.universal-notice{
+.universal-card{
   position:relative;
-
-  z-index:2;
-
-  margin-top:24px;
-
-  padding:16px;
-
-  border:
-    1px solid
-    rgba(0,234,255,.15);
-
-  border-radius:16px;
-
+  z-index:1;
+  margin-top:30px;
+  padding:18px;
+  border-radius:18px;
   background:
     linear-gradient(
       135deg,
-      rgba(0,234,255,.07),
-      rgba(139,92,255,.07)
+      rgba(56,232,255,.08),
+      rgba(155,92,255,.08)
     );
+  border:1px solid rgba(121,176,255,.18);
 }
 
-.universal-notice-title{
-  font-family:
-    Orbitron,
-    sans-serif;
+.universal-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:Orbitron,sans-serif;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
 
-  font-size:10px;
-
-  letter-spacing:1.5px;
-
+.universal-title span{
   color:var(--cyan);
-
-  margin-bottom:7px;
 }
 
-.universal-notice p{
-  margin:0;
-
+.universal-card p{
+  color:#969eb3;
   font-size:11px;
-
-  line-height:1.6;
-
-  color:#a9a9bd;
+  line-height:1.65;
+  margin:9px 0 0;
 }
 
-.universal-notice a{
-  color:var(--cyan);
-
-  text-decoration:none;
-}
-
-.universal-notice a:hover{
-  text-decoration:underline;
-}
-
-
-/* ============================================================
-   AUTH CARD
-============================================================ */
-
-.auth-card{
+.account-flow{
   position:relative;
-
-  padding:30px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.12);
-
-  border-radius:
-    var(--radius);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18,15,38,.94),
-      rgba(7,7,15,.94)
-    );
-
-  box-shadow:
-    var(--shadow);
-
-  backdrop-filter:blur(25px);
+  z-index:1;
+  margin-top:20px;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:7px;
+  color:#7e879d;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
 }
 
-.auth-header{
-  text-align:center;
-
-  margin-bottom:25px;
+.flow-pill{
+  padding:7px 9px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:999px;
+  background:rgba(255,255,255,.025);
+  color:#bfc7da;
 }
 
-.auth-header h2{
-  margin:0 0 8px;
-
-  font-family:
-    Orbitron,
-    sans-serif;
-
-  font-size:27px;
+.arrow{
+  color:var(--cyan);
 }
 
-.auth-header p{
+.auth-panel{
+  padding:0;
+  min-height:690px;
+}
+
+.auth-head{
+  padding:34px 34px 22px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.auth-head h2{
+  font-family:Orbitron,sans-serif;
   margin:0;
-
-  color:var(--muted);
-
-  font-size:13px;
-
-  line-height:1.6;
+  font-size:23px;
+  letter-spacing:-.02em;
 }
 
-
-/* ============================================================
-   TABS
-============================================================ */
+.auth-head p{
+  color:#8f97ad;
+  font-size:11px;
+  line-height:1.6;
+  margin:9px 0 0;
+}
 
 .tabs{
   display:grid;
-
-  grid-template-columns:
-    1fr
-    1fr;
-
-  padding:5px;
-
-  margin-bottom:25px;
-
+  grid-template-columns:1fr 1fr;
+  margin:22px 34px 0;
+  padding:4px;
+  background:rgba(0,0,0,.24);
+  border:1px solid rgba(255,255,255,.07);
   border-radius:13px;
-
-  background:
-    rgba(255,255,255,.045);
 }
 
 .tab{
   border:0;
-
-  background:transparent;
-
-  color:#9292a8;
-
-  padding:12px;
-
   border-radius:9px;
-
-  font-family:
-    Montserrat,
-    sans-serif;
-
-  font-weight:700;
-
-  font-size:12px;
-
-  cursor:pointer;
+  background:transparent;
+  color:#81899e;
+  padding:11px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.09em;
+  text-transform:uppercase;
 }
 
 .tab.active{
   color:white;
-
   background:
     linear-gradient(
-      90deg,
-      rgba(0,234,255,.16),
-      rgba(139,92,255,.18)
+      135deg,
+      rgba(56,232,255,.13),
+      rgba(155,92,255,.13)
     );
-
-  box-shadow:
-    inset
-    0 0
-    0 1px
-    rgba(255,255,255,.08);
+  box-shadow:0 5px 20px rgba(0,0,0,.22);
 }
 
+.auth-body{
+  padding:25px 34px 34px;
+}
 
-/* ============================================================
-   FORMS
-============================================================ */
+.form{
+  display:grid;
+  gap:14px;
+}
 
-.auth-form{
+.form.hidden{
   display:none;
 }
 
-.auth-form.active{
-  display:block;
-}
-
 .field{
-  margin-bottom:15px;
+  display:grid;
+  gap:7px;
 }
 
 .field label{
-  display:block;
-
-  margin-bottom:7px;
-
-  color:#cfcfe0;
-
-  font-size:11px;
-
-  font-weight:700;
-
-  letter-spacing:.8px;
+  color:#aab1c3;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
 }
 
 .field input,
-.field select,
-.field textarea{
+.field textarea,
+.field select{
   width:100%;
-
-  border:
-    1px solid
-    rgba(255,255,255,.10);
-
-  border-radius:12px;
-
-  background:
-    rgba(255,255,255,.045);
-
   color:white;
-
-  padding:13px 14px;
-
-  font-family:
-    Montserrat,
-    sans-serif;
-
-  font-size:13px;
-
+  background:rgba(0,0,0,.23);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:12px;
   outline:none;
-
-  transition:
-    border-color .2s,
-    box-shadow .2s,
-    background .2s;
+  padding:12px 13px;
+  font-size:12px;
+  transition:.2s ease;
 }
 
 .field textarea{
   min-height:90px;
-
   resize:vertical;
 }
 
+.field select{
+  appearance:auto;
+}
+
+.field input::placeholder,
+.field textarea::placeholder{
+  color:#5e667b;
+}
+
 .field input:focus,
-.field select:focus,
-.field textarea:focus{
-  border-color:
-    rgba(0,234,255,.6);
-
-  background:
-    rgba(0,234,255,.035);
-
+.field textarea:focus,
+.field select:focus{
+  border-color:rgba(56,232,255,.45);
   box-shadow:
-    0 0 0 3px
-    rgba(0,234,255,.08);
+    0 0 0 3px rgba(56,232,255,.07);
 }
 
-.field select option{
-  background:#10101b;
-  color:white;
+.password-wrap{
+  position:relative;
 }
 
-.two{
-  display:grid;
+.password-wrap input{
+  padding-right:68px;
+}
 
-  grid-template-columns:
-    1fr
-    1fr;
+.password-toggle{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:transparent;
+  color:#788197;
+  font-size:9px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
 
+.form-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   gap:12px;
 }
 
-@media(max-width:520px){
-
-  .two{
-    grid-template-columns:1fr;
-  }
-
-}
-
-.check-row{
+.checkbox{
   display:flex;
-
-  align-items:flex-start;
-
-  gap:9px;
-
-  color:#a9a9bc;
-
-  font-size:11px;
-
-  line-height:1.5;
-
-  margin:14px 0;
+  align-items:center;
+  gap:8px;
+  color:#8d95a9;
+  font-size:10px;
 }
 
-.check-row input{
-  margin-top:3px;
-
-  accent-color:
-    var(--cyan);
+.checkbox input{
+  accent-color:var(--cyan);
 }
 
-
-/* ============================================================
-   BUTTONS
-============================================================ */
-
-.primary-btn{
-  width:100%;
-
+.small-link{
   border:0;
-
-  border-radius:13px;
-
-  padding:14px 18px;
-
-  font-family:
-    Orbitron,
-    sans-serif;
-
-  font-size:12px;
-
+  padding:0;
+  background:none;
+  color:#8ceeff;
+  font-size:10px;
   font-weight:800;
-
-  letter-spacing:1px;
-
-  color:#05050b;
-
-  background:
-    linear-gradient(
-      90deg,
-      var(--cyan),
-      #8eeaff,
-      var(--purple)
-    );
-
-  cursor:pointer;
-
-  transition:
-    transform .2s,
-    box-shadow .2s,
-    opacity .2s;
 }
 
-.primary-btn:hover{
-  transform:translateY(-2px);
-
-  box-shadow:
-    0 12px 30px
-    rgba(0,234,255,.18);
-}
-
-.primary-btn:disabled{
-  opacity:.55;
-
-  cursor:not-allowed;
-
-  transform:none;
-}
-
-.secondary-btn{
-  width:100%;
-
-  margin-top:10px;
-
-  border:
-    1px solid
-    rgba(255,255,255,.10);
-
-  border-radius:12px;
-
-  padding:12px;
-
-  background:
-    rgba(255,255,255,.035);
-
-  color:#d6d6e4;
-
-  cursor:pointer;
-
-  font-family:
-    Montserrat,
-    sans-serif;
-
-  font-weight:700;
-
-  font-size:11px;
-}
-
-.secondary-btn:hover{
-  background:
-    rgba(255,255,255,.07);
-}
-
-.google-btn{
-  width:100%;
-
-  border:
-    1px solid
-    rgba(255,255,255,.13);
-
-  border-radius:13px;
-
-  padding:13px;
-
-  background:
-    rgba(255,255,255,.055);
-
-  color:#fff;
-
-  cursor:pointer;
-
-  font-family:
-    Montserrat,
-    sans-serif;
-
-  font-size:12px;
-
-  font-weight:700;
-
-  transition:
-    transform .2s,
-    background .2s;
-}
-
-.google-btn:hover{
-  transform:translateY(-1px);
-
-  background:
-    rgba(255,255,255,.09);
-}
-
-
-/* ============================================================
-   EXTRA LINKS
-============================================================ */
-
-.form-options{
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  margin:5px 0 16px;
-
-  font-size:11px;
-}
-
-.remember{
-  display:flex;
-
-  align-items:center;
-
-  gap:7px;
-
-  color:#9292a8;
-}
-
-.remember input{
-  accent-color:
-    var(--cyan);
-}
-
-.link{
-  color:var(--cyan);
-
-  text-decoration:none;
-
-  cursor:pointer;
-}
-
-.link:hover{
+.small-link:hover{
   text-decoration:underline;
 }
 
+.primary{
+  width:100%;
+  border:1px solid rgba(56,232,255,.32);
+  color:white;
+  padding:13px 16px;
+  border-radius:12px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(56,232,255,.20),
+      rgba(155,92,255,.22)
+    );
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.22),
+    inset 0 1px 0 rgba(255,255,255,.07);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  transition:.2s ease;
+}
 
-/* ============================================================
-   STATUS
-============================================================ */
+.primary:hover{
+  transform:translateY(-1px);
+  border-color:rgba(56,232,255,.55);
+  box-shadow:
+    0 15px 35px rgba(0,0,0,.28),
+    0 0 25px rgba(56,232,255,.07);
+}
+
+.primary:disabled{
+  cursor:not-allowed;
+  opacity:.55;
+  transform:none;
+}
+
+.secondary{
+  width:100%;
+  border:1px solid rgba(255,255,255,.10);
+  color:#d8ddec;
+  padding:12px 16px;
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+
+.secondary:hover{
+  background:rgba(255,255,255,.065);
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:3px 0;
+  color:#5d6579;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+.divider::before,
+.divider::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background:rgba(255,255,255,.07);
+}
+
+.google{
+  width:100%;
+  border:1px solid rgba(255,255,255,.10);
+  color:#dce2f1;
+  padding:12px 16px;
+  border-radius:12px;
+  background:rgba(255,255,255,.035);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.05em;
+}
+
+.google:hover{
+  background:rgba(255,255,255,.06);
+}
+
+.terms{
+  color:#697187;
+  font-size:9px;
+  line-height:1.6;
+  text-align:center;
+}
+
+.terms a{
+  color:#99eefe;
+}
 
 .status{
   display:none;
-
   padding:12px 14px;
-
   border-radius:12px;
-
-  margin-bottom:15px;
-
-  font-size:12px;
-
-  line-height:1.5;
+  font-size:10px;
+  line-height:1.55;
+  border:1px solid transparent;
 }
 
 .status.show{
   display:block;
 }
 
+.status.info{
+  color:#bcefff;
+  background:rgba(56,232,255,.06);
+  border-color:rgba(56,232,255,.16);
+}
+
 .status.success{
-  color:#baffdf;
-
-  background:
-    rgba(71,230,161,.08);
-
-  border:
-    1px solid
-    rgba(71,230,161,.2);
+  color:#baf6d2;
+  background:rgba(84,227,142,.06);
+  border-color:rgba(84,227,142,.18);
 }
 
 .status.error{
-  color:#ffd0d5;
-
-  background:
-    rgba(255,95,109,.08);
-
-  border:
-    1px solid
-    rgba(255,95,109,.22);
+  color:#ffc1ca;
+  background:rgba(255,102,125,.06);
+  border-color:rgba(255,102,125,.18);
 }
 
-.status.info{
-  color:#d2f9ff;
-
-  background:
-    rgba(0,234,255,.07);
-
-  border:
-    1px solid
-    rgba(0,234,255,.18);
-}
-
-
-/* ============================================================
-   DIVIDER
-============================================================ */
-
-.divider{
-  display:flex;
-
-  align-items:center;
-
-  gap:10px;
-
-  margin:18px 0;
-
-  color:#68687b;
-
-  font-size:10px;
-
-  text-transform:uppercase;
-
-  letter-spacing:2px;
-}
-
-.divider:before,
-.divider:after{
-  content:"";
-
-  height:1px;
-
-  flex:1;
-
-  background:
-    rgba(255,255,255,.08);
-}
-
-
-/* ============================================================
-   ACCOUNT INFO
-============================================================ */
-
-.account-info{
+.account-panel{
   display:none;
-
-  margin-bottom:20px;
-
-  padding:15px;
-
-  border-radius:15px;
-
-  border:
-    1px solid
-    rgba(0,234,255,.15);
-
-  background:
-    rgba(0,234,255,.04);
 }
 
-.account-info.show{
+.account-panel.visible{
   display:block;
 }
 
+.auth-forms.hidden{
+  display:none;
+}
+
+.account-card{
+  padding:20px;
+  border-radius:17px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56,232,255,.055),
+      rgba(155,92,255,.07)
+    );
+  border:1px solid rgba(110,173,255,.15);
+}
+
 .account-label{
-  font-family:
-    Orbitron,
-    sans-serif;
-
+  color:#6e788f;
   font-size:9px;
-
-  letter-spacing:1.5px;
-
-  color:var(--cyan);
-
-  margin-bottom:6px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
 }
 
 .account-name{
-  font-size:13px;
-
-  font-weight:700;
-
-  color:white;
+  font-family:Orbitron,sans-serif;
+  font-size:20px;
+  font-weight:800;
+  margin-top:6px;
+  overflow-wrap:anywhere;
 }
 
-.account-plan{
-  margin-top:4px;
-
+.account-email{
+  color:#8c95aa;
   font-size:10px;
-
-  color:#9c9cb2;
+  margin-top:5px;
+  overflow-wrap:anywhere;
 }
 
-
-/* ============================================================
-   MEMBERSHIP
-============================================================ */
-
-.membership-card{
+.membership-status{
   margin-top:18px;
-
-  padding:16px;
-
-  border:
-    1px solid
-    rgba(139,92,255,.18);
-
-  border-radius:16px;
-
-  background:
-    linear-gradient(
-      135deg,
-      rgba(139,92,255,.08),
-      rgba(255,60,172,.05)
-    );
+  padding:15px;
+  border-radius:14px;
+  background:rgba(0,0,0,.20);
+  border:1px solid rgba(255,255,255,.07);
 }
 
-.membership-card h3{
-  margin:0 0 7px;
-
-  font-family:
-    Orbitron,
-    sans-serif;
-
-  font-size:11px;
-
-  letter-spacing:1px;
+.membership-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
 
-.membership-card p{
-  margin:0 0 12px;
+.membership-name{
+  font-family:Orbitron,sans-serif;
+  font-size:13px;
+  font-weight:800;
+}
 
-  color:#a7a7ba;
+.membership-badge{
+  padding:5px 8px;
+  border-radius:999px;
+  color:#aef4ff;
+  background:rgba(56,232,255,.07);
+  border:1px solid rgba(56,232,255,.15);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
 
+.membership-detail{
+  color:#858ea4;
   font-size:10px;
-
-  line-height:1.6;
+  line-height:1.55;
+  margin-top:7px;
 }
 
-.membership-link{
-  display:inline-block;
-
-  padding:9px 12px;
-
-  border-radius:9px;
-
-  background:
-    rgba(139,92,255,.12);
-
-  border:
-    1px solid
-    rgba(139,92,255,.22);
-
-  color:#d9cfff;
-
-  text-decoration:none;
-
-  font-size:10px;
-
-  font-weight:700;
+.account-actions{
+  display:grid;
+  gap:9px;
+  margin-top:15px;
 }
 
-.membership-link:hover{
-  background:
-    rgba(139,92,255,.18);
+.loading{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
 }
 
-
-/* ============================================================
-   FOOTER
-============================================================ */
-
-footer{
-  position:relative;
-
-  z-index:2;
-
-  text-align:center;
-
-  padding:0 20px 40px;
-
-  color:#66667a;
-
-  font-size:10px;
-
-  line-height:1.7;
-}
-
-footer strong{
-  color:#9a9aae;
-}
-
-footer a{
-  color:#77778d;
-
-  text-decoration:none;
-}
-
-footer a:hover{
-  color:var(--cyan);
-}
-
-
-/* ============================================================
-   LOADING
-============================================================ */
-
-.loading:after{
-  content:"";
-
-  display:inline-block;
-
+.spinner{
   width:12px;
   height:12px;
-
-  margin-left:8px;
-
-  vertical-align:-2px;
-
-  border:
-    2px solid
-    rgba(255,255,255,.15);
-
-  border-top-color:
-    var(--cyan);
-
   border-radius:50%;
-
-  animation:
-    spin
-    .7s
-    linear
-    infinite;
+  border:2px solid rgba(255,255,255,.18);
+  border-top-color:var(--cyan);
+  animation:spin .8s linear infinite;
 }
 
 @keyframes spin{
-
   to{
     transform:rotate(360deg);
+  }
+}
+
+.creator-note{
+  margin-top:15px;
+  padding:13px;
+  border-radius:12px;
+  background:rgba(255,209,102,.035);
+  border:1px solid rgba(255,209,102,.10);
+  color:#99909a;
+  font-size:9px;
+  line-height:1.6;
+}
+
+.creator-note strong{
+  color:#e4d5a8;
+}
+
+.footer{
+  position:relative;
+  z-index:2;
+  padding:0 0 35px;
+  color:#626b80;
+  font-size:9px;
+  text-align:center;
+}
+
+.footer-line{
+  width:100%;
+  height:1px;
+  background:rgba(255,255,255,.06);
+  margin-bottom:20px;
+}
+
+.footer strong{
+  color:#a4adbf;
+}
+
+@media(max-width:900px){
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .intro,
+  .auth-panel{
+    min-height:auto;
+  }
+
+  .intro{
+    padding:32px;
   }
 
 }
 
+@media(max-width:680px){
 
-/* ============================================================
-   MOBILE
-============================================================ */
+  .container{
+    width:min(100% - 20px,1180px);
+  }
 
-@media(max-width:600px){
+  .nav{
+    min-height:68px;
+  }
+
+  .nav-links{
+    display:none;
+  }
+
+  .nav-membership{
+    font-size:8px;
+    padding:7px 9px;
+  }
+
+  main{
+    padding:28px 0 55px;
+  }
 
   .intro{
-    padding:32px 22px;
+    padding:25px;
   }
 
-  .auth-card{
-    padding:22px 18px;
+  .auth-head,
+  .auth-body{
+    padding-left:22px;
+    padding-right:22px;
   }
 
-  .intro h1{
-    font-size:39px;
+  .tabs{
+    margin-left:22px;
+    margin-right:22px;
+  }
+
+  h1{
+    font-size:38px;
+  }
+
+  .hero-copy{
+    font-size:13px;
   }
 
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-<div id="stars"></div>
+<header>
+  <div class="container nav">
 
-<div class="orb one"></div>
-<div class="orb two"></div>
-<div class="orb three"></div>
+    <a class="brand" href="index.html" aria-label="CrowRules Dreamscapes home">
 
+      <div class="brand-mark">✦</div>
 
-<nav>
+      <div class="brand-copy">
+        <div class="brand-title">CROWRULES</div>
+        <div class="brand-sub">Dreamscapes Network</div>
+      </div>
 
-  <a
-    class="brand"
-    href="index.html"
-    aria-label="CrowRules Dreamscapes home"
-  >
-
-    <div class="brand-mark">
-      CR
-    </div>
-
-    <div class="brand-text">
-
-      <strong>
-        CROWRULES DREAMSCAPES
-      </strong>
-
-      <span>
-        BRINGING STORIES TO LIFE
-      </span>
-
-    </div>
-
-  </a>
-
-
-  <div class="nav-links">
-
-    <a href="index.html">
-      Home
     </a>
 
-    <a href="about.html">
-      About
-    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
 
-    <a href="creators.html">
-      Creators
-    </a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="creators.html">Creators</a>
+      <a href="membership.html">Membership</a>
+
+    </nav>
 
     <a
       class="nav-membership"
+      id="navMembership"
       href="membership.html"
     >
-      Membership
+      <span class="status-dot"></span>
+      <span id="navMembershipText">UNIVERSAL MEMBERSHIP</span>
     </a>
 
   </div>
-
-</nav>
-
-
-<main class="page">
+</header>
 
 
-  <section class="intro">
+<main>
 
-    <div class="eyebrow">
-      THE CREATOR NETWORK
-    </div>
+  <div class="container">
 
-    <h1>
-
-      DON'T JUST HAVE
-
-      <span class="gradient">
-        A DREAM.
-      </span>
-
-    </h1>
-
-    <p>
-
-      Bring it into the Dreamscapes.
-
-      Connect with creators, writers, artists,
-      filmmakers, storytellers and builders who
-      want to turn ideas into worlds.
-
-    </p>
+    <div class="hero-grid">
 
 
-    <div class="network-list">
+      <!-- INTRODUCTION -->
 
-      <div class="network-item">
+      <section class="panel intro">
 
-        <div class="network-icon">
-          ✦
+        <div class="kicker">
+          <span class="dot"></span>
+          Dreamscapes Creator Network
         </div>
 
-        <div>
-
-          <strong>
-            Submit Your Dreams
-          </strong>
-
-          <br>
-
-          <span>
-            Turn an idea into the beginning of something bigger.
+        <h1>
+          Enter the
+          <span class="gradient-text">
+            Dream World.
           </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="network-item">
-
-        <div class="network-icon">
-          ◈
-        </div>
-
-        <div>
-
-          <strong>
-            Build With Others
-          </strong>
-
-          <br>
-
-          <span>
-            Find people who can help develop your vision.
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="network-item">
-
-        <div class="network-icon">
-          ◎
-        </div>
-
-        <div>
-
-          <strong>
-            Create Worlds
-          </strong>
-
-          <br>
-
-          <span>
-            Develop characters, stories, lore and productions.
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <div class="network-item">
-
-        <div class="network-icon">
-          ★
-        </div>
-
-        <div>
-
-          <strong>
-            Grow With CrowRules
-          </strong>
-
-          <br>
-
-          <span>
-            Build toward shows, movies and original productions.
-          </span>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="universal-notice">
-
-      <div class="universal-notice-title">
-        ONE CROWRULES ACCOUNT
-      </div>
-
-      <p>
-
-        Your CrowRules account works across the
-        Entertainment network — including Dreamscapes.
-        You do not need a separate Dreamscapes account.
-
-        <a href="membership.html">
-          Explore Membership
-        </a>
-
-      </p>
-
-    </div>
-
-  </section>
-
-
-  <section class="auth-card">
-
-
-    <div class="auth-header">
-
-      <h2>
-        ENTER THE NETWORK
-      </h2>
-
-      <p>
-        Sign in with your CrowRules account
-        or create your universal account.
-      </p>
-
-    </div>
-
-
-    <div
-      id="status"
-      class="status"
-      role="status"
-      aria-live="polite"
-    ></div>
-
-
-    <div
-      id="accountInfo"
-      class="account-info"
-    >
-
-      <div class="account-label">
-        UNIVERSAL CROWRULES ACCOUNT
-      </div>
-
-      <div
-        id="accountName"
-        class="account-name"
-      >
-        Account detected
-      </div>
-
-      <div
-        id="accountPlan"
-        class="account-plan"
-      >
-        Membership loading...
-      </div>
-
-    </div>
-
-
-    <div class="tabs">
-
-      <button
-        type="button"
-        class="tab active"
-        data-tab="login"
-      >
-        SIGN IN
-      </button>
-
-      <button
-        type="button"
-        class="tab"
-        data-tab="signup"
-      >
-        JOIN
-      </button>
-
-    </div>
-
-
-    <!-- LOGIN -->
-
-    <form
-      id="loginForm"
-      class="auth-form active"
-      novalidate
-    >
-
-      <div class="field">
-
-        <label for="loginEmail">
-          EMAIL
-        </label>
-
-        <input
-          id="loginEmail"
-          type="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-          required
-        >
-
-      </div>
-
-
-      <div class="field">
-
-        <label for="loginPassword">
-          PASSWORD
-        </label>
-
-        <input
-          id="loginPassword"
-          type="password"
-          autocomplete="current-password"
-          placeholder="Your password"
-          required
-        >
-
-      </div>
-
-
-      <div class="form-options">
-
-        <label class="remember">
-
-          <input
-            id="rememberMe"
-            type="checkbox"
-            checked
-          >
-
-          Remember me
-
-        </label>
-
-
-        <a
-          class="link"
-          id="forgotPassword"
-          href="#"
-        >
-          Forgot password?
-        </a>
-
-      </div>
-
-
-      <button
-        id="loginButton"
-        class="primary-btn"
-        type="submit"
-      >
-        ENTER DREAMSCAPES
-      </button>
-
-
-      <div class="divider">
-        OR
-      </div>
-
-
-      <button
-        id="googleButton"
-        class="google-btn"
-        type="button"
-      >
-        CONTINUE WITH GOOGLE
-      </button>
-
-
-      <button
-        id="magicLinkButton"
-        class="secondary-btn"
-        type="button"
-      >
-        SEND MAGIC LOGIN LINK
-      </button>
-
-
-      <div class="membership-card">
-
-        <h3>
-          UNIVERSAL MEMBERSHIP
-        </h3>
-
-        <p>
-          Your CrowRules membership follows you across
-          CrowRules Entertainment, Dreamscapes, TV,
-          Podcasting, Sports and the rest of the network.
+        </h1>
+
+        <p class="hero-copy">
+          Dreamscapes is the creative network inside
+          <strong>CrowRules Entertainment</strong> —
+          a place where ideas, dreams, characters, worlds and stories
+          can become something bigger.
         </p>
 
-        <a
-          class="membership-link"
-          href="membership.html"
-        >
-          VIEW MEMBERSHIP
-        </a>
+        <div class="feature-list">
 
-      </div>
+          <div class="feature">
 
-    </form>
+            <div class="feature-icon">✦</div>
 
+            <div>
+              <strong>Bring an Idea to Life</strong>
 
-    <!-- SIGNUP -->
+              <span>
+                Submit dreams, concepts, characters, stories and worlds
+                for collaborative development.
+              </span>
+            </div>
 
-    <form
-      id="signupForm"
-      class="auth-form"
-      novalidate
-    >
-
-      <div class="two">
-
-        <div class="field">
-
-          <label for="signupName">
-            DISPLAY NAME
-          </label>
-
-          <input
-            id="signupName"
-            type="text"
-            autocomplete="name"
-            placeholder="Your name"
-            maxlength="80"
-            required
-          >
-
-        </div>
+          </div>
 
 
-        <div class="field">
+          <div class="feature">
 
-          <label for="signupUsername">
-            CREATOR USERNAME
-          </label>
+            <div class="feature-icon">◈</div>
 
-          <input
-            id="signupUsername"
-            type="text"
-            autocomplete="username"
-            placeholder="yourcreatorname"
-            maxlength="30"
-            required
-          >
+            <div>
+              <strong>Create With CrowRules</strong>
 
-        </div>
+              <span>
+                Work through development rooms, collaborators,
+                files, messages, agreements and project milestones.
+              </span>
+            </div>
 
-      </div>
+          </div>
 
 
-      <div class="field">
+          <div class="feature">
 
-        <label for="signupEmail">
-          EMAIL
-        </label>
+            <div class="feature-icon">◎</div>
 
-        <input
-          id="signupEmail"
-          type="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-          required
-        >
+            <div>
+              <strong>Track Your Creative Journey</strong>
 
-      </div>
+              <span>
+                Follow submissions, projects, credits, rights,
+                agreements and potential earnings in one place.
+              </span>
+            </div>
 
-
-      <div class="field">
-
-        <label for="signupRole">
-          PRIMARY CREATIVE ROLE
-        </label>
-
-        <select
-          id="signupRole"
-          required
-        >
-
-          <option value="">
-            Select your primary role
-          </option>
-
-          <option value="writer">
-            Writer
-          </option>
-
-          <option value="director">
-            Director
-          </option>
-
-          <option value="producer">
-            Producer
-          </option>
-
-          <option value="actor">
-            Actor
-          </option>
-
-          <option value="artist">
-            Artist
-          </option>
-
-          <option value="animator">
-            Animator
-          </option>
-
-          <option value="filmmaker">
-            Filmmaker
-          </option>
-
-          <option value="musician">
-            Musician
-          </option>
-
-          <option value="photographer">
-            Photographer
-          </option>
-
-          <option value="designer">
-            Designer
-          </option>
-
-          <option value="editor">
-            Editor
-          </option>
-
-          <option value="world_builder">
-            World Builder
-          </option>
-
-          <option value="storyteller">
-            Storyteller
-          </option>
-
-          <option value="other">
-            Other
-          </option>
-
-        </select>
-
-      </div>
+          </div>
 
 
-      <div class="field">
+          <div class="feature">
 
-        <label for="signupBio">
-          SHORT CREATOR BIO
-        </label>
+            <div class="feature-icon">∞</div>
 
-        <textarea
-          id="signupBio"
-          maxlength="1000"
-          placeholder="Tell us a little about yourself and what you create..."
-        ></textarea>
+            <div>
+              <strong>One CrowRules Universe</strong>
 
-      </div>
+              <span>
+                Your CrowRules account can connect you with
+                Dreamscapes and the wider CrowRules Entertainment network.
+              </span>
+            </div>
 
-
-      <div class="two">
-
-        <div class="field">
-
-          <label for="signupPassword">
-            PASSWORD
-          </label>
-
-          <input
-            id="signupPassword"
-            type="password"
-            autocomplete="new-password"
-            placeholder="At least 8 characters"
-            minlength="8"
-            required
-          >
+          </div>
 
         </div>
 
 
-        <div class="field">
+        <div class="universal-card">
 
-          <label for="signupPasswordConfirm">
-            CONFIRM PASSWORD
-          </label>
+          <div class="universal-title">
+            <span>●</span>
+            ONE CROWRULES ACCOUNT
+          </div>
 
-          <input
-            id="signupPasswordConfirm"
-            type="password"
-            autocomplete="new-password"
-            placeholder="Repeat password"
-            minlength="8"
-            required
-          >
+          <p>
+            Dreamscapes does not require a separate membership account.
+            Sign in with your universal CrowRules account and your
+            membership follows you across the CrowRules universe.
+          </p>
+
+          <div class="account-flow">
+
+            <span class="flow-pill">CrowRules Account</span>
+
+            <span class="arrow">→</span>
+
+            <span class="flow-pill">Universal Membership</span>
+
+            <span class="arrow">→</span>
+
+            <span class="flow-pill">Dreamscapes</span>
+
+          </div>
 
         </div>
 
-      </div>
+      </section>
 
 
-      <label class="check-row">
+      <!-- AUTHENTICATION -->
 
-        <input
-          id="terms"
-          type="checkbox"
-          required
-        >
+      <section class="panel auth-panel">
 
-        <span>
+        <div class="auth-head">
 
-          I understand that Dreamscapes is part of
-          CrowRules Entertainment and uses the universal
-          CrowRules account system. Submitting an idea
-          does not automatically mean CrowRules Entertainment
-          will produce it. Creator rights and agreements
-          are handled separately.
+          <h2 id="authTitle">
+            Welcome to Dreamscapes
+          </h2>
 
-        </span>
+          <p id="authSubtitle">
+            Sign in with your universal CrowRules account
+            or create one to begin.
+          </p>
 
-      </label>
+        </div>
 
 
-      <button
-        id="signupButton"
-        class="primary-btn"
-        type="submit"
-      >
-        CREATE CROWRULES ACCOUNT
-      </button>
+        <div class="tabs" id="authTabs">
+
+          <button
+            type="button"
+            class="tab active"
+            id="loginTab"
+          >
+            Sign In
+          </button>
+
+          <button
+            type="button"
+            class="tab"
+            id="signupTab"
+          >
+            Join Network
+          </button>
+
+        </div>
 
 
-      <div class="divider">
-        OR
-      </div>
+        <div class="auth-body">
 
 
-      <button
-        id="googleSignupButton"
-        class="google-btn"
-        type="button"
-      >
-        CREATE ACCOUNT WITH GOOGLE
-      </button>
+          <!-- GLOBAL STATUS -->
+
+          <div
+            class="status"
+            id="statusMessage"
+            role="status"
+            aria-live="polite"
+          ></div>
 
 
-      <div class="membership-card">
+          <!-- AUTH FORMS -->
 
-        <h3>
-          START AS A CROW MEMBER
-        </h3>
+          <div
+            class="auth-forms"
+            id="authForms"
+          >
 
-        <p>
-          New accounts start with the free CROW membership.
-          You can explore Dreamscapes and upgrade your universal
-          CrowRules membership later.
-        </p>
 
-        <a
-          class="membership-link"
-          href="membership.html"
-        >
-          EXPLORE MEMBERSHIP
-        </a>
+            <!-- LOGIN -->
 
-      </div>
+            <form
+              class="form"
+              id="loginForm"
+              autocomplete="on"
+            >
 
-    </form>
+              <div class="field">
 
-  </section>
+                <label for="loginEmail">
+                  Email
+                </label>
+
+                <input
+                  id="loginEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                  required
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="loginPassword">
+                  Password
+                </label>
+
+                <div class="password-wrap">
+
+                  <input
+                    id="loginPassword"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Your password"
+                    required
+                  >
+
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="loginPassword"
+                  >
+                    Show
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="form-row">
+
+                <label class="checkbox">
+
+                  <input
+                    id="rememberMe"
+                    type="checkbox"
+                    checked
+                  >
+
+                  <span>Keep me signed in</span>
+
+                </label>
+
+
+                <button
+                  type="button"
+                  class="small-link"
+                  id="forgotPassword"
+                >
+                  Forgot password?
+                </button>
+
+              </div>
+
+
+              <button
+                type="submit"
+                class="primary"
+                id="loginButton"
+              >
+                Sign In to CrowRules
+              </button>
+
+
+              <div class="divider">
+                or
+              </div>
+
+
+              <button
+                type="button"
+                class="google"
+                id="googleLogin"
+              >
+                Continue with Google
+              </button>
+
+
+              <button
+                type="button"
+                class="secondary"
+                id="magicLink"
+              >
+                Email Me a Magic Link
+              </button>
+
+
+              <div class="terms">
+                Your Dreamscapes access is connected to your
+                universal CrowRules account.
+              </div>
+
+            </form>
+
+
+            <!-- SIGNUP -->
+
+            <form
+              class="form hidden"
+              id="signupForm"
+              autocomplete="on"
+            >
+
+              <div class="field">
+
+                <label for="displayName">
+                  Display Name
+                </label>
+
+                <input
+                  id="displayName"
+                  name="display_name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="How should CrowRules identify you?"
+                  maxlength="100"
+                  required
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="creatorUsername">
+                  Creator Username
+                </label>
+
+                <input
+                  id="creatorUsername"
+                  name="username"
+                  type="text"
+                  autocomplete="username"
+                  placeholder="@yourcreatorname"
+                  maxlength="40"
+                  required
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="signupEmail">
+                  Email
+                </label>
+
+                <input
+                  id="signupEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                  required
+                >
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="creatorRole">
+                  Creative Role
+                </label>
+
+                <select
+                  id="creatorRole"
+                  name="creator_role"
+                >
+
+                  <option value="">
+                    Select a role
+                  </option>
+
+                  <option value="Writer">
+                    Writer
+                  </option>
+
+                  <option value="Director">
+                    Director
+                  </option>
+
+                  <option value="Producer">
+                    Producer
+                  </option>
+
+                  <option value="Actor">
+                    Actor
+                  </option>
+
+                  <option value="Creator">
+                    Creator
+                  </option>
+
+                  <option value="Artist">
+                    Artist
+                  </option>
+
+                  <option value="Filmmaker">
+                    Filmmaker
+                  </option>
+
+                  <option value="Podcaster">
+                    Podcaster
+                  </option>
+
+                  <option value="Musician">
+                    Musician
+                  </option>
+
+                  <option value="Designer">
+                    Designer
+                  </option>
+
+                  <option value="Other">
+                    Other
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="signupBio">
+                  Short Bio
+                </label>
+
+                <textarea
+                  id="signupBio"
+                  name="bio"
+                  maxlength="500"
+                  placeholder="Tell the Dreamscapes network a little about yourself..."
+                ></textarea>
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="signupPassword">
+                  Password
+                </label>
+
+                <div class="password-wrap">
+
+                  <input
+                    id="signupPassword"
+                    name="password"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    placeholder="At least 8 characters"
+                    required
+                  >
+
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="signupPassword"
+                  >
+                    Show
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <div class="field">
+
+                <label for="signupPasswordConfirm">
+                  Confirm Password
+                </label>
+
+                <div class="password-wrap">
+
+                  <input
+                    id="signupPasswordConfirm"
+                    name="password_confirm"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    placeholder="Enter password again"
+                    required
+                  >
+
+                  <button
+                    type="button"
+                    class="password-toggle"
+                    data-target="signupPasswordConfirm"
+                  >
+                    Show
+                  </button>
+
+                </div>
+
+              </div>
+
+
+              <label class="checkbox">
+
+                <input
+                  id="acceptTerms"
+                  type="checkbox"
+                  required
+                >
+
+                <span>
+                  I agree to the CrowRules terms and creator
+                  network policies.
+                </span>
+
+              </label>
+
+
+              <button
+                type="submit"
+                class="primary"
+                id="signupButton"
+              >
+                Create My CrowRules Account
+              </button>
+
+
+              <div class="universal-card">
+
+                <div class="universal-title">
+                  <span>✦</span>
+                  START WITH CROW
+                </div>
+
+                <p>
+                  New accounts begin with the current free
+                  CrowRules membership level. Your membership is
+                  universal — it is not a separate Dreamscapes account.
+                </p>
+
+              </div>
+
+
+              <div class="terms">
+                By joining, you are creating one CrowRules account
+                that can be used throughout the CrowRules universe.
+              </div>
+
+            </form>
+
+          </div>
+
+
+          <!-- ACCOUNT PANEL -->
+
+          <div
+            class="account-panel"
+            id="accountPanel"
+          >
+
+            <div class="account-card">
+
+              <div class="account-label">
+                Universal CrowRules Account
+              </div>
+
+              <div
+                class="account-name"
+                id="accountName"
+              >
+                CrowRules Member
+              </div>
+
+              <div
+                class="account-email"
+                id="accountEmail"
+              >
+                —
+              </div>
+
+
+              <div class="membership-status">
+
+                <div class="membership-top">
+
+                  <div
+                    class="membership-name"
+                    id="membershipName"
+                  >
+                    Loading membership...
+                  </div>
+
+                  <div
+                    class="membership-badge"
+                    id="membershipBadge"
+                  >
+                    UNIVERSAL
+                  </div>
+
+                </div>
+
+                <div
+                  class="membership-detail"
+                  id="membershipDetail"
+                >
+                  <span class="loading">
+                    <span class="spinner"></span>
+                    Checking your CrowRules membership...
+                  </span>
+                </div>
+
+              </div>
+
+
+              <div class="account-actions">
+
+                <button
+                  type="button"
+                  class="primary"
+                  id="enterDreamscapes"
+                >
+                  Enter Dreamscapes
+                </button>
+
+                <button
+                  type="button"
+                  class="secondary"
+                  id="manageMembership"
+                >
+                  Manage Membership
+                </button>
+
+                <button
+                  type="button"
+                  class="secondary"
+                  id="signOut"
+                >
+                  Sign Out
+                </button>
+
+              </div>
+
+
+              <div class="creator-note">
+
+                <strong>Creator access:</strong>
+                Your Dreamscapes creator information is connected
+                to your universal CrowRules identity. Your membership
+                and creator access are managed separately so your
+                creator identity can remain connected to projects,
+                credits, agreements and submissions.
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </div>
 
 </main>
 
 
-<footer>
+<footer class="footer">
 
-  <strong>
-    CrowRules Dreamscapes
-  </strong>
+  <div class="container">
 
-  —
-  Bringing Stories to Life.
+    <div class="footer-line"></div>
 
-  <br>
+    <strong>CrowRules Entertainment</strong>
+    · Dreamscapes Creator Network
+    · Bringing Stories to Life
 
-  Part of
-  <a
-    href="https://crowrulesentertainment-oss.github.io/crowrulesentertainment/"
-  >
-    CrowRules Entertainment
-  </a>.
+    <br>
 
-  <br><br>
+    <span>
+      One CrowRules account. One connected universe.
+    </span>
 
-  <a href="membership.html">
-    Membership
-  </a>
-
-  ·
-
-  <a href="profile.html">
-    Profile
-  </a>
-
-  ·
-
-  <a href="index.html">
-    Dreamscapes Home
-  </a>
+  </div>
 
 </footer>
 
 
 <script>
 
-/* ============================================================
-   CROWRULES UNIVERSAL AUTH
-============================================================ */
+/* =========================================================
+   CROWRULES DREAMSCAPES
+   UNIVERSAL MEMBERSHIP AUTHENTICATION
+   ========================================================= */
 
-"use strict";
 
-
-/* ============================================================
-   SUPABASE
-============================================================ */
+/* ---------------------------------------------------------
+   SUPABASE CONFIGURATION
+   --------------------------------------------------------- */
 
 const SUPABASE_URL =
   "https://cevylpnoexugwgygvtgu.supabase.co";
@@ -2167,15 +1756,32 @@ const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_AdfM5y6RqvF3tbvEVzDZSg_JuGTQLD-";
 
 
-if (
-  !window.supabase ||
-  typeof window.supabase.createClient !== "function"
-){
+if(!window.supabase){
+
+  document.body.innerHTML = `
+    <div style="
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:30px;
+      color:white;
+      background:#05050b;
+      font-family:Arial,sans-serif;
+      text-align:center;
+    ">
+      <div>
+        <h2>CrowRules Authentication Could Not Load</h2>
+        <p style="color:#9da4ba">
+          The Supabase authentication library could not be loaded.
+          Please refresh the page and try again.
+        </p>
+      </div>
+    </div>
+  `;
 
   throw new Error(
-    "Supabase JavaScript library failed to load."
+    "Supabase JavaScript library unavailable."
   );
-
 }
 
 
@@ -2193,16 +1799,12 @@ const supabaseClient =
   );
 
 
-/* ============================================================
+/* ---------------------------------------------------------
    URLS
-============================================================ */
+   --------------------------------------------------------- */
 
 const BASE_URL =
-  new URL(
-    "./",
-    window.location.href
-  );
-
+  new URL("./",window.location.href);
 
 const AUTH_CALLBACK =
   new URL(
@@ -2210,20 +1812,17 @@ const AUTH_CALLBACK =
     BASE_URL
   ).href;
 
-
 const RESET_PASSWORD =
   new URL(
     "reset-password.html",
     BASE_URL
   ).href;
 
-
 const CREATOR_PORTAL =
   new URL(
     "creator-portal.html",
     BASE_URL
   ).href;
-
 
 const MEMBERSHIP_PAGE =
   new URL(
@@ -2232,11 +1831,11 @@ const MEMBERSHIP_PAGE =
   ).href;
 
 
-/* ============================================================
+/* ---------------------------------------------------------
    SAFE NEXT URL
-============================================================ */
+   --------------------------------------------------------- */
 
-function getSafeNext(){
+function getSafeNextUrl(){
 
   const params =
     new URLSearchParams(
@@ -2246,37 +1845,29 @@ function getSafeNext(){
   const requested =
     params.get("next");
 
-
-  if (!requested){
-    return CREATOR_PORTAL;
-  }
-
-
-  if (
-    requested.includes("\\") ||
-    requested.includes("\r") ||
-    requested.includes("\n") ||
-    requested.includes("\0")
-  ){
+  if(!requested){
 
     return CREATOR_PORTAL;
-
   }
-
-
-  if (
-    requested.startsWith("http:") ||
-    requested.startsWith("https:") ||
-    requested.startsWith("//") ||
-    requested.startsWith("javascript:")
-  ){
-
-    return CREATOR_PORTAL;
-
-  }
-
 
   try{
+
+    if(
+      requested.includes("\\") ||
+      /[\u0000-\u001F\u007F]/.test(requested)
+    ){
+
+      return CREATOR_PORTAL;
+    }
+
+    if(
+      /^https?:/i.test(requested) ||
+      /^\/\//.test(requested) ||
+      /^javascript:/i.test(requested)
+    ){
+
+      return CREATOR_PORTAL;
+    }
 
     const resolved =
       new URL(
@@ -2284,38 +1875,36 @@ function getSafeNext(){
         BASE_URL
       );
 
-
-    if (
+    if(
       resolved.origin !==
-      BASE_URL.origin
+      window.location.origin
     ){
 
       return CREATOR_PORTAL;
-
     }
-
 
     return resolved.href;
 
-  }catch{
+  }catch(error){
 
     return CREATOR_PORTAL;
-
   }
-
 }
 
 
 const NEXT_URL =
-  getSafeNext();
+  getSafeNextUrl();
 
 
-/* ============================================================
-   ELEMENTS
-============================================================ */
+/* ---------------------------------------------------------
+   DOM
+   --------------------------------------------------------- */
 
-const statusBox =
-  document.getElementById("status");
+const loginTab =
+  document.getElementById("loginTab");
+
+const signupTab =
+  document.getElementById("signupTab");
 
 const loginForm =
   document.getElementById("loginForm");
@@ -2323,64 +1912,58 @@ const loginForm =
 const signupForm =
   document.getElementById("signupForm");
 
-const loginButton =
-  document.getElementById("loginButton");
+const authForms =
+  document.getElementById("authForms");
 
-const signupButton =
-  document.getElementById("signupButton");
+const accountPanel =
+  document.getElementById("accountPanel");
 
-const googleButton =
-  document.getElementById("googleButton");
+const authTabs =
+  document.getElementById("authTabs");
 
-const googleSignupButton =
-  document.getElementById("googleSignupButton");
+const statusMessage =
+  document.getElementById("statusMessage");
 
-const magicLinkButton =
-  document.getElementById("magicLinkButton");
+const authTitle =
+  document.getElementById("authTitle");
 
-const accountInfo =
-  document.getElementById("accountInfo");
+const authSubtitle =
+  document.getElementById("authSubtitle");
 
-const accountName =
-  document.getElementById("accountName");
-
-const accountPlan =
-  document.getElementById("accountPlan");
+const navMembershipText =
+  document.getElementById("navMembershipText");
 
 
-/* ============================================================
+/* ---------------------------------------------------------
    STATUS
-============================================================ */
+   --------------------------------------------------------- */
 
 function showStatus(
   message,
   type = "info"
 ){
 
-  statusBox.textContent =
+  statusMessage.textContent =
     message;
 
-  statusBox.className =
-    "status show " +
-    type;
-
+  statusMessage.className =
+    `status show ${type}`;
 }
 
 
 function clearStatus(){
 
-  statusBox.textContent =
+  statusMessage.textContent =
     "";
 
-  statusBox.className =
+  statusMessage.className =
     "status";
-
 }
 
 
-/* ============================================================
-   BUTTON STATE
-============================================================ */
+/* ---------------------------------------------------------
+   BUTTON LOADING
+   --------------------------------------------------------- */
 
 function setButtonLoading(
   button,
@@ -2388,26 +1971,28 @@ function setButtonLoading(
   loadingText
 ){
 
-  if (!button){
-    return;
-  }
+  if(!button) return;
 
+  if(loading){
 
-  if (loading){
+    if(!button.dataset.originalText){
 
-    button.dataset.originalText =
-      button.textContent;
+      button.dataset.originalText =
+        button.textContent;
+    }
 
-    button.disabled =
-      true;
+    button.disabled = true;
 
-    button.textContent =
-      loadingText;
+    button.innerHTML = `
+      <span class="loading">
+        <span class="spinner"></span>
+        ${loadingText || "Please wait..."}
+      </span>
+    `;
 
   }else{
 
-    button.disabled =
-      false;
+    button.disabled = false;
 
     button.textContent =
       button.dataset.originalText ||
@@ -2418,153 +2003,24 @@ function setButtonLoading(
 }
 
 
-/* ============================================================
-   STARFIELD
-============================================================ */
+/* ---------------------------------------------------------
+   UNIVERSAL MEMBERSHIP
+   --------------------------------------------------------- */
 
-function createStars(){
+/*
+  IMPORTANT:
 
-  const container =
-    document.getElementById(
-      "stars"
-    );
+  Dreamscapes does NOT create its own membership.
 
+  These RPCs are the universal CrowRules membership layer:
 
-  const count =
-    window.innerWidth < 600
-      ? 70
-      : 130;
+    ensure_crow_membership
+    get_my_membership
 
+  The user's authenticated CrowRules identity is the source
+  of truth for membership.
+*/
 
-  for (
-    let i = 0;
-    i < count;
-    i++
-  ){
-
-    const star =
-      document.createElement(
-        "div"
-      );
-
-
-    star.className =
-      "star";
-
-
-    star.style.left =
-      Math.random() * 100 +
-      "%";
-
-
-    star.style.top =
-      Math.random() * 100 +
-      "%";
-
-
-    star.style.animationDelay =
-      Math.random() * 5 +
-      "s";
-
-
-    star.style.animationDuration =
-      2 +
-      Math.random() * 5 +
-      "s";
-
-
-    container.appendChild(
-      star
-    );
-
-  }
-
-}
-
-
-createStars();
-
-
-/* ============================================================
-   TABS
-============================================================ */
-
-document
-  .querySelectorAll(".tab")
-  .forEach(
-    tab => {
-
-      tab.addEventListener(
-        "click",
-        () => {
-
-          clearStatus();
-
-
-          document
-            .querySelectorAll(".tab")
-            .forEach(
-              item =>
-                item.classList.remove(
-                  "active"
-                )
-            );
-
-
-          tab.classList.add(
-            "active"
-          );
-
-
-          const isLogin =
-            tab.dataset.tab ===
-            "login";
-
-
-          loginForm.classList.toggle(
-            "active",
-            isLogin
-          );
-
-
-          signupForm.classList.toggle(
-            "active",
-            !isLogin
-          );
-
-        }
-      );
-
-    }
-  );
-
-
-/* ============================================================
-   USERNAME
-============================================================ */
-
-function normalizeUsername(
-  value
-){
-
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(
-      /[^a-z0-9_]/g,
-      ""
-    )
-    .slice(
-      0,
-      30
-    );
-
-}
-
-
-/* ============================================================
-   ENSURE CROW MEMBERSHIP
-============================================================ */
 
 async function ensureUniversalMembership(){
 
@@ -2572,13 +2028,11 @@ async function ensureUniversalMembership(){
     data,
     error
   } =
-    await supabaseClient
-      .rpc(
-        "ensure_crow_membership"
-      );
+    await supabaseClient.rpc(
+      "ensure_crow_membership"
+    );
 
-
-  if (error){
+  if(error){
 
     console.warn(
       "ensure_crow_membership:",
@@ -2586,18 +2040,11 @@ async function ensureUniversalMembership(){
     );
 
     return null;
-
   }
 
-
   return data;
-
 }
 
-
-/* ============================================================
-   GET MEMBERSHIP
-============================================================ */
 
 async function getMembership(){
 
@@ -2605,13 +2052,11 @@ async function getMembership(){
     data,
     error
   } =
-    await supabaseClient
-      .rpc(
-        "get_my_membership"
-      );
+    await supabaseClient.rpc(
+      "get_my_membership"
+    );
 
-
-  if (error){
+  if(error){
 
     console.warn(
       "get_my_membership:",
@@ -2619,157 +2064,434 @@ async function getMembership(){
     );
 
     return null;
-
   }
 
-
-  if (
-    Array.isArray(data)
-  ){
+  if(Array.isArray(data)){
 
     return data[0] || null;
-
   }
 
-
   return data || null;
-
 }
 
 
-/* ============================================================
-   LOAD ACCOUNT
-============================================================ */
+/* ---------------------------------------------------------
+   MEMBERSHIP DISPLAY
+   --------------------------------------------------------- */
+
+function getMembershipName(
+  membership
+){
+
+  if(!membership){
+
+    return "CrowRules Member";
+  }
+
+  return (
+    membership.plan_name ||
+    membership.plan_key ||
+    "CROW"
+  );
+}
+
+
+function getMembershipLevel(
+  membership
+){
+
+  if(!membership){
+
+    return null;
+  }
+
+  if(
+    membership.level !== null &&
+    membership.level !== undefined
+  ){
+
+    return membership.level;
+  }
+
+  return null;
+}
+
+
+function getMembershipStatus(
+  membership
+){
+
+  if(!membership){
+
+    return "Universal membership";
+  }
+
+  return (
+    membership.status ||
+    membership.membership_status ||
+    (
+      membership.is_active === true
+        ? "Active"
+        : "Universal membership"
+    )
+  );
+}
+
+
+function updateMembershipUI(
+  membership
+){
+
+  const membershipName =
+    document.getElementById(
+      "membershipName"
+    );
+
+  const membershipBadge =
+    document.getElementById(
+      "membershipBadge"
+    );
+
+  const membershipDetail =
+    document.getElementById(
+      "membershipDetail"
+    );
+
+
+  if(!membership){
+
+    membershipName.textContent =
+      "CrowRules Member";
+
+    membershipBadge.textContent =
+      "CROW";
+
+    membershipDetail.textContent =
+      "Your universal CrowRules account is active. Membership details could not be loaded right now.";
+
+    navMembershipText.textContent =
+      "UNIVERSAL MEMBERSHIP";
+
+    return;
+  }
+
+
+  const name =
+    getMembershipName(
+      membership
+    );
+
+  const level =
+    getMembershipLevel(
+      membership
+    );
+
+  const status =
+    getMembershipStatus(
+      membership
+    );
+
+
+  membershipName.textContent =
+    name;
+
+
+  membershipBadge.textContent =
+    level !== null
+      ? `LEVEL ${level}`
+      : "UNIVERSAL";
+
+
+  let detail =
+    `Universal CrowRules membership · ${status}`;
+
+
+  if(
+    level !== null
+  ){
+
+    detail +=
+      ` · Membership level ${level}`;
+  }
+
+
+  membershipDetail.textContent =
+    detail;
+
+
+  navMembershipText.textContent =
+    name.toUpperCase();
+}
+
+
+/* ---------------------------------------------------------
+   ACCOUNT UI
+   --------------------------------------------------------- */
 
 async function loadAccount(
   user
 ){
 
-  if (!user){
-    return;
+  if(!user){
+
+    return null;
   }
 
 
-  accountInfo.classList.add(
-    "show"
-  );
+  const accountName =
+    document.getElementById(
+      "accountName"
+    );
+
+  const accountEmail =
+    document.getElementById(
+      "accountEmail"
+    );
 
 
   const metadata =
-    user.user_metadata || {};
+    user.user_metadata ||
+    {};
 
 
-  accountName.textContent =
+  const displayName =
     metadata.display_name ||
     metadata.full_name ||
     metadata.name ||
+    metadata.username ||
     user.email ||
     "CrowRules Member";
 
 
-  accountPlan.textContent =
-    "Universal membership loading...";
+  accountName.textContent =
+    displayName;
 
 
-  await ensureUniversalMembership();
+  accountEmail.textContent =
+    user.email ||
+    "Authenticated CrowRules account";
 
 
-  const membership =
+  document.getElementById(
+    "membershipName"
+  ).textContent =
+    "Loading membership...";
+
+
+  document.getElementById(
+    "membershipBadge"
+  ).textContent =
+    "CHECKING";
+
+
+  document.getElementById(
+    "membershipDetail"
+  ).innerHTML = `
+    <span class="loading">
+      <span class="spinner"></span>
+      Checking your universal CrowRules membership...
+    </span>
+  `;
+
+
+  let membership =
     await getMembership();
 
 
-  if (membership){
+  /*
+    If the universal membership record does not yet exist,
+    initialize the standard CROW membership and then read it.
+  */
 
-    accountPlan.textContent =
-      (
-        membership.plan_name ||
-        membership.plan_key ||
-        "CROW"
-      ) +
-      " · Level " +
-      (
-        membership.level ??
-        1
-      );
+  if(!membership){
+
+    await ensureUniversalMembership();
+
+    membership =
+      await getMembership();
+  }
+
+
+  updateMembershipUI(
+    membership
+  );
+
+
+  return membership;
+}
+
+
+/* ---------------------------------------------------------
+   SHOW ACCOUNT
+   --------------------------------------------------------- */
+
+function showAccountView(){
+
+  authForms.classList.add(
+    "hidden"
+  );
+
+  authTabs.style.display =
+    "none";
+
+  accountPanel.classList.add(
+    "visible"
+  );
+
+  authTitle.textContent =
+    "Welcome Back";
+
+  authSubtitle.textContent =
+    "Your universal CrowRules account is ready for Dreamscapes.";
+
+}
+
+
+function showAuthView(){
+
+  authForms.classList.remove(
+    "hidden"
+  );
+
+  authTabs.style.display =
+    "grid";
+
+  accountPanel.classList.remove(
+    "visible"
+  );
+
+  authTitle.textContent =
+    "Welcome to Dreamscapes";
+
+  authSubtitle.textContent =
+    "Sign in with your universal CrowRules account or create one to begin.";
+
+}
+
+
+/* ---------------------------------------------------------
+   REDIRECT
+   --------------------------------------------------------- */
+
+function redirectToNext(){
+
+  window.location.assign(
+    NEXT_URL
+  );
+}
+
+
+/* ---------------------------------------------------------
+   TABS
+   --------------------------------------------------------- */
+
+function activateTab(
+  mode
+){
+
+  clearStatus();
+
+
+  if(mode === "signup"){
+
+    loginTab.classList.remove(
+      "active"
+    );
+
+    signupTab.classList.add(
+      "active"
+    );
+
+    loginForm.classList.add(
+      "hidden"
+    );
+
+    signupForm.classList.remove(
+      "hidden"
+    );
 
   }else{
 
-    accountPlan.textContent =
-      "CrowRules universal account";
-
-  }
-
-}
-
-
-/* ============================================================
-   CHECK EXISTING SESSION
-============================================================ */
-
-async function checkExistingSession(){
-
-  try{
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .auth
-        .getSession();
-
-
-    if (error){
-      throw error;
-    }
-
-
-    if (
-      data?.session?.user
-    ){
-
-      await loadAccount(
-        data.session.user
-      );
-
-
-      showStatus(
-        "You are already signed in. Opening Dreamscapes...",
-        "success"
-      );
-
-
-      setTimeout(
-        () => {
-
-          window.location.replace(
-            NEXT_URL
-          );
-
-        },
-        500
-      );
-
-    }
-
-  }catch(error){
-
-    console.error(
-      "Session check:",
-      error
+    signupTab.classList.remove(
+      "active"
     );
 
+    loginTab.classList.add(
+      "active"
+    );
+
+    signupForm.classList.add(
+      "hidden"
+    );
+
+    loginForm.classList.remove(
+      "hidden"
+    );
   }
 
 }
 
 
-checkExistingSession();
+loginTab.addEventListener(
+  "click",
+  () => activateTab("login")
+);
+
+signupTab.addEventListener(
+  "click",
+  () => activateTab("signup")
+);
 
 
-/* ============================================================
-   PASSWORD LOGIN
-============================================================ */
+/* ---------------------------------------------------------
+   PASSWORD VISIBILITY
+   --------------------------------------------------------- */
+
+document
+  .querySelectorAll(".password-toggle")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const target =
+          document.getElementById(
+            button.dataset.target
+          );
+
+        if(!target) return;
+
+
+        if(
+          target.type ===
+          "password"
+        ){
+
+          target.type =
+            "text";
+
+          button.textContent =
+            "Hide";
+
+        }else{
+
+          target.type =
+            "password";
+
+          button.textContent =
+            "Show";
+        }
+
+      }
+    );
+
+  });
+
+
+/* ---------------------------------------------------------
+   LOGIN
+   --------------------------------------------------------- */
 
 loginForm.addEventListener(
   "submit",
@@ -2786,9 +2508,7 @@ loginForm.addEventListener(
           "loginEmail"
         )
         .value
-        .trim()
-        .toLowerCase();
-
+        .trim();
 
     const password =
       document
@@ -2798,22 +2518,27 @@ loginForm.addEventListener(
         .value;
 
 
-    if (!email || !password){
+    const button =
+      document.getElementById(
+        "loginButton"
+      );
+
+
+    if(!email || !password){
 
       showStatus(
-        "Enter your email and password.",
+        "Please enter your email and password.",
         "error"
       );
 
       return;
-
     }
 
 
     setButtonLoading(
-      loginButton,
+      button,
       true,
-      "SIGNING IN..."
+      "Signing in..."
     );
 
 
@@ -2823,26 +2548,30 @@ loginForm.addEventListener(
         data,
         error
       } =
-        await supabaseClient
-          .auth
-          .signInWithPassword({
-            email,
-            password
-          });
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
 
 
-      if (error){
+      if(error){
+
         throw error;
       }
 
 
-      if (!data?.session){
+      if(!data?.session){
 
         throw new Error(
-          "Sign-in succeeded but no active session was created."
+          "Your account was authenticated, but a session could not be established."
         );
-
       }
+
+
+      showStatus(
+        "Signed in. Loading your universal CrowRules membership...",
+        "success"
+      );
 
 
       await loadAccount(
@@ -2850,21 +2579,9 @@ loginForm.addEventListener(
       );
 
 
-      showStatus(
-        "Welcome back. Entering Dreamscapes...",
-        "success"
-      );
-
-
       setTimeout(
-        () => {
-
-          window.location.replace(
-            NEXT_URL
-          );
-
-        },
-        500
+        redirectToNext,
+        600
       );
 
 
@@ -2877,19 +2594,16 @@ loginForm.addEventListener(
 
 
       showStatus(
-        friendlyAuthError(
-          error
-        ),
+        error?.message ||
+        "We could not sign you in. Please check your credentials and try again.",
         "error"
       );
-
 
     }finally{
 
       setButtonLoading(
-        loginButton,
-        false,
-        "ENTER DREAMSCAPES"
+        button,
+        false
       );
 
     }
@@ -2898,122 +2612,9 @@ loginForm.addEventListener(
 );
 
 
-/* ============================================================
-   GOOGLE
-============================================================ */
-
-async function startGoogleAuth(
-  button
-){
-
-  clearStatus();
-
-
-  setButtonLoading(
-    button,
-    true,
-    "OPENING GOOGLE..."
-  );
-
-
-  try{
-
-    /*
-      Send OAuth through the universal callback.
-      The callback then safely returns the user
-      to NEXT_URL.
-    */
-
-    const callbackUrl =
-      new URL(
-        AUTH_CALLBACK
-      );
-
-
-    callbackUrl.searchParams.set(
-      "next",
-      NEXT_URL
-    );
-
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .auth
-        .signInWithOAuth({
-
-          provider:"google",
-
-          options:{
-
-            redirectTo:
-              callbackUrl.href
-
-          }
-
-        });
-
-
-    if (error){
-      throw error;
-    }
-
-
-  }catch(error){
-
-    console.error(
-      "Google authentication:",
-      error
-    );
-
-
-    showStatus(
-      friendlyAuthError(
-        error
-      ),
-      "error"
-    );
-
-
-    setButtonLoading(
-      button,
-      false,
-      "CONTINUE WITH GOOGLE"
-    );
-
-  }
-
-}
-
-
-googleButton.addEventListener(
-  "click",
-  () => {
-
-    startGoogleAuth(
-      googleButton
-    );
-
-  }
-);
-
-
-googleSignupButton.addEventListener(
-  "click",
-  () => {
-
-    startGoogleAuth(
-      googleSignupButton
-    );
-
-  }
-);
-
-
-/* ============================================================
+/* ---------------------------------------------------------
    SIGNUP
-============================================================ */
+   --------------------------------------------------------- */
 
 signupForm.addEventListener(
   "submit",
@@ -3027,20 +2628,25 @@ signupForm.addEventListener(
     const displayName =
       document
         .getElementById(
-          "signupName"
+          "displayName"
+        )
+        .value
+        .trim();
+
+    const usernameRaw =
+      document
+        .getElementById(
+          "creatorUsername"
         )
         .value
         .trim();
 
 
     const username =
-      normalizeUsername(
-        document
-          .getElementById(
-            "signupUsername"
-          )
-          .value
-      );
+      usernameRaw
+        .replace(/^@+/,"")
+        .replace(/[^a-zA-Z0-9_.-]/g,"")
+        .slice(0,40);
 
 
     const email =
@@ -3049,17 +2655,14 @@ signupForm.addEventListener(
           "signupEmail"
         )
         .value
-        .trim()
-        .toLowerCase();
-
+        .trim();
 
     const role =
       document
         .getElementById(
-          "signupRole"
+          "creatorRole"
         )
         .value;
-
 
     const bio =
       document
@@ -3069,7 +2672,6 @@ signupForm.addEventListener(
         .value
         .trim();
 
-
     const password =
       document
         .getElementById(
@@ -3077,89 +2679,66 @@ signupForm.addEventListener(
         )
         .value;
 
-
-    const confirmation =
+    const confirmPassword =
       document
         .getElementById(
           "signupPasswordConfirm"
         )
         .value;
 
-
-    const terms =
+    const termsAccepted =
       document
         .getElementById(
-          "terms"
+          "acceptTerms"
         )
         .checked;
 
 
-    if (!displayName){
-
-      showStatus(
-        "Enter your display name.",
-        "error"
+    const button =
+      document.getElementById(
+        "signupButton"
       );
 
-      return;
 
-    }
-
-
-    if (
-      username.length < 3 ||
-      !/^[a-z0-9_]+$/.test(
-        username
-      )
+    if(
+      !displayName ||
+      !username ||
+      !email ||
+      !password
     ){
 
       showStatus(
-        "Creator usernames must be 3–30 characters using letters, numbers, and underscores.",
+        "Please complete all required fields.",
         "error"
       );
 
       return;
-
     }
 
 
-    if (!email){
+    if(username.length < 3){
 
       showStatus(
-        "Enter your email address.",
+        "Your creator username must contain at least 3 valid characters.",
         "error"
       );
 
       return;
-
     }
 
 
-    if (!role){
+    if(password.length < 8){
 
       showStatus(
-        "Select your primary creative role.",
+        "Your password must contain at least 8 characters.",
         "error"
       );
 
       return;
-
     }
 
 
-    if (password.length < 8){
-
-      showStatus(
-        "Your password must be at least 8 characters.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if (password !== confirmation){
+    if(password !== confirmPassword){
 
       showStatus(
         "Your passwords do not match.",
@@ -3167,26 +2746,24 @@ signupForm.addEventListener(
       );
 
       return;
-
     }
 
 
-    if (!terms){
+    if(!termsAccepted){
 
       showStatus(
-        "Please accept the Dreamscapes creator-network terms.",
+        "Please accept the CrowRules terms and creator network policies.",
         "error"
       );
 
       return;
-
     }
 
 
     setButtonLoading(
-      signupButton,
+      button,
       true,
-      "CREATING ACCOUNT..."
+      "Creating account..."
     );
 
 
@@ -3196,117 +2773,122 @@ signupForm.addEventListener(
         data,
         error
       } =
-        await supabaseClient
-          .auth
-          .signUp({
+      await supabaseClient.auth.signUp({
 
-            email,
+        email,
 
-            password,
+        password,
 
-            options:{
+        options:{
 
-              emailRedirectTo:
-                AUTH_CALLBACK,
+          emailRedirectTo:
+            AUTH_CALLBACK,
 
-              data:{
+          data:{
 
-                /*
-                  Universal account.
-                */
+            /*
+              These are profile/identity metadata only.
 
-                app:
-                  "dreamscapes",
+              They are NOT used for authorization.
+            */
 
-                account_type:
-                  "member",
+            app:
+              "dreamscapes",
 
-                /*
-                  Universal profile.
-                */
+            account_type:
+              "member",
 
-                display_name:
-                  displayName,
+            display_name:
+              displayName,
 
-                username:
-                  username,
+            username:
+              username,
 
-                bio:
-                  bio,
+            bio:
+              bio,
 
-                /*
-                  Dreamscapes creator metadata.
-                */
+            creator_role:
+              role,
 
-                creator_role:
-                  role,
+            dreamscapes_creator:
+              true
 
-                dreamscapes_creator:
-                  true
+          }
 
-              }
+        }
 
-            }
-
-          });
+      });
 
 
-      if (error){
+      if(error){
+
         throw error;
       }
 
 
-      if (!data?.session){
+      /*
+        Supabase may require email confirmation.
+      */
+
+      if(!data?.session){
 
         showStatus(
-          "Your CrowRules account was created. Check your email to confirm your account, then return here to sign in.",
+          "Your CrowRules account has been created. Check your email to confirm your account, then return here and sign in. Your universal CROW membership will be initialized when your authenticated session is established.",
           "success"
         );
 
 
-        signupForm.reset();
+        /*
+          Preserve email so the user does not have to
+          retype it after confirmation.
+        */
 
-
-        document
-          .querySelector(
-            '[data-tab="login"]'
-          )
-          ?.click();
-
-
-        document
-          .getElementById(
-            "loginEmail"
-          )
-          .value =
+        document.getElementById(
+          "loginEmail"
+        ).value =
           email;
 
 
-        return;
+        signupForm.reset();
 
+        document.getElementById(
+          "loginEmail"
+        ).value =
+          email;
+
+
+        setTimeout(
+          () => activateTab("login"),
+          900
+        );
+
+
+        return;
       }
 
+
+      /*
+        If email confirmation is disabled and Supabase
+        immediately returns a session, initialize the
+        universal membership.
+      */
+
+      showStatus(
+        "Account created. Setting up your universal CrowRules membership...",
+        "success"
+      );
+
+
+      await ensureUniversalMembership();
 
       await loadAccount(
         data.user
       );
 
 
-      showStatus(
-        "Your CrowRules account is ready. Welcome to Dreamscapes.",
-        "success"
-      );
-
-
       setTimeout(
-        () => {
-
-          window.location.replace(
-            NEXT_URL
-          );
-
-        },
-        600
+        redirectToNext,
+        700
       );
 
 
@@ -3319,19 +2901,16 @@ signupForm.addEventListener(
 
 
       showStatus(
-        friendlyAuthError(
-          error
-        ),
+        error?.message ||
+        "We could not create your account. Please try again.",
         "error"
       );
-
 
     }finally{
 
       setButtonLoading(
-        signupButton,
-        false,
-        "CREATE CROWRULES ACCOUNT"
+        button,
+        false
       );
 
     }
@@ -3340,136 +2919,109 @@ signupForm.addEventListener(
 );
 
 
-/* ============================================================
-   MAGIC LINK
-============================================================ */
-
-magicLinkButton.addEventListener(
-  "click",
-  async () => {
-
-    clearStatus();
-
-
-    const email =
-      document
-        .getElementById(
-          "loginEmail"
-        )
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    if (!email){
-
-      showStatus(
-        "Enter your email address first.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    setButtonLoading(
-      magicLinkButton,
-      true,
-      "SENDING..."
-    );
-
-
-    try{
-
-      const callbackUrl =
-        new URL(
-          AUTH_CALLBACK
-        );
-
-
-      callbackUrl.searchParams.set(
-        "next",
-        NEXT_URL
-      );
-
-
-      const {
-        error
-      } =
-        await supabaseClient
-          .auth
-          .signInWithOtp({
-
-            email,
-
-            options:{
-
-              emailRedirectTo:
-                callbackUrl.href,
-
-              shouldCreateUser:
-                false
-
-            }
-
-          });
-
-
-      if (error){
-        throw error;
-      }
-
-
-      showStatus(
-        "Magic login link sent. Check your email.",
-        "success"
-      );
-
-
-    }catch(error){
-
-      console.error(
-        "Magic link error:",
-        error
-      );
-
-
-      showStatus(
-        friendlyAuthError(
-          error
-        ),
-        "error"
-      );
-
-
-    }finally{
-
-      setButtonLoading(
-        magicLinkButton,
-        false,
-        "SEND MAGIC LOGIN LINK"
-      );
-
-    }
-
-  }
-);
-
-
-/* ============================================================
-   PASSWORD RESET
-============================================================ */
+/* ---------------------------------------------------------
+   GOOGLE AUTH
+   --------------------------------------------------------- */
 
 document
   .getElementById(
-    "forgotPassword"
+    "googleLogin"
   )
   .addEventListener(
     "click",
-    async event => {
+    async () => {
 
-      event.preventDefault();
+      clearStatus();
+
+
+      const button =
+        document.getElementById(
+          "googleLogin"
+        );
+
+
+      setButtonLoading(
+        button,
+        true,
+        "Connecting..."
+      );
+
+
+      try{
+
+        const callbackUrl =
+          new URL(
+            AUTH_CALLBACK
+          );
+
+
+        callbackUrl.searchParams.set(
+          "next",
+          NEXT_URL
+        );
+
+
+        const {
+          error
+        } =
+        await supabaseClient.auth.signInWithOAuth({
+
+          provider:
+            "google",
+
+          options:{
+
+            redirectTo:
+              callbackUrl.href
+
+          }
+
+        });
+
+
+        if(error){
+
+          throw error;
+        }
+
+
+      }catch(error){
+
+        console.error(
+          "Google auth error:",
+          error
+        );
+
+
+        showStatus(
+          error?.message ||
+          "Google sign-in could not be started.",
+          "error"
+        );
+
+
+        setButtonLoading(
+          button,
+          false
+        );
+
+      }
+
+    }
+  );
+
+
+/* ---------------------------------------------------------
+   MAGIC LINK
+   --------------------------------------------------------- */
+
+document
+  .getElementById(
+    "magicLink"
+  )
+  .addEventListener(
+    "click",
+    async () => {
 
       clearStatus();
 
@@ -3480,11 +3032,10 @@ document
             "loginEmail"
           )
           .value
-          .trim()
-          .toLowerCase();
+          .trim();
 
 
-      if (!email){
+      if(!email){
 
         showStatus(
           "Enter your email address first.",
@@ -3492,19 +3043,31 @@ document
         );
 
         return;
-
       }
+
+
+      const button =
+        document.getElementById(
+          "magicLink"
+        );
+
+
+      setButtonLoading(
+        button,
+        true,
+        "Sending..."
+      );
 
 
       try{
 
-        const resetUrl =
+        const callbackUrl =
           new URL(
-            RESET_PASSWORD
+            AUTH_CALLBACK
           );
 
 
-        resetUrl.searchParams.set(
+        callbackUrl.searchParams.set(
           "next",
           NEXT_URL
         );
@@ -3513,24 +3076,31 @@ document
         const {
           error
         } =
-          await supabaseClient
-            .auth
-            .resetPasswordForEmail(
-              email,
-              {
-                redirectTo:
-                  resetUrl.href
-              }
-            );
+        await supabaseClient.auth.signInWithOtp({
+
+          email,
+
+          options:{
+
+            emailRedirectTo:
+              callbackUrl.href,
+
+            shouldCreateUser:
+              false
+
+          }
+
+        });
 
 
-        if (error){
+        if(error){
+
           throw error;
         }
 
 
         showStatus(
-          "Password reset instructions have been sent to your email.",
+          "If that email belongs to an existing CrowRules account, a secure sign-in link has been sent.",
           "success"
         );
 
@@ -3538,16 +3108,22 @@ document
       }catch(error){
 
         console.error(
-          "Password reset:",
+          "Magic link error:",
           error
         );
 
 
         showStatus(
-          friendlyAuthError(
-            error
-          ),
+          error?.message ||
+          "The magic link could not be sent.",
           "error"
+        );
+
+      }finally{
+
+        setButtonLoading(
+          button,
+          false
         );
 
       }
@@ -3556,149 +3132,389 @@ document
   );
 
 
-/* ============================================================
-   FRIENDLY AUTH ERRORS
-============================================================ */
+/* ---------------------------------------------------------
+   PASSWORD RESET
+   --------------------------------------------------------- */
 
-function friendlyAuthError(
-  error
-){
+document
+  .getElementById(
+    "forgotPassword"
+  )
+  .addEventListener(
+    "click",
+    async () => {
 
-  const message =
-    String(
-      error?.message ||
-      error ||
-      ""
+      clearStatus();
+
+
+      const email =
+        document
+          .getElementById(
+            "loginEmail"
+          )
+          .value
+          .trim();
+
+
+      if(!email){
+
+        showStatus(
+          "Enter your email address first so we know where to send the reset link.",
+          "error"
+        );
+
+        return;
+      }
+
+
+      const button =
+        document.getElementById(
+          "forgotPassword"
+        );
+
+
+      button.disabled =
+        true;
+
+
+      try{
+
+        const {
+          error
+        } =
+        await supabaseClient.auth.resetPasswordForEmail(
+          email,
+          {
+            redirectTo:
+              RESET_PASSWORD
+          }
+        );
+
+
+        if(error){
+
+          throw error;
+        }
+
+
+        showStatus(
+          "If that email belongs to a CrowRules account, password reset instructions have been sent.",
+          "success"
+        );
+
+
+      }catch(error){
+
+        console.error(
+          "Password reset error:",
+          error
+        );
+
+
+        showStatus(
+          error?.message ||
+          "Password reset could not be started.",
+          "error"
+        );
+
+      }finally{
+
+        button.disabled =
+          false;
+
+      }
+
+    }
+  );
+
+
+/* ---------------------------------------------------------
+   ENTER DREAMSCAPES
+   --------------------------------------------------------- */
+
+document
+  .getElementById(
+    "enterDreamscapes"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      redirectToNext();
+
+    }
+  );
+
+
+/* ---------------------------------------------------------
+   MANAGE MEMBERSHIP
+   --------------------------------------------------------- */
+
+document
+  .getElementById(
+    "manageMembership"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      window.location.assign(
+        MEMBERSHIP_PAGE
+      );
+
+    }
+  );
+
+
+/* ---------------------------------------------------------
+   SIGN OUT
+   --------------------------------------------------------- */
+
+document
+  .getElementById(
+    "signOut"
+  )
+  .addEventListener(
+    "click",
+    async () => {
+
+      clearStatus();
+
+
+      const button =
+        document.getElementById(
+          "signOut"
+        );
+
+
+      setButtonLoading(
+        button,
+        true,
+        "Signing out..."
+      );
+
+
+      try{
+
+        const {
+          error
+        } =
+        await supabaseClient.auth.signOut();
+
+
+        if(error){
+
+          throw error;
+        }
+
+
+        showAuthView();
+
+        activateTab(
+          "login"
+        );
+
+
+        showStatus(
+          "You have been signed out of your universal CrowRules account.",
+          "success"
+        );
+
+
+        navMembershipText.textContent =
+          "UNIVERSAL MEMBERSHIP";
+
+
+      }catch(error){
+
+        console.error(
+          "Sign out error:",
+          error
+        );
+
+
+        showStatus(
+          error?.message ||
+          "We could not sign you out.",
+          "error"
+        );
+
+      }finally{
+
+        setButtonLoading(
+          button,
+          false
+        );
+
+      }
+
+    }
+  );
+
+
+/* ---------------------------------------------------------
+   SESSION CHECK
+   --------------------------------------------------------- */
+
+async function checkExistingSession(){
+
+  try{
+
+    const {
+      data,
+      error
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    if(error){
+
+      console.warn(
+        "getSession:",
+        error.message
+      );
+
+      return;
+    }
+
+
+    const session =
+      data?.session;
+
+
+    if(!session?.user){
+
+      showAuthView();
+
+      return;
+    }
+
+
+    showAccountView();
+
+
+    showStatus(
+      "Your CrowRules session is active. Loading your universal membership...",
+      "info"
     );
 
 
-  const lower =
-    message.toLowerCase();
+    await loadAccount(
+      session.user
+    );
 
 
-  if (
-    lower.includes(
-      "invalid login credentials"
-    )
-  ){
-
-    return "The email or password is incorrect.";
-
-  }
+    showStatus(
+      "Universal CrowRules account verified.",
+      "success"
+    );
 
 
-  if (
-    lower.includes(
-      "email not confirmed"
-    )
-  ){
+    /*
+      If the user arrived here specifically because another
+      page sent them to authentication, return them there.
+    */
 
-    return "Please confirm your email address before signing in.";
-
-  }
-
-
-  if (
-    lower.includes(
-      "user already registered"
-    ) ||
-    lower.includes(
-      "already registered"
-    )
-  ){
-
-    return "An account with that email already exists. Try signing in instead.";
-
-  }
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
 
 
-  if (
-    lower.includes(
-      "rate limit"
-    )
-  ){
+    if(params.has("next")){
 
-    return "Too many attempts. Please wait a moment and try again.";
+      setTimeout(
+        redirectToNext,
+        700
+      );
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "Session check error:",
+      error
+    );
 
   }
-
-
-  if (
-    lower.includes(
-      "redirect"
-    ) ||
-    lower.includes(
-      "redirect_uri"
-    )
-  ){
-
-    return "The CrowRules authentication redirect is not configured for this Dreamscapes address yet.";
-
-  }
-
-
-  if (
-    lower.includes(
-      "provider"
-    ) &&
-    lower.includes(
-      "not enabled"
-    )
-  ){
-
-    return "Google sign-in is not enabled in the CrowRules authentication settings.";
-
-  }
-
-
-  return (
-    message ||
-    "Something went wrong. Please try again."
-  );
 
 }
 
 
-/* ============================================================
-   AUTH STATE
-============================================================ */
+/* ---------------------------------------------------------
+   AUTH STATE CHANGES
+   --------------------------------------------------------- */
 
-supabaseClient
-  .auth
-  .onAuthStateChange(
-    async (
-      event,
-      session
-    ) => {
+/*
+  Do not await long-running account work directly inside
+  Supabase's auth callback.
 
-      console.log(
-        "CrowRules Auth:",
-        event
+  Scheduling it avoids auth callback/re-entrancy issues.
+*/
+
+supabaseClient.auth.onAuthStateChange(
+  (event,session) => {
+
+    console.log(
+      "CrowRules Auth:",
+      event
+    );
+
+
+    if(
+      session?.user &&
+      event !==
+      "PASSWORD_RECOVERY"
+    ){
+
+      setTimeout(
+        async () => {
+
+          showAccountView();
+
+          await loadAccount(
+            session.user
+          );
+
+        },
+        0
       );
 
+      return;
+    }
 
-      if (
-        session?.user &&
-        event !==
-          "PASSWORD_RECOVERY"
-      ){
 
-        await loadAccount(
-          session.user
-        );
+    if(
+      event ===
+      "SIGNED_OUT"
+    ){
 
-      }
+      setTimeout(
+        () => {
+
+          showAuthView();
+
+          navMembershipText.textContent =
+            "UNIVERSAL MEMBERSHIP";
+
+        },
+        0
+      );
 
     }
-  );
 
+  }
+);
+
+
+/* ---------------------------------------------------------
+   INITIALIZE
+   --------------------------------------------------------- */
+
+checkExistingSession();
 
 </script>
-
-
-<script
-  src="assets/js/dreamscapes-global.js"
-></script>
 
 </body>
 </html>
