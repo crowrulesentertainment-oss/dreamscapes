@@ -1,60 +1,442 @@
 <!doctype html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="utf-8">
 
 <meta
   name="viewport"
-  content="width=device-width,initial-scale=1"
+  content="width=device-width,initial-scale=1,viewport-fit=cover"
 >
 
-<title>Entering Dreamscapes...</title>
+<title>Entering Dreamscapes | CrowRules Entertainment</title>
+
+<meta
+  name="description"
+  content="Completing your CrowRules Dreamscapes account sign-in."
+>
+
+<meta name="theme-color" content="#05050b">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap"
+  rel="stylesheet"
+>
+
+<!-- IMPORTANT:
+     Correct Supabase browser package.
+     Never place a service_role or secret key here.
+-->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link
+  rel="stylesheet"
+  href="assets/css/dreamscapes-global.css"
+>
 
 <style>
 
+:root{
+  --bg:#05050b;
+  --panel:rgba(12,12,25,.88);
+  --border:rgba(255,255,255,.10);
+
+  --cyan:#00eaff;
+  --purple:#8b5cff;
+  --pink:#ff3cac;
+  --gold:#ffd166;
+
+  --text:#f7f7ff;
+  --muted:#a7a7bd;
+
+  --success:#47e6a1;
+  --danger:#ff5f6d;
+}
+
+*{
+  box-sizing:border-box;
+}
+
 html,
 body{
-  margin:0;
-  width:100%;
-  height:100%;
-  background:#05050b;
-  color:white;
-  font-family:Arial,sans-serif;
+  min-height:100%;
 }
 
 body{
-  display:grid;
-  place-items:center;
+  margin:0;
+
+  color:var(--text);
+
+  font-family:
+    Montserrat,
+    Arial,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(139,92,255,.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(0,234,255,.13),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(255,60,172,.10),
+      transparent 40%
+    ),
+    #05050b;
+
+  overflow:hidden;
 }
 
-.box{
-  text-align:center;
+/* ============================================================
+   STARFIELD
+============================================================ */
+
+#stars{
+  position:fixed;
+  inset:0;
+
+  pointer-events:none;
+
+  z-index:0;
 }
 
-.spinner{
-  width:50px;
-  height:50px;
+.star{
+  position:absolute;
 
-  margin:0 auto 25px;
-
-  border:3px solid rgba(255,255,255,.12);
-  border-top-color:#00eaff;
+  width:2px;
+  height:2px;
 
   border-radius:50%;
 
-  animation:spin .8s linear infinite;
+  background:#fff;
+
+  opacity:.35;
+
+  animation:
+    twinkle 4s infinite ease-in-out;
 }
 
-h1{
-  font-family:Arial,sans-serif;
+@keyframes twinkle{
+
+  0%,
+  100%{
+    opacity:.15;
+    transform:scale(.7);
+  }
+
+  50%{
+    opacity:.8;
+    transform:scale(1.5);
+  }
+
+}
+
+/* ============================================================
+   AMBIENT ORBS
+============================================================ */
+
+.orb{
+  position:fixed;
+
+  border-radius:50%;
+
+  pointer-events:none;
+
+  filter:blur(2px);
+
+  z-index:0;
+}
+
+.orb.one{
+  width:360px;
+  height:360px;
+
+  left:-180px;
+  top:5%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(139,92,255,.30),
+      transparent 70%
+    );
+}
+
+.orb.two{
+  width:420px;
+  height:420px;
+
+  right:-220px;
+  top:30%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(0,234,255,.22),
+      transparent 70%
+    );
+}
+
+.orb.three{
+  width:320px;
+  height:320px;
+
+  left:40%;
+  bottom:-200px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,60,172,.20),
+      transparent 70%
+    );
+}
+
+/* ============================================================
+   PAGE
+============================================================ */
+
+.page{
+  position:relative;
+
+  z-index:2;
+
+  min-height:100vh;
+
+  display:grid;
+
+  place-items:center;
+
+  padding:30px 20px;
+}
+
+/* ============================================================
+   CARD
+============================================================ */
+
+.callback-card{
+
+  width:min(560px,100%);
+
+  padding:42px 34px;
+
+  text-align:center;
+
+  border:
+    1px solid
+    rgba(255,255,255,.12);
+
+  border-radius:26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18,15,38,.95),
+      rgba(7,7,15,.95)
+    );
+
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.65);
+
+  backdrop-filter:blur(25px);
+
+  animation:
+    cardIn .55s ease both;
+}
+
+@keyframes cardIn{
+
+  from{
+    opacity:0;
+    transform:
+      translateY(15px)
+      scale(.98);
+  }
+
+  to{
+    opacity:1;
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+/* ============================================================
+   BRAND MARK
+============================================================ */
+
+.brand-mark{
+
+  width:72px;
+  height:72px;
+
+  margin:0 auto 24px;
+
+  display:grid;
+  place-items:center;
+
+  border-radius:20px;
+
+  color:#05050b;
+
+  font-family:Orbitron,sans-serif;
+
+  font-size:19px;
+
+  font-weight:900;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--cyan),
+      var(--purple),
+      var(--pink)
+    );
+
+  box-shadow:
+    0 0 40px rgba(0,234,255,.25);
+
+}
+
+/* ============================================================
+   TEXT
+============================================================ */
+
+.eyebrow{
+
+  margin-bottom:12px;
+
+  color:var(--cyan);
+
+  font-family:Orbitron,sans-serif;
+
+  font-size:10px;
+
+  font-weight:700;
+
   letter-spacing:3px;
 }
 
-p{
-  color:#999;
+h1{
+
+  margin:0 0 14px;
+
+  font-family:Orbitron,sans-serif;
+
+  font-size:
+    clamp(25px,5vw,38px);
+
+  line-height:1.1;
+
+}
+
+.subtitle{
+
+  margin:0 auto;
+
+  max-width:430px;
+
+  color:var(--muted);
+
+  font-size:13px;
+
+  line-height:1.7;
+}
+
+/* ============================================================
+   STATUS
+============================================================ */
+
+.status{
+
+  margin-top:26px;
+
+  padding:15px 17px;
+
+  border-radius:14px;
+
+  font-size:12px;
+
+  line-height:1.6;
+}
+
+.status.info{
+
+  color:#d2f9ff;
+
+  background:
+    rgba(0,234,255,.07);
+
+  border:
+    1px solid
+    rgba(0,234,255,.18);
+}
+
+.status.success{
+
+  color:#baffdf;
+
+  background:
+    rgba(71,230,161,.08);
+
+  border:
+    1px solid
+    rgba(71,230,161,.20);
+}
+
+.status.error{
+
+  color:#ffd0d5;
+
+  background:
+    rgba(255,95,109,.08);
+
+  border:
+    1px solid
+    rgba(255,95,109,.22);
+}
+
+/* ============================================================
+   LOADER
+============================================================ */
+
+.loader-wrap{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin-top:28px;
+}
+
+.loader{
+
+  width:38px;
+  height:38px;
+
+  border-radius:50%;
+
+  border:
+    3px solid
+    rgba(255,255,255,.10);
+
+  border-top-color:
+    var(--cyan);
+
+  border-right-color:
+    var(--purple);
+
+  animation:
+    spin .8s linear infinite;
 }
 
 @keyframes spin{
@@ -65,28 +447,197 @@ p{
 
 }
 
+/* ============================================================
+   BUTTON
+============================================================ */
+
+.button{
+
+  display:inline-block;
+
+  margin-top:22px;
+
+  padding:12px 20px;
+
+  border-radius:12px;
+
+  color:#05050b;
+
+  text-decoration:none;
+
+  font-family:Orbitron,sans-serif;
+
+  font-size:10px;
+
+  font-weight:800;
+
+  letter-spacing:1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--cyan),
+      var(--purple)
+    );
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+}
+
+.button:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,234,255,.18);
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+.footer{
+
+  position:fixed;
+
+  left:0;
+  right:0;
+  bottom:18px;
+
+  z-index:3;
+
+  text-align:center;
+
+  color:#66667a;
+
+  font-size:9px;
+
+  letter-spacing:.4px;
+}
+
+.footer strong{
+  color:#9a9aae;
+}
+
 </style>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <link rel="stylesheet" href="assets/css/dreamscapes-global.css">
 </head>
 
 <body>
 
-<div class="box">
+<div id="stars"></div>
 
-  <div class="spinner"></div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
 
-  <h1>ENTERING DREAMSCAPES</h1>
 
-  <p>
-    Verifying your creator account...
-  </p>
+<main class="page">
+
+  <section class="callback-card">
+
+    <div class="brand-mark">
+      CR
+    </div>
+
+    <div class="eyebrow">
+      CROWRULES DREAMSCAPES
+    </div>
+
+    <h1>
+      ENTERING THE
+      <span
+        style="
+          background:linear-gradient(
+            90deg,
+            #00eaff,
+            #8b5cff,
+            #ff3cac
+          );
+          -webkit-background-clip:text;
+          background-clip:text;
+          color:transparent;
+        "
+      >
+        DREAMSCAPES
+      </span>
+    </h1>
+
+    <p class="subtitle" id="subtitle">
+      We're securely completing your CrowRules account sign-in.
+    </p>
+
+    <div
+      id="status"
+      class="status info"
+    >
+      Authenticating your account...
+    </div>
+
+    <div
+      id="loader"
+      class="loader-wrap"
+    >
+      <div class="loader"></div>
+    </div>
+
+    <a
+      id="continueButton"
+      class="button"
+      href="login.html"
+      style="display:none"
+    >
+      RETURN TO LOGIN
+    </a>
+
+  </section>
+
+</main>
+
+
+<div class="footer">
+
+  <strong>CrowRules Dreamscapes</strong>
+  —
+  Part of CrowRules Entertainment
 
 </div>
 
+
 <script>
+
+/* ============================================================
+   CROWRULES UNIVERSAL AUTH CALLBACK
+============================================================ */
+
+/*
+  This page is intentionally shared by the Dreamscapes
+  authentication flow.
+
+  Universal account architecture:
+
+      auth.users
+           ↓
+      crowrules_handle_new_user()
+           ↓
+      members
+           ↓
+      membership_profiles
+           ↓
+      ensure_crow_membership()
+           ↓
+      membership_plans
+           ↓
+      membership_entitlements
+
+  The browser NEVER receives a service-role key.
+*/
+
+
+/* ============================================================
+   SUPABASE CONFIG
+============================================================ */
 
 const SUPABASE_URL =
   "https://cevylpnoexugwgygvtgu.supabase.co";
@@ -94,96 +645,700 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
   "sb_publishable_AdfM5y6RqvF3tbvEVzDZSg_JuGTQLD-";
 
-const supabaseClient =
-  window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY,
-    {
-      auth:{
-        autoRefreshToken:true,
-        persistSession:true,
-        detectSessionInUrl:true
-      }
-    }
+
+/* ============================================================
+   DREAMSCAPES PATHS
+============================================================ */
+
+const BASE_URL =
+  new URL(
+    "./",
+    window.location.href
   );
 
-async function enterDreamscapes(){
+
+const LOGIN_URL =
+  new URL(
+    "login.html",
+    BASE_URL
+  ).href;
+
+
+const CREATOR_PORTAL_URL =
+  new URL(
+    "creator-portal.html",
+    BASE_URL
+  ).href;
+
+
+/* ============================================================
+   SUPABASE CLIENT
+============================================================ */
+
+let supabaseClient = null;
+
+if (
+  window.supabase &&
+  SUPABASE_URL &&
+  SUPABASE_PUBLISHABLE_KEY &&
+  !SUPABASE_PUBLISHABLE_KEY.includes("PASTE_YOUR")
+){
+
+  supabaseClient =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY,
+      {
+        auth:{
+          autoRefreshToken:true,
+          persistSession:true,
+          detectSessionInUrl:true
+        }
+      }
+    );
+
+}
+
+
+/* ============================================================
+   ELEMENTS
+============================================================ */
+
+const statusBox =
+  document.getElementById(
+    "status"
+  );
+
+const subtitle =
+  document.getElementById(
+    "subtitle"
+  );
+
+const loader =
+  document.getElementById(
+    "loader"
+  );
+
+const continueButton =
+  document.getElementById(
+    "continueButton"
+  );
+
+
+/* ============================================================
+   STATUS
+============================================================ */
+
+function showStatus(
+  message,
+  type = "info"
+){
+
+  statusBox.textContent =
+    message;
+
+  statusBox.className =
+    "status " + type;
+
+}
+
+
+function showError(
+  message
+){
+
+  loader.style.display =
+    "none";
+
+  continueButton.style.display =
+    "inline-block";
+
+  showStatus(
+    message,
+    "error"
+  );
+
+}
+
+
+/* ============================================================
+   SAFE REDIRECT HANDLING
+============================================================ */
+
+/*
+  Never blindly trust a `next=` URL.
+
+  We allow only local Dreamscapes pages.
+
+  Examples allowed:
+
+      creator-portal.html
+      profile.html
+      membership.html
+      dashboard.html
+
+  External URLs are rejected.
+*/
+
+function getSafeNext(){
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const next =
+    params.get("next");
+
+  if (!next){
+    return null;
+  }
 
   try{
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.auth.getSession();
+    const decoded =
+      decodeURIComponent(next);
 
-    if (error){
-      throw error;
+    /*
+      Reject dangerous URL forms.
+    */
+
+    if (
+      !decoded ||
+      decoded.includes("\\") ||
+      decoded.includes("\0") ||
+      decoded.startsWith("//") ||
+      /^[a-z][a-z0-9+.-]*:/i.test(decoded)
+    ){
+
+      return null;
+
     }
 
-    if (data.session){
-
-      window.location.replace(
-        "creator-portal.html"
+    const target =
+      new URL(
+        decoded,
+        BASE_URL
       );
 
-      return;
+    /*
+      Must remain on this Dreamscapes origin.
+    */
+
+    if (
+      target.origin !==
+      window.location.origin
+    ){
+
+      return null;
 
     }
 
     /*
-      Give Supabase a moment to process
-      the confirmation/recovery URL.
+      Don't allow auth callback loops.
     */
 
+    const pathname =
+      target.pathname.toLowerCase();
+
+    if (
+      pathname.endsWith(
+        "/auth-callback.html"
+      )
+    ){
+
+      return null;
+
+    }
+
+    return target.href;
+
+  }catch(error){
+
+    console.warn(
+      "Invalid next destination:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* ============================================================
+   DEFAULT DESTINATION
+============================================================ */
+
+function getDestination(){
+
+  const safeNext =
+    getSafeNext();
+
+  if (safeNext){
+    return safeNext;
+  }
+
+  return CREATOR_PORTAL_URL;
+
+}
+
+
+/* ============================================================
+   ENSURE UNIVERSAL MEMBERSHIP
+============================================================ */
+
+async function ensureUniversalMembership(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .rpc(
+        "ensure_crow_membership"
+      );
+
+  if (error){
+
+    console.error(
+      "ensure_crow_membership:",
+      error
+    );
+
+    throw error;
+
+  }
+
+  return data;
+
+}
+
+
+/* ============================================================
+   LOAD UNIVERSAL MEMBERSHIP
+============================================================ */
+
+async function getUniversalMembership(){
+
+  const {
+    data,
+    error
+  } =
+    await supabaseClient
+      .rpc(
+        "get_my_membership"
+      );
+
+  if (error){
+
+    console.error(
+      "get_my_membership:",
+      error
+    );
+
+    /*
+      Membership loading should not prevent
+      an otherwise valid authenticated user
+      from entering the site.
+
+      The account trigger has already created
+      the universal member/profile records.
+    */
+
+    return null;
+
+  }
+
+  if (
+    Array.isArray(data)
+  ){
+
+    return data[0] || null;
+
+  }
+
+  return data || null;
+
+}
+
+
+/* ============================================================
+   AUTHENTICATE
+============================================================ */
+
+async function authenticate(){
+
+  try{
+
+    if (!supabaseClient){
+
+      throw new Error(
+        "The Dreamscapes authentication system is not configured."
+      );
+
+    }
+
+
+    /* --------------------------------------------------------
+       STEP 1
+       Check current session.
+    -------------------------------------------------------- */
+
+    showStatus(
+      "Checking your CrowRules session...",
+      "info"
+    );
+
+    let {
+      data:sessionData,
+      error:sessionError
+    } =
+      await supabaseClient.auth
+        .getSession();
+
+
+    if (sessionError){
+
+      throw sessionError;
+
+    }
+
+
+    let session =
+      sessionData?.session || null;
+
+
+    /* --------------------------------------------------------
+       STEP 2
+       Explicitly exchange OAuth PKCE code when present.
+    -------------------------------------------------------- */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const code =
+      params.get("code");
+
+
+    if (
+      code &&
+      !session
+    ){
+
+      showStatus(
+        "Completing secure sign-in...",
+        "info"
+      );
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth
+          .exchangeCodeForSession(
+            code
+          );
+
+      if (error){
+
+        throw error;
+
+      }
+
+      session =
+        data?.session || null;
+
+    }
+
+
+    /* --------------------------------------------------------
+       STEP 3
+       Re-check session.
+
+       This also covers magic links where Supabase
+       has already processed the URL session.
+    -------------------------------------------------------- */
+
+    if (!session){
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth
+          .getSession();
+
+      if (error){
+
+        throw error;
+
+      }
+
+      session =
+        data?.session || null;
+
+    }
+
+
+    /* --------------------------------------------------------
+       STEP 4
+       Require authentication.
+    -------------------------------------------------------- */
+
+    if (!session){
+
+      throw new Error(
+        "Your sign-in could not be completed. Please return to login and try again."
+      );
+
+    }
+
+
+    /* --------------------------------------------------------
+       STEP 5
+       Verify the authenticated user.
+
+       getUser() asks Supabase Auth for the
+       authenticated user rather than trusting
+       URL parameters or user-provided metadata.
+    -------------------------------------------------------- */
+
+    showStatus(
+      "Verifying your CrowRules account...",
+      "info"
+    );
+
+    const {
+      data:userData,
+      error:userError
+    } =
+      await supabaseClient.auth
+        .getUser();
+
+    if (userError){
+
+      throw userError;
+
+    }
+
+    const user =
+      userData?.user;
+
+
+    if (!user){
+
+      throw new Error(
+        "We could not verify your CrowRules account."
+      );
+
+    }
+
+
+    /* --------------------------------------------------------
+       STEP 6
+       Ensure the universal CROW membership exists.
+
+       This RPC is idempotent and will not downgrade
+       an existing paid membership.
+    -------------------------------------------------------- */
+
+    showStatus(
+      "Preparing your universal CrowRules membership...",
+      "info"
+    );
+
+    await ensureUniversalMembership();
+
+
+    /* --------------------------------------------------------
+       STEP 7
+       Retrieve membership information.
+
+       This is informational here. The actual authorization
+       remains controlled by Supabase/RLS/entitlements.
+    -------------------------------------------------------- */
+
+    const membership =
+      await getUniversalMembership();
+
+
+    console.log(
+      "CrowRules universal authentication complete:",
+      {
+        user_id:user.id,
+        email:user.email,
+        plan:membership?.plan_key || "crow"
+      }
+    );
+
+
+    /* --------------------------------------------------------
+       STEP 8
+       Redirect.
+    -------------------------------------------------------- */
+
+    const destination =
+      getDestination();
+
+
+    showStatus(
+      "Authentication complete. Entering Dreamscapes...",
+      "success"
+    );
+
+    subtitle.textContent =
+      membership?.plan_name
+        ? `${membership.plan_name} membership active. Preparing your Dreamscapes workspace.`
+        : "Your CrowRules account is ready. Preparing your Dreamscapes workspace.";
+
+
+    loader.style.display =
+      "none";
+
+
     setTimeout(
-      async () => {
+      () => {
 
-        const {
-          data
-        } =
-          await supabaseClient.auth.getSession();
-
-        if (data.session){
-
-          window.location.replace(
-            "creator-portal.html"
-          );
-
-        }else{
-
-          window.location.replace(
-            "login.html"
-          );
-
-        }
+        window.location.replace(
+          destination
+        );
 
       },
-      1200
+      500
     );
 
   }catch(error){
 
-    console.error(error);
+    console.error(
+      "Dreamscapes auth callback error:",
+      error
+    );
 
-    setTimeout(
-      () => {
-        window.location.replace(
-          "login.html"
-        );
-      },
-      1500
+
+    let message =
+      String(
+        error?.message ||
+        error ||
+        ""
+      );
+
+
+    const lower =
+      message.toLowerCase();
+
+
+    if (
+      lower.includes(
+        "invalid code"
+      )
+    ){
+
+      message =
+        "This sign-in link has expired or has already been used. Please return to login and try again.";
+
+    }
+    else if (
+      lower.includes(
+        "pkce"
+      )
+    ){
+
+      message =
+        "The secure sign-in session could not be completed. Please return to login and try again.";
+
+    }
+    else if (
+      lower.includes(
+        "session"
+      )
+    ){
+
+      message =
+        "We could not establish your secure CrowRules session. Please return to login and try again.";
+
+    }
+
+
+    showError(
+      message ||
+      "Authentication could not be completed. Please return to login and try again."
     );
 
   }
 
 }
 
-enterDreamscapes();
+
+/* ============================================================
+   STARFIELD
+============================================================ */
+
+function createStars(){
+
+  const container =
+    document.getElementById(
+      "stars"
+    );
+
+  const count =
+    window.innerWidth < 600
+      ? 70
+      : 130;
+
+
+  for(
+    let i = 0;
+    i < count;
+    i++
+  ){
+
+    const star =
+      document.createElement(
+        "div"
+      );
+
+    star.className =
+      "star";
+
+    star.style.left =
+      Math.random() * 100 +
+      "%";
+
+    star.style.top =
+      Math.random() * 100 +
+      "%";
+
+    star.style.animationDelay =
+      Math.random() * 5 +
+      "s";
+
+    star.style.animationDuration =
+      2 +
+      Math.random() * 5 +
+      "s";
+
+    container.appendChild(
+      star
+    );
+
+  }
+
+}
+
+
+/* ============================================================
+   INITIALIZE
+============================================================ */
+
+createStars();
+
+authenticate();
 
 </script>
 
-  <script src="assets/js/dreamscapes-global.js"></script>
 </body>
-
 </html>
