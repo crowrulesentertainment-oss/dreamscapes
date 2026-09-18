@@ -1,47 +1,1795 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050505"><title>CrowRules Membership</title>
-<meta name="description" content="CrowRules Entertainment Membership — Watch it. Create it. Build it.">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>CrowRules Membership | One Account. One Universe.</title>
+
+<meta
+  name="description"
+  content="Join CrowRules Membership. One account across the CrowRules universe with CrowPoints, exclusive content, creator access and more."
+>
+
+<meta name="theme-color" content="#050509">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap"
+  rel="stylesheet"
+>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--bg:#050505;--panel:#0d0d0d;--line:#292929;--text:#f5f5f5;--muted:#9a9a9a;--red:#e10600}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0%,rgba(225,6,0,.12),transparent 34%),#050505;color:var(--text);font-family:Montserrat,Arial,sans-serif}.wrap{width:min(1180px,92%);margin:auto}.top{padding:28px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;align-items:center}.logo{font-family:Orbitron;font-weight:800;letter-spacing:2px}.logo span{color:var(--red)}.status{font-size:13px;color:var(--muted)}.hero{text-align:center;padding:80px 0 45px}.eyebrow{font-family:Orbitron;color:var(--red);font-size:12px;letter-spacing:3px}.hero h1{font-family:Orbitron;font-size:clamp(34px,6vw,70px);margin:14px 0}.hero p{max-width:700px;margin:auto;color:var(--muted);line-height:1.7}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:20px 0 70px}.card{background:linear-gradient(180deg,#111,#090909);border:1px solid var(--line);border-radius:20px;padding:25px;display:flex;flex-direction:column;min-height:390px}.card.featured{border-color:var(--red)}.tier{font-family:Orbitron;font-size:20px}.price{font-size:34px;font-weight:800;margin:18px 0 5px}.price small{font-size:13px;color:var(--muted)}.desc{color:var(--muted);line-height:1.55;min-height:72px}.features{list-style:none;padding:0;margin:10px 0 22px;flex:1}.features li{padding:7px 0;border-bottom:1px solid #181818;font-size:13px;color:#d8d8d8}.btn{border:1px solid #444;background:#151515;color:white;border-radius:10px;padding:12px 15px;text-align:center;font-weight:700;cursor:pointer}.btn.primary{background:var(--red);border-color:var(--red)}.note{text-align:center;color:var(--muted);padding-bottom:50px;font-size:13px;line-height:1.7}@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:580px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
-</style>  <link rel="stylesheet" href="assets/css/dreamscapes-global.css">
+:root{
+  --bg:#050509;
+  --panel:#0b0b12;
+  --panel2:#10101a;
+  --line:rgba(255,255,255,.10);
+  --text:#f7f7fb;
+  --muted:#9da0ad;
+  --cyan:#00e5ff;
+  --purple:#8b5cff;
+  --pink:#ff3cac;
+  --red:#ff3347;
+  --green:#43e97b;
+  --shadow:0 25px 80px rgba(0,0,0,.45);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(0,229,255,.10),transparent 28%),
+    radial-gradient(circle at 85% 20%,rgba(139,92,255,.13),transparent 30%),
+    radial-gradient(circle at 50% 100%,rgba(255,60,172,.07),transparent 32%),
+    var(--bg);
+  font-family:Montserrat,Arial,sans-serif;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button{
+  font:inherit;
+}
+
+.container{
+  width:min(1180px,calc(100% - 36px));
+  margin:auto;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  border-bottom:1px solid var(--line);
+  background:rgba(5,5,9,.88);
+  backdrop-filter:blur(18px);
+}
+
+.nav{
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:Orbitron,sans-serif;
+  font-weight:800;
+  letter-spacing:.04em;
+}
+
+.brand-mark{
+  width:38px;
+  height:38px;
+  border:1px solid rgba(0,229,255,.55);
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  color:var(--cyan);
+  background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(139,92,255,.12));
+  box-shadow:0 0 28px rgba(0,229,255,.12);
+}
+
+.brand span{
+  white-space:nowrap;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.nav-links a{
+  padding:10px 13px;
+  border-radius:9px;
+  color:#c8cad4;
+  font-size:13px;
+  font-weight:700;
+}
+
+.nav-links a:hover{
+  color:#fff;
+  background:rgba(255,255,255,.06);
+}
+
+.account-mini{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.account-mini button{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.04);
+  color:#fff;
+  padding:9px 13px;
+  border-radius:9px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:12px;
+}
+
+.hero{
+  padding:95px 0 70px;
+  text-align:center;
+}
+
+.kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 13px;
+  border:1px solid rgba(0,229,255,.25);
+  border-radius:999px;
+  background:rgba(0,229,255,.05);
+  color:var(--cyan);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.kicker-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
+}
+
+h1{
+  margin:24px auto 16px;
+  max-width:900px;
+  font-family:Orbitron,sans-serif;
+  font-size:clamp(38px,7vw,76px);
+  line-height:1.02;
+  letter-spacing:-.035em;
+}
+
+.gradient-text{
+  background:linear-gradient(90deg,var(--cyan),#fff,var(--purple),var(--pink));
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:730px;
+  margin:0 auto;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.8;
+}
+
+.current{
+  display:none;
+  margin:35px auto 0;
+  max-width:760px;
+  padding:18px 20px;
+  border:1px solid rgba(0,229,255,.22);
+  background:rgba(0,229,255,.045);
+  border-radius:16px;
+  text-align:left;
+}
+
+.current.show{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.current-main{
+  min-width:0;
+}
+
+.current-label{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-weight:800;
+}
+
+.current-name{
+  margin-top:5px;
+  font-family:Orbitron,sans-serif;
+  font-weight:800;
+  color:var(--cyan);
+}
+
+.current-meta{
+  margin-top:4px;
+  color:#c9cbd4;
+  font-size:12px;
+}
+
+.plans{
+  padding:15px 0 100px;
+}
+
+.plan-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.plan{
+  position:relative;
+  min-height:620px;
+  display:flex;
+  flex-direction:column;
+  padding:28px 24px 24px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012)),
+    var(--panel);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.plan::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  opacity:.55;
+}
+
+.plan.featured{
+  border-color:rgba(0,229,255,.35);
+  transform:translateY(-8px);
+}
+
+.plan.featured::before{
+  height:3px;
+  opacity:1;
+}
+
+.plan-badge{
+  position:absolute;
+  top:17px;
+  right:17px;
+  padding:6px 9px;
+  border-radius:999px;
+  background:rgba(0,229,255,.10);
+  color:var(--cyan);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.plan-level{
+  color:#777b88;
+  font-family:Orbitron,sans-serif;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.15em;
+}
+
+.plan h2{
+  margin:10px 0 7px;
+  font-family:Orbitron,sans-serif;
+  font-size:25px;
+}
+
+.plan-description{
+  min-height:62px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+
+.price{
+  margin:21px 0 3px;
+  font-family:Orbitron,sans-serif;
+  font-size:36px;
+  font-weight:800;
+}
+
+.price small{
+  color:var(--muted);
+  font-family:Montserrat,sans-serif;
+  font-size:12px;
+  font-weight:600;
+}
+
+.points{
+  display:inline-flex;
+  width:max-content;
+  margin:12px 0 20px;
+  padding:7px 10px;
+  border-radius:8px;
+  background:rgba(139,92,255,.10);
+  border:1px solid rgba(139,92,255,.20);
+  color:#cdbfff;
+  font-size:11px;
+  font-weight:800;
+}
+
+.features{
+  margin:0;
+  padding:0;
+  list-style:none;
+  flex:1;
+}
+
+.features li{
+  position:relative;
+  padding:9px 0 9px 22px;
+  border-bottom:1px solid rgba(255,255,255,.055);
+  color:#c8cad3;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.features li::before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  top:8px;
+  color:var(--cyan);
+  font-weight:900;
+}
+
+.plan-button{
+  width:100%;
+  margin-top:23px;
+  padding:13px 15px;
+  border-radius:10px;
+  border:1px solid rgba(0,229,255,.35);
+  background:rgba(0,229,255,.08);
+  color:#fff;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.04em;
+  transition:.2s ease;
+}
+
+.plan-button:hover{
+  transform:translateY(-2px);
+  background:rgba(0,229,255,.14);
+  border-color:rgba(0,229,255,.65);
+}
+
+.plan-button.primary{
+  background:linear-gradient(135deg,rgba(0,229,255,.22),rgba(139,92,255,.22));
+  border-color:rgba(0,229,255,.50);
+}
+
+.plan-button.current-plan{
+  cursor:default;
+  color:var(--cyan);
+  background:rgba(0,229,255,.045);
+}
+
+.plan-button:disabled{
+  opacity:.6;
+  cursor:wait;
+  transform:none;
+}
+
+.info{
+  padding:0 0 90px;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.info-card{
+  padding:25px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(255,255,255,.025);
+}
+
+.info-card .icon{
+  font-size:23px;
+}
+
+.info-card h3{
+  margin:14px 0 8px;
+  font-family:Orbitron,sans-serif;
+  font-size:15px;
+}
+
+.info-card p{
+  margin:0;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+}
+
+.faq{
+  padding:0 0 100px;
+}
+
+.section-title{
+  margin-bottom:28px;
+  text-align:center;
+}
+
+.section-title h2{
+  margin:0 0 10px;
+  font-family:Orbitron,sans-serif;
+  font-size:30px;
+}
+
+.section-title p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.faq-grid{
+  max-width:850px;
+  margin:auto;
+}
+
+details{
+  border-bottom:1px solid var(--line);
+  padding:18px 0;
+}
+
+summary{
+  cursor:pointer;
+  font-weight:800;
+  font-size:14px;
+}
+
+details p{
+  margin:12px 0 0;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:35px 0 50px;
+  color:#747783;
+  font-size:11px;
+  text-align:center;
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  z-index:100;
+  width:min(520px,calc(100% - 30px));
+  transform:translate(-50%,140%);
+  padding:14px 17px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#101017;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  color:#fff;
+  font-size:12px;
+  line-height:1.5;
+  transition:.25s ease;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+}
+
+.toast.error{
+  border-color:rgba(255,51,71,.45);
+}
+
+.toast.success{
+  border-color:rgba(67,233,123,.35);
+}
+
+.loading{
+  opacity:.6;
+  pointer-events:none;
+}
+
+@media(max-width:1000px){
+  .plan-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .plan.featured{
+    transform:none;
+  }
+}
+
+@media(max-width:700px){
+  .nav-links{
+    display:none;
+  }
+
+  .hero{
+    padding:70px 0 55px;
+  }
+
+  .current.show{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .plan-grid,
+  .info-grid{
+    grid-template-columns:1fr;
+  }
+
+  .plan{
+    min-height:auto;
+  }
+
+  .account-mini{
+    display:none;
+  }
+}
+</style>
 </head>
-<body><div class="wrap">
-<header class="top"><div class="logo">CROW<span>RULES</span></div><div class="status" id="authStatus">Loading membership...</div></header>
-<section class="hero"><div class="eyebrow">CROWRULES ENTERTAINMENT</div><h1>WATCH IT. CREATE IT. BUILD IT.</h1><p>Membership connects the CrowRules community across CrowRules TV, Podcasting, Dreamscapes, Tacoma Nights, Back Deck Live, Sports and the future CrowRules universe.</p></section>
-<section class="grid" id="plans"></section>
-<div class="note">Free CROW membership is available now. Paid membership checkout is prepared for Stripe integration; no payment is requested until the billing connection is activated.</div>
-</div>
+
+<body>
+
+<header>
+  <div class="container nav">
+
+    <a class="brand" href="./">
+      <div class="brand-mark">CR</div>
+      <span>CrowRules</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="./">Home</a>
+      <a href="#plans">Membership</a>
+      <a href="#faq">FAQ</a>
+      <a href="./login.html">Login</a>
+    </nav>
+
+    <div class="account-mini">
+      <button id="accountButton" type="button">LOGIN</button>
+    </div>
+
+  </div>
+</header>
+
+
+<main>
+
+<section class="hero">
+  <div class="container">
+
+    <div class="kicker">
+      <span class="kicker-dot"></span>
+      Universal CrowRules Membership
+    </div>
+
+    <h1>
+      ONE ACCOUNT.<br>
+      <span class="gradient-text">ONE UNIVERSE.</span>
+    </h1>
+
+    <p>
+      Join the CrowRules community and connect to the growing CrowRules
+      universe through one membership account, one identity and one
+      CrowPoints system.
+    </p>
+
+    <div class="current" id="currentMembership">
+
+      <div class="current-main">
+        <div class="current-label">Your Current Membership</div>
+        <div class="current-name" id="currentPlanName">CROW</div>
+        <div class="current-meta" id="currentPlanMeta">
+          Loading membership...
+        </div>
+      </div>
+
+      <button
+        id="manageBillingButton"
+        class="plan-button"
+        type="button"
+        style="width:auto;margin:0;display:none"
+      >
+        MANAGE BILLING
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="plans" id="plans">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Choose Your CrowRules Level</h2>
+      <p>
+        Start free. Upgrade whenever you're ready.
+      </p>
+    </div>
+
+    <div class="plan-grid" id="planGrid">
+
+      <div class="plan">
+        <div class="plan-level">LEVEL 1</div>
+        <h2>CROW</h2>
+        <div class="plan-description">
+          Free membership for joining the CrowRules universe.
+        </div>
+
+        <div class="price">$0 <small>forever</small></div>
+
+        <div class="points">1× CrowPoints</div>
+
+        <ul class="features">
+          <li>Member account</li>
+          <li>CrowRules TV access</li>
+          <li>CrowRules Podcasting</li>
+          <li>Dreamscapes</li>
+          <li>Tacoma Nights</li>
+          <li>Back Deck Live</li>
+          <li>Basic CrowPoints</li>
+          <li>Watch/listen history</li>
+          <li>Member news and announcements</li>
+        </ul>
+
+        <button
+          class="plan-button"
+          data-plan="crow"
+          type="button"
+        >
+          JOIN FREE
+        </button>
+      </div>
+
+
+      <div class="plan featured">
+
+        <div class="plan-badge">Featured</div>
+
+        <div class="plan-level">LEVEL 2</div>
+        <h2>CROWNER</h2>
+
+        <div class="plan-description">
+          Help build CrowRules from the ground floor.
+        </div>
+
+        <div class="price">$5 <small>/ month</small></div>
+
+        <div class="points">2× CrowPoints</div>
+
+        <ul class="features">
+          <li>Everything in CROW</li>
+          <li>Exclusive content</li>
+          <li>Early access to selected episodes</li>
+          <li>Behind-the-scenes updates</li>
+          <li>Members-only posts and events</li>
+          <li>2× CrowPoints</li>
+          <li>CROWNER badge</li>
+          <li>Members-only polls</li>
+          <li>Supporter wall recognition</li>
+        </ul>
+
+        <button
+          class="plan-button primary"
+          data-plan="crowner"
+          type="button"
+        >
+          BECOME A CROWNER
+        </button>
+
+      </div>
+
+
+      <div class="plan">
+
+        <div class="plan-level">LEVEL 3</div>
+        <h2>CREATOR</h2>
+
+        <div class="plan-description">
+          Get closer to how CrowRules productions are made.
+        </div>
+
+        <div class="price">$10 <small>/ month</small></div>
+
+        <div class="points">3× CrowPoints</div>
+
+        <ul class="features">
+          <li>Everything in CROWNER</li>
+          <li>Production BTS</li>
+          <li>Creative development previews</li>
+          <li>Podcast development access</li>
+          <li>Dreamscapes development previews</li>
+          <li>Creator workshops</li>
+          <li>Creator livestreams</li>
+          <li>3× CrowPoints</li>
+          <li>CREATOR badge</li>
+          <li>Early access to selected projects</li>
+          <li>Quarterly virtual creator meetup</li>
+        </ul>
+
+        <button
+          class="plan-button"
+          data-plan="creator"
+          type="button"
+        >
+          BECOME A CREATOR
+        </button>
+
+      </div>
+
+
+      <div class="plan">
+
+        <div class="plan-level">LEVEL 4</div>
+        <h2>FOUNDER</h2>
+
+        <div class="plan-description">
+          Help build CrowRules Entertainment from the ground up.
+        </div>
+
+        <div class="price">$25 <small>/ month</small></div>
+
+        <div class="points">5× CrowPoints</div>
+
+        <ul class="features">
+          <li>Everything in CREATOR</li>
+          <li>Founder badge</li>
+          <li>Permanent early-supporter recognition</li>
+          <li>Founder updates</li>
+          <li>Monthly Founder Q&amp;A</li>
+          <li>First-look project announcements</li>
+          <li>Founder community</li>
+          <li>Early invitations to selected events</li>
+          <li>5× CrowPoints</li>
+        </ul>
+
+        <button
+          class="plan-button"
+          data-plan="founder"
+          type="button"
+        >
+          BECOME A FOUNDER
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="info">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Built Across CrowRules</h2>
+      <p>
+        Your membership is designed to follow you throughout the universe.
+      </p>
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-card">
+        <div class="icon">◉</div>
+        <h3>One Identity</h3>
+        <p>
+          One CrowRules account can connect your membership identity
+          throughout the CrowRules network.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <div class="icon">✦</div>
+        <h3>CrowPoints</h3>
+        <p>
+          Membership levels provide different CrowPoints multipliers as
+          you watch, listen and participate.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <div class="icon">∞</div>
+        <h3>Growing Universe</h3>
+        <p>
+          CrowRules Entertainment, TV, Podcasting, Dreamscapes, Sports,
+          CrowSpace, Memorials and future divisions are designed to work
+          together.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="faq" id="faq">
+  <div class="container">
+
+    <div class="section-title">
+      <h2>Membership FAQ</h2>
+      <p>Simple answers before you join.</p>
+    </div>
+
+    <div class="faq-grid">
+
+      <details>
+        <summary>Is CROW really free?</summary>
+        <p>
+          Yes. CROW is the free CrowRules membership level. No credit
+          card is required to join the free tier.
+        </p>
+      </details>
+
+      <details>
+        <summary>Do I need separate accounts for each CrowRules site?</summary>
+        <p>
+          No. The goal of the universal membership system is one
+          CrowRules account across the CrowRules universe.
+        </p>
+      </details>
+
+      <details>
+        <summary>What happens when I upgrade?</summary>
+        <p>
+          Paid memberships are processed through Stripe. After checkout
+          is completed, the CrowRules membership system updates your
+          membership level and entitlements.
+        </p>
+      </details>
+
+      <details>
+        <summary>Can I cancel?</summary>
+        <p>
+          Paid members can use the Stripe Customer Portal to manage
+          billing, payment methods, upgrades, downgrades and
+          cancellations.
+        </p>
+      </details>
+
+      <details>
+        <summary>What are CrowPoints?</summary>
+        <p>
+          CrowPoints are the participation points used throughout the
+          CrowRules ecosystem. Membership levels provide different
+          CrowPoints multipliers.
+        </p>
+      </details>
+
+      <details>
+        <summary>Can I start with CROW and upgrade later?</summary>
+        <p>
+          Yes. You can start with the free CROW level and upgrade when
+          you want access to additional membership benefits.
+        </p>
+      </details>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+
+<footer>
+  <div class="container">
+    <strong>CrowRules Entertainment</strong><br><br>
+    One company. One universe.<br>
+    © <span id="year"></span> CrowRules Entertainment
+  </div>
+</footer>
+
+
+<div class="toast" id="toast"></div>
+
+
 <script>
-const SUPABASE_URL='https://cevylpnoexugwgygvtgu.supabase.co';
-const SUPABASE_KEY='sb_publishable_AdfM5y6RqvF3tbvEVzDZSg_JuGTQLD-';
-const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const plansEl=document.getElementById('plans'),authStatus=document.getElementById('authStatus');
-function esc(s){return String(s||'').replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
-async function init(){
- const a=await sb.auth.getSession(), b=await sb.from('membership_plans').select('*').eq('is_active',true).order('sort_order');
- const session=a.data.session, plans=b.data, error=b.error;
- authStatus.textContent=session&&session.user&&session.user.email?'Signed in as '+session.user.email:'Sign in to manage your membership';
- if(error){plansEl.innerHTML='<p>Membership plans are temporarily unavailable.</p>';return}
- plansEl.innerHTML=plans.map(function(p){
-   return '<article class="card '+(p.is_featured?'featured':'')+'"><div class="tier">'+esc(p.name)+'</div><div class="price">'+(p.price_cents===0?'FREE':'$'+(p.price_cents/100).toFixed(0))+' <small>'+(p.price_cents===0?'':'/ month')+'</small></div><div class="desc">'+esc(p.description)+'</div><ul class="features">'+(p.features||[]).map(function(f){return '<li>✓ '+esc(f)+'</li>'}).join('')+'</ul><button class="btn '+(p.price_cents===0?'primary':'')+'" onclick="choosePlan(\''+esc(p.plan_key)+'\','+p.price_cents+')">'+(p.price_cents===0?'Join CROW':'Choose '+esc(p.name))+'</button></article>';
- }).join('');
+/* ============================================================
+   CROWRULES UNIVERSAL MEMBERSHIP
+   ============================================================ */
+
+const SUPABASE_URL =
+  "https://cevylpnoexugwgygvtgu.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_AdfM5y6RqvF3tbvEVzDZSg_JuGTQLD-";
+
+const MEMBERSHIP_FUNCTION =
+  SUPABASE_URL + "/functions/v1/membership-status";
+
+const CHECKOUT_FUNCTION =
+  SUPABASE_URL + "/functions/v1/membership-checkout";
+
+const PORTAL_FUNCTION =
+  SUPABASE_URL + "/functions/v1/membership-portal";
+
+
+const {
+  createClient
+} = window.supabase;
+
+const supabaseClient = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+
+let currentUser = null;
+let currentMembership = null;
+
+
+/* ============================================================
+   UI HELPERS
+   ============================================================ */
+
+function showToast(message, type = "") {
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = message;
+
+  toast.className =
+    "toast show " + type;
+
+  clearTimeout(window.__toastTimer);
+
+  window.__toastTimer =
+    setTimeout(() => {
+      toast.className = "toast";
+    }, 5000);
 }
-async function choosePlan(key,price){
- const a=await sb.auth.getSession(),session=a.data.session;
- if(!session){location.href='login.html?next=membership.html';return}
- if(price===0){
-   const r=await sb.from('members').upsert({user_id:session.user.id,email:session.user.email,membership_type:'CROW',status:'Active'},{onConflict:'user_id'});
-   if(r.error){alert(r.error.message);return}
-   alert('Your free CROW membership is active.');return;
- }
- alert('Paid checkout is prepared for Stripe connection but is not activated yet. Selected plan: '+key+'.');
+
+
+function setButtonLoading(button, loading) {
+
+  if (!button) return;
+
+  if (loading) {
+
+    button.dataset.originalText =
+      button.textContent;
+
+    button.textContent =
+      "PLEASE WAIT…";
+
+    button.disabled = true;
+
+  } else {
+
+    button.textContent =
+      button.dataset.originalText ||
+      button.textContent;
+
+    button.disabled = false;
+  }
 }
-sb.auth.onAuthStateChange(function(){init()});init();
-</script>  <script src="assets/js/dreamscapes-global.js"></script>
-</body></html>
+
+
+function getNextUrl() {
+
+  const params =
+    new URLSearchParams(window.location.search);
+
+  const next =
+    params.get("next");
+
+  if (
+    next &&
+    next.startsWith("/") &&
+    !next.startsWith("//")
+  ) {
+    return next;
+  }
+
+  return "./";
+}
+
+
+function loginUrl() {
+
+  const next =
+    encodeURIComponent(
+      window.location.pathname +
+      window.location.search
+    );
+
+  return "./login.html?next=" + next;
+}
+
+
+/* ============================================================
+   AUTH
+   ============================================================ */
+
+async function getUser() {
+
+  const {
+    data,
+    error
+  } = await supabaseClient.auth.getUser();
+
+  if (error) {
+    console.warn("Auth user lookup:", error);
+    return null;
+  }
+
+  return data.user || null;
+}
+
+
+/* ============================================================
+   ENSURE FREE CROW MEMBERSHIP
+   ============================================================ */
+
+async function ensureCrowMembership() {
+
+  if (!currentUser) return null;
+
+  const {
+    data,
+    error
+  } = await supabaseClient.rpc(
+    "ensure_crow_membership"
+  );
+
+  if (error) {
+
+    console.warn(
+      "ensure_crow_membership:",
+      error
+    );
+
+    return null;
+  }
+
+  return data;
+}
+
+
+/* ============================================================
+   LOAD MEMBERSHIP STATUS
+   ============================================================ */
+
+async function loadMembership() {
+
+  if (!currentUser) {
+    currentMembership = null;
+    renderMembership();
+    return;
+  }
+
+  /*
+   * Make sure a newly-created universal CrowRules account
+   * has the free CROW membership if no paid membership exists.
+   */
+
+  await ensureCrowMembership();
+
+  try {
+
+    const {
+      data: sessionData
+    } = await supabaseClient.auth.getSession();
+
+    const session =
+      sessionData.session;
+
+    if (!session) {
+      renderMembership();
+      return;
+    }
+
+    const response =
+      await fetch(
+        MEMBERSHIP_FUNCTION,
+        {
+          method:"GET",
+          headers:{
+            Authorization:
+              "Bearer " + session.access_token
+          }
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        result.error ||
+        "Unable to load membership."
+      );
+    }
+
+    currentMembership =
+      result.membership || null;
+
+  } catch (error) {
+
+    console.error(error);
+
+    /*
+     * Fallback to the database RPC.
+     */
+
+    const {
+      data,
+      error: rpcError
+    } = await supabaseClient.rpc(
+      "get_my_membership"
+    );
+
+    if (!rpcError) {
+      currentMembership = data || null;
+    } else {
+      currentMembership = null;
+    }
+  }
+
+  renderMembership();
+}
+
+
+/* ============================================================
+   RENDER CURRENT MEMBERSHIP
+   ============================================================ */
+
+function renderMembership() {
+
+  const panel =
+    document.getElementById(
+      "currentMembership"
+    );
+
+  const name =
+    document.getElementById(
+      "currentPlanName"
+    );
+
+  const meta =
+    document.getElementById(
+      "currentPlanMeta"
+    );
+
+  const billing =
+    document.getElementById(
+      "manageBillingButton"
+    );
+
+  if (!currentUser) {
+
+    panel.classList.remove("show");
+
+    document
+      .getElementById("accountButton")
+      .textContent = "LOGIN";
+
+    updatePlanButtons();
+
+    return;
+  }
+
+  panel.classList.add("show");
+
+  document
+    .getElementById("accountButton")
+    .textContent = "ACCOUNT";
+
+  const plan =
+    currentMembership || {};
+
+  const planName =
+    plan.plan_name ||
+    plan.name ||
+    "CROW";
+
+  const multiplier =
+    Number(
+      plan.crowpoints_multiplier || 1
+    );
+
+  name.textContent =
+    planName.toUpperCase();
+
+  meta.textContent =
+    multiplier +
+    "× CrowPoints · " +
+    (
+      plan.status ||
+      "active"
+    ).toUpperCase();
+
+  if (
+    plan.plan_key &&
+    plan.plan_key !== "crow"
+  ) {
+
+    billing.style.display =
+      "block";
+
+  } else {
+
+    billing.style.display =
+      "none";
+  }
+
+  updatePlanButtons();
+}
+
+
+/* ============================================================
+   PLAN BUTTONS
+   ============================================================ */
+
+function updatePlanButtons() {
+
+  const buttons =
+    document.querySelectorAll(
+      "[data-plan]"
+    );
+
+  buttons.forEach(button => {
+
+    const key =
+      button.dataset.plan;
+
+    const currentKey =
+      currentMembership &&
+      currentMembership.plan_key;
+
+    button.classList.remove(
+      "current-plan"
+    );
+
+    if (currentKey === key) {
+
+      button.textContent =
+        "CURRENT MEMBERSHIP";
+
+      button.classList.add(
+        "current-plan"
+      );
+
+      button.disabled = true;
+
+      return;
+    }
+
+    button.disabled = false;
+
+    if (key === "crow") {
+
+      button.textContent =
+        currentKey &&
+        currentKey !== "crow"
+          ? "INCLUDED"
+          : "JOIN FREE";
+
+    } else if (key === "crowner") {
+
+      button.textContent =
+        "BECOME A CROWNER";
+
+    } else if (key === "creator") {
+
+      button.textContent =
+        "BECOME A CREATOR";
+
+    } else if (key === "founder") {
+
+      button.textContent =
+        "BECOME A FOUNDER";
+    }
+  });
+}
+
+
+/* ============================================================
+   PAID CHECKOUT
+   ============================================================ */
+
+async function startCheckout(
+  planKey,
+  button
+) {
+
+  if (!currentUser) {
+
+    window.location.href =
+      loginUrl();
+
+    return;
+  }
+
+  if (
+    currentMembership &&
+    currentMembership.plan_key === planKey
+  ) {
+    return;
+  }
+
+  setButtonLoading(button,true);
+
+  try {
+
+    const {
+      data: sessionData,
+      error: sessionError
+    } =
+      await supabaseClient.auth.getSession();
+
+    if (
+      sessionError ||
+      !sessionData.session
+    ) {
+      throw new Error(
+        "Your login session has expired. Please log in again."
+      );
+    }
+
+    const session =
+      sessionData.session;
+
+    const response =
+      await fetch(
+        CHECKOUT_FUNCTION,
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json",
+
+            Authorization:
+              "Bearer " +
+              session.access_token
+          },
+
+          body:JSON.stringify({
+
+            plan_key:planKey,
+
+            success_url:
+              window.location.origin +
+              window.location.pathname +
+              "?membership=success",
+
+            cancel_url:
+              window.location.origin +
+              window.location.pathname +
+              "?membership=cancelled"
+          })
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(
+        result.error ||
+        result.message ||
+        "Unable to start checkout."
+      );
+    }
+
+    if (!result.url) {
+
+      throw new Error(
+        "Stripe checkout URL was not returned."
+      );
+    }
+
+    window.location.href =
+      result.url;
+
+  } catch (error) {
+
+    console.error(
+      "Membership checkout:",
+      error
+    );
+
+    showToast(
+      error.message ||
+      "Unable to start membership checkout.",
+      "error"
+    );
+
+    setButtonLoading(button,false);
+  }
+}
+
+
+/* ============================================================
+   FREE CROW
+   ============================================================ */
+
+async function joinCrow(button) {
+
+  if (!currentUser) {
+
+    window.location.href =
+      loginUrl();
+
+    return;
+  }
+
+  setButtonLoading(button,true);
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.rpc(
+        "ensure_crow_membership"
+      );
+
+    if (error) {
+      throw error;
+    }
+
+    currentMembership =
+      data || currentMembership;
+
+    await loadMembership();
+
+    showToast(
+      "Your free CROW membership is ready.",
+      "success"
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    showToast(
+      error.message ||
+      "Unable to activate CROW membership.",
+      "error"
+    );
+
+  } finally {
+
+    setButtonLoading(button,false);
+  }
+}
+
+
+/* ============================================================
+   BILLING PORTAL
+   ============================================================ */
+
+async function openBillingPortal() {
+
+  if (!currentUser) {
+
+    window.location.href =
+      loginUrl();
+
+    return;
+  }
+
+  const button =
+    document.getElementById(
+      "manageBillingButton"
+    );
+
+  setButtonLoading(button,true);
+
+  try {
+
+    const {
+      data: sessionData,
+      error: sessionError
+    } =
+      await supabaseClient.auth.getSession();
+
+    if (
+      sessionError ||
+      !sessionData.session
+    ) {
+      throw new Error(
+        "Your login session has expired."
+      );
+    }
+
+    const response =
+      await fetch(
+        PORTAL_FUNCTION,
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json",
+
+            Authorization:
+              "Bearer " +
+              sessionData.session.access_token
+          },
+
+          body:JSON.stringify({
+            return_url:
+              window.location.href
+          })
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(
+        result.error ||
+        result.message ||
+        "Unable to open billing portal."
+      );
+    }
+
+    if (!result.url) {
+
+      throw new Error(
+        "Billing portal URL was not returned."
+      );
+    }
+
+    window.location.href =
+      result.url;
+
+  } catch (error) {
+
+    console.error(
+      "Billing portal:",
+      error
+    );
+
+    showToast(
+      error.message ||
+      "Unable to open billing management.",
+      "error"
+    );
+
+    setButtonLoading(button,false);
+  }
+}
+
+
+/* ============================================================
+   ACCOUNT BUTTON
+   ============================================================ */
+
+document
+  .getElementById("accountButton")
+  .addEventListener(
+    "click",
+    () => {
+
+      if (currentUser) {
+
+        window.location.href =
+          "./login.html";
+
+      } else {
+
+        window.location.href =
+          loginUrl();
+      }
+    }
+  );
+
+
+document
+  .getElementById("manageBillingButton")
+  .addEventListener(
+    "click",
+    openBillingPortal
+  );
+
+
+/* ============================================================
+   PLAN BUTTON EVENTS
+   ============================================================ */
+
+document
+  .querySelectorAll("[data-plan]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const plan =
+          button.dataset.plan;
+
+        if (plan === "crow") {
+
+          joinCrow(button);
+
+        } else {
+
+          startCheckout(
+            plan,
+            button
+          );
+        }
+      }
+    );
+  });
+
+
+/* ============================================================
+   AUTH STATE
+   ============================================================ */
+
+supabaseClient.auth.onAuthStateChange(
+  async (event, session) => {
+
+    currentUser =
+      session?.user || null;
+
+    if (event === "SIGNED_OUT") {
+
+      currentMembership = null;
+      renderMembership();
+      return;
+    }
+
+    if (
+      event === "SIGNED_IN" ||
+      event === "INITIAL_SESSION"
+    ) {
+
+      /*
+       * Delay database calls slightly so the auth
+       * trigger-created profile is available.
+       */
+
+      setTimeout(
+        () => loadMembership(),
+        150
+      );
+    }
+  }
+);
+
+
+/* ============================================================
+   INITIALIZATION
+   ============================================================ */
+
+async function init() {
+
+  document
+    .getElementById("year")
+    .textContent =
+    new Date().getFullYear();
+
+  try {
+
+    currentUser =
+      await getUser();
+
+    await loadMembership();
+
+  } catch (error) {
+
+    console.error(
+      "Membership initialization:",
+      error
+    );
+
+    currentUser = null;
+    currentMembership = null;
+
+    renderMembership();
+  }
+
+
+  /*
+   * Handle return from Stripe Checkout.
+   */
+
+  const params =
+    new URLSearchParams(
+      window.location.search
+    );
+
+  const membershipResult =
+    params.get("membership");
+
+  if (
+    membershipResult === "success"
+  ) {
+
+    showToast(
+      "Checkout completed. Your CrowRules membership is being updated.",
+      "success"
+    );
+
+    /*
+     * Give the webhook a moment to process
+     * before refreshing membership status.
+     */
+
+    setTimeout(
+      () => loadMembership(),
+      1800
+    );
+  }
+
+  if (
+    membershipResult === "cancelled"
+  ) {
+
+    showToast(
+      "Checkout was cancelled. No membership change was made."
+    );
+  }
+}
+
+
+init();
+
+</script>
+
+</body>
+</html>
