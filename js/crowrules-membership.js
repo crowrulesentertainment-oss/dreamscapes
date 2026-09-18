@@ -149,7 +149,6 @@
       console.warn("CrowRules membership-status:",error);
     }
 
-    /* Fallback to the database RPCs already used by Dreamscapes. */
     let membership = null;
     try{
       membership = await getMembership();
@@ -201,18 +200,25 @@
     const membership = payload?.membership || null;
 
     if(!authenticated){
+      const page = location.pathname.split("/").pop() || "index.html";
+      const loginHref = CONFIG.loginPage + "?redirect=" + encodeURIComponent(page);
+
       bar.innerHTML =
         '<div class="crum-inner">' +
           '<div class="crum-brand">' +
-            '<span class="crum-orb">CR</span>' +
-            '<span><strong>CROWRULES ACCOUNT</strong><small>ONE ACCOUNT ACROSS THE CROWRULES UNIVERSE</small></span>' +
+            '<span class="crum-orb" aria-hidden="true">CR</span>' +
+            '<span class="crum-brand-copy">' +
+              '<strong>CROWRULES ACCOUNT</strong>' +
+              '<small>ONE ACCOUNT ACROSS THE CROWRULES UNIVERSE</small>' +
+            '</span>' +
           '</div>' +
           '<div class="crum-copy">Sign in once to carry your CrowRules membership into Dreamscapes and other CrowRules experiences.</div>' +
           '<div class="crum-actions">' +
             '<a class="crum-link" href="' + escapeHTML(CONFIG.membershipPage) + '">Membership</a>' +
-            '<a class="crum-button" href="' + escapeHTML(CONFIG.loginPage) + '?redirect=' + encodeURIComponent(location.pathname.split("/").pop() || "index.html") + '">Sign In</a>' +
+            '<a class="crum-button" href="' + escapeHTML(loginHref) + '">Sign In</a>' +
           '</div>' +
         '</div>';
+
       document.body.dataset.crowrulesAuthenticated = "false";
       document.body.dataset.crowrulesMembership = "";
       return;
@@ -227,10 +233,11 @@
     bar.innerHTML =
       '<div class="crum-inner">' +
         '<div class="crum-brand">' +
-          '<span class="crum-orb">CR</span>' +
-          '<span><strong>UNIVERSAL CROWRULES MEMBERSHIP</strong><small>' +
-            escapeHTML(detail || "ACCOUNT MEMBERSHIP") +
-          '</small></span>' +
+          '<span class="crum-orb" aria-hidden="true">CR</span>' +
+          '<span class="crum-brand-copy">' +
+            '<strong>UNIVERSAL CROWRULES MEMBERSHIP</strong>' +
+            '<small>' + escapeHTML(detail || "ACCOUNT MEMBERSHIP") + '</small>' +
+          '</span>' +
         '</div>' +
         '<div class="crum-membership">' +
           '<span class="crum-plan">' + escapeHTML(name) + '</span>' +
