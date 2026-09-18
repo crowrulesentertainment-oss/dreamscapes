@@ -66,5 +66,6 @@ $('saveNote').addEventListener('click',()=>saveNote().catch(err=>toast(err.messa
 (async()=>{try{await getUser();await loadProjects();await loadProject()}catch(e){console.error(e);renderEmpty(e.message||'Unable to load the project workspace.')}})();
 })();
 </script>
+  <script src="js/crowrules-membership.js"></script>
 </body>
 </html>
