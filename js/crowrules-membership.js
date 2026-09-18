@@ -118,6 +118,7 @@
 
   async function getStatus(){
     const session = await getSession();
+
     if(!session?.access_token){
       currentMembership = null;
       return {
@@ -129,6 +130,9 @@
       };
     }
 
+    /* The Supabase session is the source of truth for whether
+       the visitor is signed in. Membership lookup must never
+       turn a signed-in account back into a "Sign In" banner. */
     try{
       const response = await fetch(CONFIG.statusFunction,{
         method:"GET",
@@ -142,7 +146,11 @@
         const payload = await response.json();
         if(payload?.ok){
           currentMembership = payload.membership || null;
-          return payload;
+          return {
+            ...payload,
+            authenticated:true,
+            membership:currentMembership
+          };
         }
       }
     }catch(error){
@@ -198,6 +206,7 @@
     const bar = ensureBar();
     const authenticated = !!payload?.authenticated;
     const membership = payload?.membership || null;
+    const sessionUser = currentSession?.user || null;
 
     if(!authenticated){
       const page = location.pathname.split("/").pop() || "index.html";
@@ -229,15 +238,26 @@
     const key = membershipKey(membership);
     const level = membership?.level != null ? "Level " + escapeHTML(membership.level) : "";
     const detail = [key ? key.toUpperCase() : "",level].filter(Boolean).join(" · ");
+    const userName =
+      sessionUser?.user_metadata?.full_name ||
+      sessionUser?.user_metadata?.name ||
+      sessionUser?.email?.split("@")[0] ||
+      "CrowRules Member";
+    const userEmail = sessionUser?.email || "";
 
     bar.innerHTML =
       '<div class="crum-inner">' +
         '<div class="crum-brand">' +
           '<span class="crum-orb" aria-hidden="true">CR</span>' +
           '<span class="crum-brand-copy">' +
-            '<strong>UNIVERSAL CROWRULES MEMBERSHIP</strong>' +
-            '<small>' + escapeHTML(detail || "ACCOUNT MEMBERSHIP") + '</small>' +
+            '<strong>CROWRULES ACCOUNT</strong>' +
+            '<small>ONE ACCOUNT ACROSS THE CROWRULES UNIVERSE</small>' +
           '</span>' +
+        '</div>' +
+        '<div class="crum-copy crum-signed-in">' +
+          '<span class="crum-signed-label">SIGNED IN</span>' +
+          '<span class="crum-account-name">' + escapeHTML(userName) + '</span>' +
+          (userEmail ? '<span class="crum-account-email">' + escapeHTML(userEmail) + '</span>' : '') +
         '</div>' +
         '<div class="crum-membership">' +
           '<span class="crum-plan">' + escapeHTML(name) + '</span>' +
@@ -246,7 +266,7 @@
           '</span>' +
         '</div>' +
         '<div class="crum-actions">' +
-          '<a class="crum-link" href="' + escapeHTML(CONFIG.membershipPage) + '">Manage Membership</a>' +
+          '<a class="crum-link" href="' + escapeHTML(CONFIG.membershipPage) + '">Membership</a>' +
           '<a class="crum-button" href="' + escapeHTML(CONFIG.portalPage) + '">Creator Portal</a>' +
         '</div>' +
       '</div>';
