@@ -195,7 +195,9 @@
 
     const nav = document.querySelector(".ds-global-nav");
     if(nav?.parentNode){
-      nav.insertAdjacentElement("afterend",bar);
+      nav.insertAdjacentElement("afterbegin",bar);
+      nav.prepend(bar);
+      bar.classList.add("crum-in-header");
     }else{
       document.body.prepend(bar);
     }
