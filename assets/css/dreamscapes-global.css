@@ -233,6 +233,7 @@ a{transition:color .2s ease,border-color .2s ease,background .2s ease,transform 
   margin:auto;
   display:flex;
   align-items:center;
+  justify-content:center;
   gap:18px;
 }
 .crum-brand{
