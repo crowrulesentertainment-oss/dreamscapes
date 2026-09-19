@@ -347,3 +347,28 @@ a{transition:color .2s ease,border-color .2s ease,background .2s ease,transform 
   .crum-actions{width:100%;gap:8px}
   .crum-link,.crum-button{flex:1}
 }
+/* Membership is part of the Dreamscapes header */
+.ds-global-nav{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+}
+.ds-global-nav > .crum-bar{
+  order:2;
+}
+.ds-global-nav > .ds-nav-inner{
+  order:1;
+}
+.crum-in-header{
+  width:100%;
+  border-top:0;
+  border-bottom:1px solid rgba(88,232,255,.14);
+}
+.crum-in-header .crum-inner{
+  min-height:52px;
+}
+@media(max-width:980px){
+  .crum-in-header .crum-inner{
+    padding:8px 0;
+  }
+}
