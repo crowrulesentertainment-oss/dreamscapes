@@ -193,10 +193,9 @@
     bar.setAttribute("role","status");
     bar.setAttribute("aria-live","polite");
 
-    const nav = document.querySelector(".ds-global-nav");
-    if(nav?.parentNode){
-      nav.insertAdjacentElement("afterbegin",bar);
-      nav.prepend(bar);
+    const navLinks = document.querySelector(".ds-global-nav .ds-nav-links");
+    if(navLinks){
+      navLinks.appendChild(bar);
       bar.classList.add("crum-in-header");
     }else{
       document.body.prepend(bar);
