@@ -224,7 +224,7 @@
           '<div class="crum-copy">Sign in once to carry your CrowRules membership into Dreamscapes and other CrowRules experiences.</div>' +
           '<div class="crum-actions">' +
             '<a class="crum-link" href="' + escapeHTML(CONFIG.membershipPage) + '">Membership</a>' +
-            '<a class="crum-button" href="' + escapeHTML(loginHref) + '">Sign In</a>' +
+            '<a class="crum-button" href="' + escapeHTML(loginHref) + '">JOIN CROWRULES</a>' +
           '</div>' +
         '</div>';
 
@@ -267,7 +267,7 @@
         '</div>' +
         '<div class="crum-actions">' +
           '<a class="crum-link" href="' + escapeHTML(CONFIG.membershipPage) + '">Membership</a>' +
-          '<a class="crum-button" href="' + escapeHTML(CONFIG.portalPage) + '">Creator Portal</a>' +
+          '<a class="crum-button" href="' + escapeHTML(CONFIG.portalPage) + '">CREATOR PORTAL</a>' +
         '</div>' +
       '</div>';
 
