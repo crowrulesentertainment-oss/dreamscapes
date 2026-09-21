@@ -121,7 +121,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:28px
 <script>
 const SUPABASE_URL = 'https://cevylpnoexugwgygvtgu.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNldnlscG5vZXh1Z3dneWd2dGd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg4MTYxOTYsImV4cCI6MjEwNDM5MjE5Nn0.bvSF3qRqFNvCtaF5CSDeeEO3yJnsnYt9CXmgUaBWjNQ';
-const PROFILE_TABLE = 'cr_profiles';
+const PROFILE_TABLE = 'ds_creator_profiles';
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const $ = id => document.getElementById(id);
@@ -170,12 +170,32 @@ async function loadProfile(){
   }
   currentUser = user;
 
-  const result = await supabaseClient.from(PROFILE_TABLE).select('*').eq('id',user.id).maybeSingle();
+  const result = await supabaseClient.from(PROFILE_TABLE).select('*').eq('user_id',user.id).maybeSingle();
   if(result.error && result.error.code !== 'PGRST116'){
     console.warn('Profile lookup:', result.error);
     setMessage('Profile data could not be loaded. Check your cr_profiles table and RLS policies.','error');
   }
   profile = result.data || {};
+  if(!result.data){
+    const createResult = await supabaseClient.from(PROFILE_TABLE).insert({
+      user_id:user.id,
+      display_name:user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'Creator',
+      username:user.user_metadata?.user_name || '',
+      avatar_url:user.user_metadata?.avatar_url || '',
+      bio:'',
+      location:'',
+      portfolio_url:'',
+      is_discoverable:true
+    }).select().single();
+    if(createResult.error){
+      console.error('Profile creation:',createResult.error);
+      setMessage('Your account is signed in, but your Dreamscapes profile could not be created: ' + createResult.error.message,'error');
+      $('loading').hidden=true;
+      $('profileLayout').hidden=false;
+      return;
+    }
+    profile=createResult.data;
+  }
 
   setField('displayName',profile.display_name ?? profile.full_name ?? user.user_metadata?.full_name ?? '');
   setField('username',profile.username ?? user.user_metadata?.user_name ?? '');
@@ -208,17 +228,17 @@ $('profileForm').addEventListener('submit',async e=>{
   button.textContent = 'Saving…';
 
   const updates = {
-    id: currentUser.id,
+    user_id: currentUser.id,
     display_name: $('displayName').value.trim(),
     username: $('username').value.trim(),
     avatar_url: $('avatarUrl').value.trim(),
     location: $('location').value.trim(),
-    website: $('website').value.trim(),
+    portfolio_url: $('website').value.trim(),
     bio: $('bio').value.trim(),
     updated_at: new Date().toISOString()
   };
 
-  const { data,error } = await supabaseClient.from(PROFILE_TABLE).upsert(updates,{onConflict:'id'}).select().single();
+  const { data,error } = await supabaseClient.from(PROFILE_TABLE).upsert(updates,{onConflict:'user_id'}).select().single();
   if(error){
     console.error(error);
     setMessage('Unable to save profile: ' + error.message,'error');
