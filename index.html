@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070711">
+  <meta name="description" content="CrowRules Dreamscapes — bringing stories to life. Coming soon. Under development.">
+  <title>CrowRules Dreamscapes | Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--bg:#070711;--text:#f7f5ff;--muted:#aaa8c4;--cyan:#53f3ff;--purple:#a66bff;--pink:#ff68c8}
+    *{box-sizing:border-box}
+    html{min-height:100%;scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 40%,#1a1240 0%,#0b0a1b 42%,var(--bg) 78%);color:var(--text);font-family:Montserrat,system-ui,sans-serif;display:grid;place-items:center;padding:28px}
+    body:before,body:after{content:"";position:fixed;inset:0;pointer-events:none}
+    body:before{opacity:.45;background-image:radial-gradient(1px 1px at 8% 18%,#fff 99%,transparent),radial-gradient(2px 2px at 78% 24%,#a6faff 99%,transparent),radial-gradient(1px 1px at 32% 74%,#fff 99%,transparent),radial-gradient(1px 1px at 88% 81%,#e9caff 99%,transparent),radial-gradient(2px 2px at 18% 88%,#fff 99%,transparent),radial-gradient(1px 1px at 60% 10%,#fff 99%,transparent);background-size:310px 280px,410px 370px,250px 330px,360px 310px,290px 260px,330px 300px}
+    body:after{background:linear-gradient(120deg,transparent 20%,#53f3ff06 42%,#a66bff0b 57%,transparent 78%)}
+    .shell{position:relative;z-index:1;width:min(100%,920px);text-align:center;padding:clamp(26px,6vw,66px) clamp(20px,6vw,68px);border:1px solid #b6a5ff2e;border-radius:28px;background:linear-gradient(145deg,#17152bcc,#0c0b19eF 70%);box-shadow:0 0 90px #7c3cff18,inset 0 1px #ffffff0b;backdrop-filter:blur(14px)}
+    .brand{display:inline-flex;align-items:center;justify-content:center;gap:12px;margin-bottom:34px}
+    .sigil{width:44px;height:44px;display:grid;place-items:center;border:1px solid #53f3ff88;border-radius:14px;color:var(--cyan);font-family:Orbitron,sans-serif;font-weight:800;font-size:22px;transform:rotate(-4deg);box-shadow:0 0 22px #53f3ff22,inset 0 0 16px #53f3ff0b}
+    .brand-name{font-family:Orbitron,sans-serif;font-size:clamp(13px,2.3vw,18px);font-weight:700;letter-spacing:.16em;text-align:left}
+    .brand-name span{display:block;color:#c3b4ff;font-size:.65em;letter-spacing:.31em;margin-top:5px}
+    .art{width:min(100%,330px);height:auto;margin:0 auto 12px;display:block;filter:drop-shadow(0 0 35px #9a60ff30)}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:9px 15px;border:1px solid #a66bff70;border-radius:999px;background:#a66bff13;color:#d9c9ff;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
+    .pulse{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);animation:pulse 2s infinite}
+    h1{font-family:Orbitron,Montserrat,sans-serif;font-size:clamp(38px,8vw,76px);line-height:1.08;letter-spacing:-.045em;margin:24px 0 12px;font-weight:800}
+    h1 .gradient{background:linear-gradient(100deg,var(--cyan),#c5a0ff 48%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .subtitle{margin:0 auto;max-width:620px;color:#d6d2e9;font-size:clamp(16px,2.4vw,21px);line-height:1.7}
+    .status{margin:30px auto 0;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--cyan);font-family:Orbitron,sans-serif;font-size:clamp(12px,2vw,15px);font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+    .status:before,.status:after{content:"";width:clamp(18px,5vw,54px);height:1px;background:linear-gradient(90deg,transparent,#53f3ff99)}
+    .status:after{transform:scaleX(-1)}
+    .description{max-width:610px;margin:24px auto 0;color:var(--muted);font-size:14px;line-height:1.9}
+    .rule{height:1px;width:min(100%,450px);margin:36px auto 22px;background:linear-gradient(90deg,transparent,#a66bff66,#53f3ff66,transparent)}
+    .tagline{font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.18em;color:#c8c2e3;text-transform:uppercase}
+    .footer{margin-top:30px;display:flex;justify-content:center;flex-wrap:wrap;gap:14px 22px;font-size:12px;color:#85819f}
+    .footer a{color:#b7b0d5;text-decoration:none;transition:color .2s}
+    .footer a:hover,.footer a:focus-visible{color:var(--cyan)}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.75)}}
+    @media(max-width:520px){body{padding:14px}.shell{border-radius:22px;padding:30px 20px}.brand{margin-bottom:25px}.art{width:min(88%,270px)}.description{font-size:13px}.footer{line-height:1.8}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="brand" aria-label="CrowRules Dreamscapes">
+      <div class="sigil" aria-hidden="true">C</div>
+      <div class="brand-name">CROWRULES<span>DREAMSCAPES</span></div>
+    </div>
+
+    <svg class="art" viewBox="0 0 360 190" role="img" aria-labelledby="art-title">
+      <title id="art-title">An illuminated portal opening into a dreamlike universe</title>
+      <defs>
+        <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#53f3ff"/><stop offset=".52" stop-color="#a66bff"/><stop offset="1" stop-color="#ff68c8"/></linearGradient>
+        <radialGradient id="core"><stop stop-color="#a66bff" stop-opacity=".45"/><stop offset="1" stop-color="#15112c" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="180" cy="93" rx="139" ry="76" fill="url(#core)"/>
+      <ellipse cx="180" cy="93" rx="105" ry="71" fill="none" stroke="url(#ring)" stroke-width="1.7" opacity=".9" transform="rotate(-13 180 93)"/>
+      <ellipse cx="180" cy="93" rx="88" ry="58" fill="none" stroke="#a66bff" stroke-width="1" opacity=".7" transform="rotate(22 180 93)"/>
+      <ellipse cx="180" cy="93" rx="67" ry="48" fill="#0b0a1b" stroke="#53f3ff" stroke-width="1.3" opacity=".95"/>
+      <path d="M137 124 C126 95 145 63 173 54 C199 46 226 65 230 91 C234 111 218 129 199 135" fill="none" stroke="url(#ring)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M149 116 C144 95 159 74 178 70 C198 66 214 82 214 98" fill="none" stroke="#53f3ff" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>
+      <circle cx="180" cy="93" r="24" fill="url(#core)"/>
+      <g fill="#fff"><circle cx="83" cy="53" r="2"/><circle cx="267" cy="48" r="1.8"/><circle cx="274" cy="132" r="1.5"/><circle cx="94" cy="137" r="1.4"/><circle cx="180" cy="17" r="1.6"/><circle cx="230" cy="157" r="1.4"/></g>
+      <g fill="#53f3ff"><circle cx="119" cy="30" r="2"/><circle cx="248" cy="86" r="2"/><circle cx="118" cy="154" r="1.8"/></g>
+      <g stroke="url(#ring)" stroke-width="1.2" opacity=".75"><path d="M27 93h31m244 0h31M180 0v18m0 150v20"/><path d="M53 40l13 9m228 92 13 9"/></g>
+    </svg>
+
+    <div class="eyebrow"><span class="pulse" aria-hidden="true"></span>A new world is taking shape</div>
+    <h1><span class="gradient">Coming Soon.</span></h1>
+    <p class="subtitle">Bringing Stories to Life.</p>
+    <div class="status"><span>Under Development</span></div>
+    <p class="description">Dreamscapes is being built as a home for imaginative worlds, original stories, and creative possibilities. We’re laying the groundwork for what comes next. The journey begins soon.</p>
+    <div class="rule"></div>
+    <div class="tagline">One company. One universe.</div>
+    <nav class="footer" aria-label="Related links">
+      <a href="https://crowrulesentertainment-oss.github.io/crowrulesentertainment/">CrowRules Entertainment Home</a>
+      <span aria-hidden="true">✦</span>
+      <a href="https://github.com/crowrulesentertainment-oss/dreamscapes">Dreamscapes on GitHub</a>
+    </nav>
+  </main>
+</body>
+</html>
