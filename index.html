@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080812">
+  <meta name="description" content="CrowRules Dreamscapes — bringing stories to life. Coming soon. Under development.">
+  <title>CrowRules Dreamscapes — Coming Soon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme: dark; --cyan:#54f5ff; --purple:#a66bff; --pink:#ff70cf; }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center; overflow: hidden;
+      padding: 28px; color: #f5f3ff; font-family: Montserrat, sans-serif;
+      background: radial-gradient(ellipse at 18% 20%, #35205d 0, transparent 40%),
+                  radial-gradient(ellipse at 82% 78%, #123b50 0, transparent 38%), #080812;
+    }
+    body::before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.24;
+      background-image: linear-gradient(#a66bff18 1px, transparent 1px), linear-gradient(90deg,#54f5ff18 1px,transparent 1px);
+      background-size: 52px 52px; mask-image: linear-gradient(to bottom, black, transparent 92%); }
+    .panel { position:relative; width:min(760px,100%); padding:clamp(34px,7vw,76px) 26px; text-align:center;
+      border:1px solid #a66bff66; border-radius:26px; background:linear-gradient(145deg,#171329df,#0b111de8);
+      box-shadow:0 0 70px #8b5cf633, inset 0 0 40px #54f5ff08; }
+    .mark { width:76px; height:76px; margin:0 auto 26px; display:grid; place-items:center; border-radius:22px;
+      color:var(--cyan); font:800 32px Orbitron,sans-serif; border:1px solid #54f5ff99;
+      box-shadow:0 0 30px #54f5ff25, inset 0 0 24px #a66bff20; transform:rotate(-4deg); }
+    .eyebrow { color:var(--cyan); text-transform:uppercase; letter-spacing:.28em; font-size:.72rem; font-weight:700; }
+    h1 { margin:16px 0 12px; font:800 clamp(2rem,7vw,4rem)/1.12 Orbitron,sans-serif; letter-spacing:-.04em;
+      background:linear-gradient(90deg,#fff,var(--cyan),var(--purple),var(--pink)); background-clip:text; color:transparent; }
+    .status { margin:28px auto 18px; display:inline-flex; align-items:center; gap:10px; padding:11px 16px;
+      border:1px solid #a66bff77; border-radius:999px; background:#a66bff13; font-size:.78rem; font-weight:800; letter-spacing:.16em; }
+    .dot { width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan); }
+    p { max-width:520px; margin:0 auto; color:#c6c4d9; line-height:1.8; font-size:1rem; }
+    .tagline { margin-top:24px; color:#aaa5c7; font-size:.76rem; letter-spacing:.18em; text-transform:uppercase; }
+    .line { width:86px; height:2px; margin:30px auto 0; background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink)); }
+    @media (prefers-reduced-motion:no-preference) { .dot { animation:pulse 2s ease-in-out infinite; } @keyframes pulse { 50% { opacity:.45; } } }
+  </style>
+</head>
+<body>
+  <main class="panel">
+    <div class="mark" aria-hidden="true">CR</div>
+    <div class="eyebrow">A CrowRules Entertainment Division</div>
+    <h1>CrowRules<br>Dreamscapes</h1>
+    <div class="status"><span class="dot" aria-hidden="true"></span> COMING SOON · UNDER DEVELOPMENT</div>
+    <p>We're building a place where imagination becomes a universe of stories. New worlds, original characters, and unforgettable adventures are in development.</p>
+    <div class="tagline">Bringing Stories to Life</div>
+    <div class="line" aria-hidden="true"></div>
+  </main>
+</body>
+</html>
