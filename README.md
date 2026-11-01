@@ -20,7 +20,9 @@ A creative development platform for turning original dreams, ideas, stories, cha
 - `rights.html` — creator-first principles
 - `creator-hub.html` — creator workspace preview
 
-## Restricted administration\n- `admin-setup.html` — secure first-administrator activation instructions. The current project has no active `cr_admins` records yet; an owner must add the first administrator manually.
+## Restricted administration
+- `admin-setup.html` — first-administrator setup and recovery instructions. The initial CrowRules administrator is now active.
+
 - `admin.html` — authenticated Dreamscapes Control Room for submission review, project oversight, team assignments, Pitch Room decisions, and Premiere Room publishing.
 
 ## Supabase
