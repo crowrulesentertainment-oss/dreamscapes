@@ -23,7 +23,8 @@ async function handleOne(db:any,p:any){
  if(delivery){
   const patch:any={last_event_at:eventAt,updated_at:new Date().toISOString()};
   if(kind==="delivered"){patch.status="delivered";patch.delivered_at=eventAt;patch.bounced_at=null;}
-  else if(["hardbounce","softbounce","blocked","spam","invalid","error"].includes(kind)){patch.status="bounced";patch.bounced_at=eventAt;}
+  else if(["hardbounce","softbounce","blocked","invalid","error"].includes(kind)){patch.status="bounced";patch.bounced_at=eventAt;}
+  else if(kind==="spam"){patch.status="complained";}
   else if(["sent","request"].includes(kind)&&delivery.status==="queued"){patch.status="sent";}
   if(kind==="opened"||kind==="uniqueopened"){
    const {count}=await db.from("ds_email_events").select("id",{count:"exact",head:true}).eq("delivery_id",delivery.id).in("event_type",["opened","uniqueOpened"]);
