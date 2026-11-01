@@ -2,29 +2,47 @@
 
 **Where imagination becomes entertainment.**
 
-A creative development platform concept for turning original dreams, ideas, stories, characters, and fictional worlds into television, film, animation, and other storytelling projects.
+A creative development platform for turning original dreams, ideas, stories, characters, and fictional worlds into television, film, animation, and other storytelling projects.
 
-## Pages
-- `index.html` — cinematic public homepage
-- `submit.html` — submission form prototype
-- `explore.html` — Dream Library / project discovery
+## Public pages
+- `index.html` — cinematic homepage
+- `submit.html` — submission form preview (not connected to intake)
+- `explore.html` — Dream Library
 - `how-it-works.html` — development pipeline
-- `development.html` — Project Development Space for writers, artists, producers, and creative teams\n- `project-room.html` — interactive sample project workspace with overview, team, world, scripts, tasks, and pitch checklist\n- `join-project.html` — creative collaboration interest form prototype
-- `pitch-room.html` — presentation pathway for CrowRules decision-makers
-- `premiere-room.html` — showcase concept for completed productions
-- `worlds.html` — World Builder overview
-- `characters.html` — Character Forge overview
+- `development.html` — Project Development Space
+- `project-room.html` — interactive sample project workspace
+- `join-project.html` — creative collaboration interest form preview
+- `pitch-room.html` — Pitch Room overview
+- `premiere-room.html` — live public showcase of published productions
+- `worlds.html` — World Builder
+- `characters.html` — Character Forge
 - `creators.html` — creative network
 - `rights.html` — creator-first principles
-- `creator-hub.html` — private workspace preview
+- `creator-hub.html` — creator workspace preview
 
-## Current status
-Static front-end foundation. Forms, team matching, pitching, project workspaces, and premieres are not connected to live services. The Project Room and collaborator interest form are interactive front-end previews only. Supabase authentication, CrowRules member integration, database tables, Row Level Security, private file storage, notifications, and legally reviewed creator agreements must be implemented before accepting real submissions or private project material.
+## Restricted administration
+- `admin.html` — authenticated Dreamscapes Control Room for submission review, project oversight, team assignments, Pitch Room decisions, and Premiere Room publishing.
 
-## Planned architecture
-Use the existing CrowRules Supabase project and existing member identity. Suggested data domains: submissions, projects, project members and roles, worlds, locations, characters, relationships, story bibles, scripts, script versions, episodes, scenes, tasks, files, agreements, credits, pitch submissions, pitch reviews, decisions, premiere listings, and milestones.
+## Supabase
+Project: `cevylpnoexugwgygvtgu` (existing CrowRules Supabase project). The Control Room uses Supabase JS v2.118.0 and a publishable browser key only. It never includes a service-role or secret key.
 
-All private records must be protected by Row Level Security. Public project and premiere pages should display only material explicitly approved for public release.
+Dreamscapes tables:
+- `ds_submissions`
+- `ds_projects`
+- `ds_project_members`
+- `ds_pitch_reviews`
+- `ds_activity_log`
+- `ds_premieres`
+
+All six tables have Row Level Security enabled. Admin operations are gated by an active record in the existing `cr_admins` table. Submitters can insert/read only their own authenticated submissions. Project members can read only their own membership record and projects they are assigned to. Premiere Room listings are publicly readable only when status is `published`.
+
+## Important launch notes
+- Public submission and collaborator forms remain preview-only; they do not transmit data.
+- The Control Room is live against Supabase, but requires an existing CrowRules administrator account with an active `cr_admins` row.
+- Team assignment requires an existing Supabase Auth user UUID.
+- Publish only productions with confirmed permissions, approved credits, and cleared viewing links.
+- Rights, compensation, ownership, and creator participation must be documented in separate written agreements.
+- Before accepting public submissions, build a secure authenticated intake workflow and verify email/anti-abuse handling.
 
 ## Preview
 Open `index.html` or publish this repository with GitHub Pages.
