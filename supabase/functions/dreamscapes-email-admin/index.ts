@@ -34,7 +34,7 @@ Deno.serve(async(req:Request)=>{
    db.from("ds_email_deliveries").select("id,notification_id,recipient_id,status,attempt_count,next_attempt_at,provider_message_id,last_error,created_at,updated_at,sent_at,delivered_at,bounced_at,open_count,click_count,first_opened_at,last_opened_at,last_clicked_at,notification:ds_notifications(title,notification_type,body,created_at)").order("created_at",{ascending:false}).limit(100),
    db.from("ds_email_worker_runs").select("id,started_at,finished_at,outcome,processed,sent,skipped,failed,busy,unknown,error_message").order("started_at",{ascending:false}).limit(10),
    db.from("ds_email_events").select("id,event_type,recipient_email,provider_message_id,event_at,link,reason,delivery_id").order("event_at",{ascending:false}).limit(100),
-   db.from("ds_email_events").select("event_type,delivery:ds_email_deliveries(notification:ds_notifications(notification_type))").order("event_at",{ascending:false}).limit(2000),
+   db.from("ds_email_events").select("event_type,event_at,delivery:ds_email_deliveries(notification:ds_notifications(notification_type))").order("event_at",{ascending:false}).limit(5000),
    db.from("ds_email_suppressions").select("id,email_normalized,reason,created_at,notes").order("created_at",{ascending:false}).limit(100)
   ]);
   if(listError||runError||eventError||suppressionError||performanceError)return reply({error:"Could not load email operations data."},500);
@@ -49,11 +49,26 @@ Deno.serve(async(req:Request)=>{
    if(["opened","uniqueopened"].includes(kind))row.opened++;
    if(kind==="click")row.clicked++;
   }
+  const reporting:Record<string,any>={};
+  for(const [label,hours] of [["24 hours",24],["7 days",168],["30 days",720]] as const){
+   const cutoff=Date.now()-hours*3600000;const row={sent:0,delivered:0,bounced:0,opened:0,clicks:0,bounce_rate:"0.0%"};
+   for(const ev of performanceEvents??[]){
+    if(!ev.event_at||new Date(ev.event_at).getTime()<cutoff)continue;
+    const kind=String(ev.event_type).toLowerCase();
+    if(kind==="sent")row.sent++;
+    if(kind==="delivered")row.delivered++;
+    if(["hardbounce","softbounce","blocked","invalid"].includes(kind))row.bounced++;
+    if(["opened","uniqueopened"].includes(kind))row.opened++;
+    if(kind==="click")row.clicks++;
+   }
+   row.bounce_rate=((row.bounced/Math.max(1,row.delivered+row.bounced))*100).toFixed(1)+"%";
+   reporting[label]=row;
+  }
   const enriched=await Promise.all((deliveries??[]).map(async d=>{
    const {data}=await db.auth.admin.getUserById(d.recipient_id);
    return {...d,recipient_email:data.user?.email??"Email unavailable"};
   }));
-  return reply({counts,deliveries:enriched,worker_runs:runs??[],event_counts:eventCounts,notification_performance:performance,recent_events:recentEvents??[],suppressions:suppressions??[],admin_email:user.email??null});
+  return reply({counts,deliveries:enriched,worker_runs:runs??[],event_counts:eventCounts,notification_performance:performance,reporting,recent_events:recentEvents??[],suppressions:suppressions??[],admin_email:user.email??null});
  }
  if(action==="retry"){
   const id=input.delivery_id;if(!id)return reply({error:"Delivery ID is required."},400);
