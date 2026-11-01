@@ -15,6 +15,9 @@ Deno.serve(async(req:Request)=>{
  if(!supplied)return json({error:"Unauthorized."},401);
  const {data:authorized,error:authError}=await db.rpc("verify_dreamscapes_email_worker_token",{p_token:supplied});
  if(authError||authorized!==true)return json({error:"Unauthorized."},401);
+ const {data:runRow,error:runInsertError}=await db.from("ds_email_worker_runs").insert({outcome:"running"}).select("id").single();
+ if(runInsertError)return json({error:"Could not record worker run."},500);
+ const runId=runRow.id;
  const nowIso=new Date().toISOString(),staleIso=new Date(Date.now()-10*60*1000).toISOString();
  const {error:staleError}=await db.from("ds_email_deliveries").update({status:"unknown",last_error:"Worker lease expired; provider acceptance is uncertain. Review Brevo logs before retrying.",lease_expires_at:null,updated_at:nowIso}).eq("status","processing").lt("lease_expires_at",staleIso);
  if(staleError)console.error("Could not mark stale delivery leases:",staleError.message);
@@ -59,5 +62,8 @@ Deno.serve(async(req:Request)=>{
    await db.from("ds_email_deliveries").update({status:"failed",last_error:reason.slice(0,1000),next_attempt_at:new Date(Date.now()+backoff(nextAttempt)).toISOString(),lease_expires_at:null,updated_at:new Date().toISOString()}).eq("id",item.id).eq("status","processing");failed++;
   }
  }
+ const runFinished=new Date().toISOString();
+ const {error:runUpdateError}=await db.from("ds_email_worker_runs").update({finished_at:runFinished,outcome:"succeeded",processed:(items??[]).length,sent,skipped,failed,busy,unknown}).eq("id",runId);
+ if(runUpdateError)console.error("Could not finish worker run record:",runUpdateError.message);
  return json({processed:(items??[]).length,sent,skipped,failed,busy,unknown});
 });
