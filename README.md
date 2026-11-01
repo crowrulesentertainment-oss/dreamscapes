@@ -19,8 +19,10 @@ A creative development platform for turning original dreams, ideas, stories, cha
 - `creators.html` — creative network
 - `rights.html` — creator-first principles
 - `creator-hub.html` — creator workspace preview
-- `creator-dashboard.html` — authenticated creator dashboard for submissions, private messages, and project invitations\n- `creator-portal.html` — personalized creator and team portal with private creator profiles, active project teams, invitations, assigned work and personal deadlines
-- `project-dashboard.html` — authenticated cross-project production dashboard for progress, project health, overdue work, deadlines, milestones and assigned team workload\n- `project-workspace.html` — private project workspace for story documents, immutable version snapshots, milestones, project team visibility, document discussions, activity timeline, secure media library, and production pipeline with task assignments and deadlines
+- `creator-dashboard.html` — authenticated creator dashboard for submissions, private messages, and project invitations
+- `creator-portal.html` — personalized creator and team portal with private creator profiles, active project teams, invitations, assigned work and personal deadlines
+- `project-dashboard.html` — authenticated cross-project production dashboard for progress, project health, overdue work, deadlines, milestones and assigned team workload
+- `project-workspace.html` — private project workspace for story documents, immutable version snapshots, milestones, project team visibility, document discussions, activity timeline, secure media library, and production pipeline with task assignments and deadlines
 
 ## Restricted administration
 - `admin-setup.html` — first-administrator setup and recovery instructions. The initial CrowRules administrator is now active.
