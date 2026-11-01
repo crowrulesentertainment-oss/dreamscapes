@@ -15,3 +15,36 @@
 @media(max-width:1050px){.nav-links{gap:10px;font-size:11px}.nav-wrap{gap:12px}.nav-cta{font-size:11px;padding:11px 14px}.realm-grid{grid-template-columns:repeat(2,1fr)}.pathway{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.menu-toggle{display:block}.nav-links{display:none;position:absolute;top:76px;left:0;right:0;padding:18px 28px 24px;background:#080a13;border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;max-height:calc(100svh - 76px);overflow:auto}.nav-links.open{display:flex}.nav-cta{display:none}.hero{min-height:690px}.hero-backdrop{background-position:58% center}.hero-inner{padding:90px 0 100px}.hero-caption{font-size:8px}.intro-grid{grid-template-columns:1fr;gap:12px}.section{padding:65px 0}.section-head{display:block}.section-head p{margin-top:15px}.realm-grid{grid-template-columns:1fr}.realm-card{min-height:380px}.journey-section{min-height:570px}.pathway{grid-template-columns:1fr 1fr}.creator-panel{grid-template-columns:1fr;padding:35px 28px}.creator-orb{width:190px}.final-call{min-height:540px}}
 @media(max-width:440px){.container,.nav-wrap{padding-left:20px;padding-right:20px}.hero h1{font-size:clamp(43px,13vw,58px)}.hero-note{font-size:8px;letter-spacing:.12em}.pathway{grid-template-columns:1fr}.realm-card{min-height:350px}.hero-actions{align-items:stretch;flex-direction:column;max-width:310px}.hero-actions .button{width:100%}.creator-panel .hero-actions{align-items:stretch}.text-link{text-align:center}}
+
+/* Immersive Dream Library / World Explorer */
+.explorer-hero{position:relative;min-height:590px;display:flex;align-items:end;overflow:hidden;background:#080a13}
+.explorer-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#070912 0%,#070912a8 32%,#07091220 75%),linear-gradient(90deg,#070912b0,transparent 75%),url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2400&q=90') center 45%/cover;animation:explorerDrift 38s ease-in-out infinite alternate}
+.explorer-hero:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 75% 40%,#9c7dff22,transparent 35%);pointer-events:none}
+.explorer-hero-content{position:relative;z-index:1;padding-top:130px;padding-bottom:75px;max-width:800px}
+.explorer-hero h1{font:800 clamp(46px,7vw,82px)/1.02 Orbitron,sans-serif;letter-spacing:-.06em;margin:18px 0}
+.explorer-hero p{max-width:620px;color:#e0dfec;font-size:17px}
+.explorer-stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:30px;color:#d6d5e5;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.explorer-stats span:before{content:"✦";color:var(--cyan);margin-right:9px}
+.explorer-toolbar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin:0 0 28px}
+.explorer-toolbar .filter-row{margin:0}
+.explorer-count{color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.explorer-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.explorer-card{--tilt-x:0deg;--tilt-y:0deg;position:relative;min-height:390px;grid-column:span 4;overflow:hidden;border:1px solid #ffffff28;border-radius:18px;background:#121626;isolation:isolate;transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));transition:transform .35s ease,border-color .35s;box-shadow:0 18px 55px #0005}
+.explorer-card:nth-child(1),.explorer-card:nth-child(6){grid-column:span 6;min-height:450px}
+.explorer-card[hidden]{display:none}
+.explorer-card:before{content:"";position:absolute;inset:0;z-index:-2;background-image:var(--scene);background-position:center;background-size:cover;transition:transform .9s cubic-bezier(.2,.7,.2,1),filter .6s;filter:saturate(.86)}
+.explorer-card:hover{border-color:#a8efff99}
+.explorer-card:hover:before{transform:scale(1.09);filter:saturate(1.12)}
+.explorer-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#050711f5 0%,#070912a6 35%,#07091208 80%),linear-gradient(120deg,#07091245,transparent 70%)}
+.explorer-card .scene-number{position:absolute;top:22px;left:22px;color:#fff;font:10px Orbitron;letter-spacing:.18em;text-shadow:0 2px 8px #000}
+.explorer-card .scene-type{position:absolute;top:20px;right:20px;padding:7px 10px;border:1px solid #ffffff55;border-radius:30px;background:#07091266;color:#fff;font-size:9px;letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(8px)}
+.explorer-card-body{position:absolute;left:0;right:0;bottom:0;padding:26px}
+.explorer-card h2{font:700 clamp(19px,2.4vw,28px)/1.2 Orbitron;margin:0 0 9px;text-shadow:0 3px 15px #000}
+.explorer-card p{max-width:460px;color:#e0dfeb;font-size:13px;margin:0 0 17px}
+.explorer-card a{display:inline-flex;align-items:center;gap:9px;color:var(--cyan);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.explorer-card a:hover{color:#fff}
+.explorer-note{margin-top:26px;padding:18px 20px;border-left:2px solid var(--cyan);background:#ffffff08;color:var(--muted);font-size:12px}
+@keyframes explorerDrift{from{transform:scale(1.02) translateX(0)}to{transform:scale(1.11) translateX(-1.5%)}}
+@media(max-width:900px){.explorer-card,.explorer-card:nth-child(1),.explorer-card:nth-child(6){grid-column:span 6;min-height:390px}}
+@media(max-width:600px){.explorer-hero{min-height:560px}.explorer-hero-content{padding-top:100px;padding-bottom:60px}.explorer-hero p{font-size:15px}.explorer-card,.explorer-card:nth-child(1),.explorer-card:nth-child(6){grid-column:1/-1;min-height:390px}.explorer-stats{gap:14px}.explorer-card{transform:none!important}}
+@media(prefers-reduced-motion:reduce){.explorer-hero:before{animation:none}.explorer-card,.explorer-card:before{transition:none}}
