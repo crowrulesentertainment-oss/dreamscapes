@@ -30,18 +30,30 @@ Deno.serve(async(req:Request)=>{
   const trackedEvents=["delivered","hardBounce","softBounce","blocked","spam","invalid","deferred","click","opened","uniqueOpened","unsubscribed","sent"];
   const eventCounts:Record<string,number>={};
   await Promise.all(trackedEvents.map(async event=>{const {count,error}=await db.from("ds_email_events").select("id",{count:"exact",head:true}).eq("event_type",event);if(error)throw error;eventCounts[event]=count??0;}));
-  const [{data:deliveries,error:listError},{data:runs,error:runError},{data:recentEvents,error:eventError},{data:suppressions,error:suppressionError}]=await Promise.all([
+  const [{data:deliveries,error:listError},{data:runs,error:runError},{data:recentEvents,error:eventError},{data:suppressions,error:suppressionError},{data:performanceEvents,error:performanceError}]=await Promise.all([
    db.from("ds_email_deliveries").select("id,notification_id,recipient_id,status,attempt_count,next_attempt_at,provider_message_id,last_error,created_at,updated_at,sent_at,delivered_at,bounced_at,open_count,click_count,first_opened_at,last_opened_at,last_clicked_at,notification:ds_notifications(title,notification_type,body,created_at)").order("created_at",{ascending:false}).limit(100),
    db.from("ds_email_worker_runs").select("id,started_at,finished_at,outcome,processed,sent,skipped,failed,busy,unknown,error_message").order("started_at",{ascending:false}).limit(10),
    db.from("ds_email_events").select("id,event_type,recipient_email,provider_message_id,event_at,link,reason,delivery_id").order("event_at",{ascending:false}).limit(100),
+   db.from("ds_email_events").select("event_type,delivery:ds_email_deliveries(notification:ds_notifications(notification_type))").order("event_at",{ascending:false}).limit(2000),
    db.from("ds_email_suppressions").select("id,email_normalized,reason,created_at,notes").order("created_at",{ascending:false}).limit(100)
   ]);
-  if(listError||runError||eventError||suppressionError)return reply({error:"Could not load email operations data."},500);
+  if(listError||runError||eventError||suppressionError||performanceError)return reply({error:"Could not load email operations data."},500);
+  const performance:Record<string,any>={};
+  for(const ev of performanceEvents??[]){
+   const type=ev.delivery?.notification?.notification_type??"other";
+   if(!performance[type])performance[type]={events:0,delivered:0,bounced:0,opened:0,clicked:0};
+   const row=performance[type];row.events++;
+   const kind=String(ev.event_type).toLowerCase();
+   if(kind==="delivered")row.delivered++;
+   if(["hardbounce","softbounce","blocked","invalid"].includes(kind))row.bounced++;
+   if(["opened","uniqueopened"].includes(kind))row.opened++;
+   if(kind==="click")row.clicked++;
+  }
   const enriched=await Promise.all((deliveries??[]).map(async d=>{
    const {data}=await db.auth.admin.getUserById(d.recipient_id);
    return {...d,recipient_email:data.user?.email??"Email unavailable"};
   }));
-  return reply({counts,deliveries:enriched,worker_runs:runs??[],event_counts:eventCounts,recent_events:recentEvents??[],suppressions:suppressions??[],admin_email:user.email??null});
+  return reply({counts,deliveries:enriched,worker_runs:runs??[],event_counts:eventCounts,notification_performance:performance,recent_events:recentEvents??[],suppressions:suppressions??[],admin_email:user.email??null});
  }
  if(action==="retry"){
   const id=input.delivery_id;if(!id)return reply({error:"Delivery ID is required."},400);
