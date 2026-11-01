@@ -20,7 +20,7 @@ A creative development platform for turning original dreams, ideas, stories, cha
 - `rights.html` — creator-first principles
 - `creator-hub.html` — creator workspace preview
 - `creator-dashboard.html` — authenticated creator dashboard for submissions, private messages, and project invitations
-- `project-workspace.html` — private project workspace for story documents, immutable version snapshots, milestones, project team visibility, document discussions, activity timeline, secure media library, and production pipeline with task assignments and deadlines
+- `project-dashboard.html` — authenticated cross-project production dashboard for progress, project health, overdue work, deadlines, milestones and assigned team workload\n- `project-workspace.html` — private project workspace for story documents, immutable version snapshots, milestones, project team visibility, document discussions, activity timeline, secure media library, and production pipeline with task assignments and deadlines
 
 ## Restricted administration
 - `admin-setup.html` — first-administrator setup and recovery instructions. The initial CrowRules administrator is now active.
@@ -54,7 +54,7 @@ All fourteen Dreamscapes tables have Row Level Security enabled. Workspace docum
 - Team assignment requires an existing Supabase Auth user UUID.
 - Publish only productions with confirmed permissions, approved credits, and cleared viewing links.
 - Rights, compensation, ownership, and creator participation must be documented in separate written agreements.
-- Before broad public promotion, verify email confirmation and Google OAuth end-to-end, and add CAPTCHA / rate-limiting protections to the intake. Project Workspace authentication, document editing, version restore, and milestone updates still require end-to-end browser testing.
+- Before broad public promotion, verify email confirmation and Google OAuth end-to-end, and add CAPTCHA / rate-limiting protections to the intake. Project Workspace and Production Dashboard authentication, data loading, file uploads, task updates and milestone changes still require end-to-end browser testing.
 
 ## Preview
 Open `index.html` or publish this repository with GitHub Pages.
