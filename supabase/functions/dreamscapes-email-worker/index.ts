@@ -38,6 +38,9 @@ Deno.serve(async(req:Request)=>{
    if(!notification){await db.from("ds_email_deliveries").update({status:"disabled",lease_expires_at:null,updated_at:new Date().toISOString(),last_error:"Notification no longer exists."}).eq("id",item.id);skipped++;continue}
    if(!preference?.email_enabled){await db.from("ds_email_deliveries").update({status:"disabled",lease_expires_at:null,updated_at:new Date().toISOString(),last_error:"Recipient disabled email notifications."}).eq("id",item.id);skipped++;continue}
    const email=account.user?.email;if(!email||!account.user.email_confirmed_at)throw new Error("Recipient has no confirmed account email address.");
+   const {data:suppression,error:suppressionError}=await db.from("ds_email_suppressions").select("reason").eq("email_normalized",email.trim().toLowerCase()).maybeSingle();
+   if(suppressionError)throw new Error("Could not check recipient suppression status.");
+   if(suppression){await db.from("ds_email_deliveries").update({status:"disabled",lease_expires_at:null,updated_at:new Date().toISOString(),last_error:"Recipient suppressed by Brevo: "+suppression.reason}).eq("id",item.id);skipped++;continue;}
    const unsubscribe=url+"/functions/v1/dreamscapes-email-unsubscribe?token="+encodeURIComponent(preference.unsubscribe_token);
    const title=String(notification.title??"Dreamscapes update"),body=String(notification.body??"");
    const category=notification.notification_type==="project_invitation"?"Project invitation":"Production assignment";
