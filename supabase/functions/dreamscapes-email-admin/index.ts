@@ -27,16 +27,21 @@ Deno.serve(async(req:Request)=>{
    const {count,error}=await db.from("ds_email_deliveries").select("id",{count:"exact",head:true}).eq("status",status);
    if(error)throw error;counts[status]=count??0;
   }));
-  const [{data:deliveries,error:listError},{data:runs,error:runError}]=await Promise.all([
+  const trackedEvents=["delivered","hardBounce","softBounce","blocked","spam","invalid","deferred","click","opened","uniqueOpened","unsubscribed","sent","request"];
+  const eventCounts:Record<string,number>={};
+  await Promise.all(trackedEvents.map(async event=>{const {count,error}=await db.from("ds_email_events").select("id",{count:"exact",head:true}).eq("event_type",event);if(error)throw error;eventCounts[event]=count??0;}));
+  const [{data:deliveries,error:listError},{data:runs,error:runError},{data:recentEvents,error:eventError},{data:suppressions,error:suppressionError}]=await Promise.all([
    db.from("ds_email_deliveries").select("id,notification_id,recipient_id,status,attempt_count,next_attempt_at,provider_message_id,last_error,created_at,updated_at,sent_at,notification:ds_notifications(title,notification_type,body,created_at)").order("created_at",{ascending:false}).limit(100),
-   db.from("ds_email_worker_runs").select("id,started_at,finished_at,outcome,processed,sent,skipped,failed,busy,unknown,error_message").order("started_at",{ascending:false}).limit(10)
+   db.from("ds_email_worker_runs").select("id,started_at,finished_at,outcome,processed,sent,skipped,failed,busy,unknown,error_message").order("started_at",{ascending:false}).limit(10),
+   db.from("ds_email_events").select("id,event_type,recipient_email,provider_message_id,event_at,link,reason,delivery_id").order("event_at",{ascending:false}).limit(100),
+   db.from("ds_email_suppressions").select("id,email_normalized,reason,created_at,notes").order("created_at",{ascending:false}).limit(100)
   ]);
-  if(listError||runError)return reply({error:"Could not load email operations data."},500);
+  if(listError||runError||eventError||suppressionError)return reply({error:"Could not load email operations data."},500);
   const enriched=await Promise.all((deliveries??[]).map(async d=>{
    const {data}=await db.auth.admin.getUserById(d.recipient_id);
    return {...d,recipient_email:data.user?.email??"Email unavailable"};
   }));
-  return reply({counts,deliveries:enriched,worker_runs:runs??[],admin_email:user.email??null});
+  return reply({counts,deliveries:enriched,worker_runs:runs??[],event_counts:eventCounts,recent_events:recentEvents??[],suppressions:suppressions??[],admin_email:user.email??null});
  }
  if(action==="retry"){
   const id=input.delivery_id;if(!id)return reply({error:"Delivery ID is required."},400);
@@ -46,6 +51,22 @@ Deno.serve(async(req:Request)=>{
   const {data:updated,error}=await db.from("ds_email_deliveries").update({status:"queued",attempt_count:0,next_attempt_at:new Date().toISOString(),last_error:null,lease_expires_at:null,updated_at:new Date().toISOString()}).eq("id",id).eq("status","failed").select("id").maybeSingle();
   if(error||!updated)return reply({error:"Delivery could not be queued for retry."},409);
   return reply({ok:true,message:"Delivery returned to the queue. The worker will process it on its next run."});
+ }
+ if(action==="register-webhook"){
+  const brevoKey=Deno.env.get("BREVO_API_KEY");if(!brevoKey)return reply({error:"BREVO_API_KEY is not configured."},503);
+  const {data:webhookToken,error:tokenError}=await db.rpc("get_dreamscapes_brevo_webhook_token");
+  if(tokenError||!webhookToken)return reply({error:"Could not retrieve the protected webhook credential."},500);
+  const webhookUrl=url+"/functions/v1/dreamscapes-brevo-webhook";
+  const webhookEvents=["delivered","hardBounce","softBounce","blocked","spam","invalid","deferred","click","opened","uniqueOpened","unsubscribed","sent","request"];
+  const auth={type:"bearer",token:webhookToken};
+  const listResponse=await fetch("https://api.brevo.com/v3/webhooks?type=transactional",{headers:{"api-key":brevoKey,"accept":"application/json"}});
+  if(!listResponse.ok)return reply({error:"Could not inspect Brevo webhooks ("+listResponse.status+")."},502);
+  const list=await listResponse.json();const existing=(list.webhooks??[]).find((x:any)=>x.url===webhookUrl&&x.type==="transactional");
+  const payload={url:webhookUrl,description:"CrowRules Dreamscapes transactional email intelligence",events:webhookEvents,type:"transactional",auth,batched:false};
+  const response=await fetch(existing?"https://api.brevo.com/v3/webhooks/"+existing.id:"https://api.brevo.com/v3/webhooks",{method:existing?"PUT":"POST",headers:{"api-key":brevoKey,"accept":"application/json","content-type":"application/json"},body:JSON.stringify(payload)});
+  const result=await response.text();if(!response.ok)return reply({error:"Brevo webhook configuration failed ("+response.status+"): "+result.slice(0,500)},502);
+  let parsed:any={};try{parsed=JSON.parse(result)}catch{/* empty response */}
+  return reply({ok:true,webhook_id:parsed.id??existing?.id??null,created:!existing,message:existing?"Existing Brevo webhook updated.":"Brevo transactional webhook created and connected.",url:webhookUrl,events:webhookEvents});
  }
  if(action==="test"){
   const brevoKey=Deno.env.get("BREVO_API_KEY"),fromEmail=Deno.env.get("DREAMSCAPES_EMAIL_FROM")??Deno.env.get("HUB_EMAIL_FROM");
