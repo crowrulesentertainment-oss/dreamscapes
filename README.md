@@ -64,3 +64,7 @@ All Dreamscapes tables have Row Level Security enabled. The `ds_creator_profiles
 
 ## Preview
 Open `index.html` or publish this repository with GitHub Pages.
+
+
+### Email Operations Center
+The restricted Admin Control Room includes a Brevo Email Operations Center. The `dreamscapes-email-admin` Edge Function validates the signed-in user against `cr_admins` (`is_active=true`) before returning delivery records, recipient email addresses, aggregate counts or allowing a failed delivery to be retried. Uncertain deliveries cannot be retried from the dashboard to avoid duplicate sends. The test-email action sends only to the currently signed-in administrator. The worker writes server-only run telemetry to `ds_email_worker_runs` for last-run health and processing counts. The delivery ledger and worker telemetry tables have RLS enabled and no anon/authenticated table grants.
