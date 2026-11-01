@@ -1,0 +1,1 @@
+(()=>{document.querySelectorAll('[data-tab]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('active',x===a));document.querySelectorAll('.tab-panel').forEach(p=>p.hidden=p.id!==a.dataset.tab)}))})();
