@@ -36,13 +36,15 @@ Dreamscapes tables:
 - `ds_workspace_documents`
 - `ds_document_versions`
 - `ds_workspace_milestones`
+- `ds_document_comments`
+- `ds_workspace_activity`
 - `ds_projects`
 - `ds_project_members`
 - `ds_pitch_reviews`
 - `ds_activity_log`
 - `ds_premieres`
 
-All ten Dreamscapes tables have Row Level Security enabled. Workspace documents and milestones are restricted to project creators, active project members, and active CrowRules administrators. Document version snapshots are append-only through the client API; only authorized project participants can read or create them. The submission message thread is readable only by the submitting creator and active CrowRules administrators; creators can accept or decline only their own pending project invitations. Admin operations are gated by an active record in the existing `cr_admins` table. Creators must sign in or create an account. Submitters can insert/read only their own authenticated submissions; active administrators manage the private review queue. Project members can read only their own membership record and projects they are invited to or assigned to. Premiere Room listings are publicly readable only when status is `published`.
+All twelve Dreamscapes tables have Row Level Security enabled. Workspace documents and milestones are restricted to project creators, active project members, and active CrowRules administrators. Document version snapshots are append-only through the client API; only authorized project participants can read or create them. Document discussions and project activity are restricted to project creators, active team members and active CrowRules administrators. Activity records are created by authenticated workspace actions. The submission message thread is readable only by the submitting creator and active CrowRules administrators; creators can accept or decline only their own pending project invitations. Admin operations are gated by an active record in the existing `cr_admins` table. Creators must sign in or create an account. Submitters can insert/read only their own authenticated submissions; active administrators manage the private review queue. Project members can read only their own membership record and projects they are invited to or assigned to. Premiere Room listings are publicly readable only when status is `published`.
 
 ## Important launch notes
 - Dreamscapes submission intake is connected to Supabase and requires an authenticated account. Email confirmation may be required depending on Auth settings. Collaborator interest forms remain preview-only. The intake has a honeypot but still needs CAPTCHA / broader abuse controls before major promotion.
