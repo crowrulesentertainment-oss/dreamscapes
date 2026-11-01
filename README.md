@@ -6,7 +6,7 @@ A creative development platform for turning original dreams, ideas, stories, cha
 
 ## Public pages
 - `index.html` — cinematic homepage
-- `submit.html` — submission form preview (not connected to intake)
+- `submit.html` — authenticated creator submission intake
 - `explore.html` — Dream Library
 - `how-it-works.html` — development pipeline
 - `development.html` — Project Development Space
@@ -34,10 +34,10 @@ Dreamscapes tables:
 - `ds_activity_log`
 - `ds_premieres`
 
-All six tables have Row Level Security enabled. Admin operations are gated by an active record in the existing `cr_admins` table. Submitters can insert/read only their own authenticated submissions. Project members can read only their own membership record and projects they are assigned to. Premiere Room listings are publicly readable only when status is `published`.
+All six tables have Row Level Security enabled. Admin operations are gated by an active record in the existing `cr_admins` table. Creators must sign in or create an account. Submitters can insert/read only their own authenticated submissions; active administrators manage the private review queue. Project members can read only their own membership record and projects they are assigned to. Premiere Room listings are publicly readable only when status is `published`.
 
 ## Important launch notes
-- Public submission and collaborator forms remain preview-only; they do not transmit data.
+- Dreamscapes submission intake is connected to Supabase and requires an authenticated account. Email confirmation may be required depending on Auth settings. Collaborator interest forms remain preview-only. The intake has a honeypot but still needs CAPTCHA / broader abuse controls before major promotion.
 - The Control Room is live against Supabase, but requires an existing CrowRules administrator account with an active `cr_admins` row.
 - Team assignment requires an existing Supabase Auth user UUID.
 - Publish only productions with confirmed permissions, approved credits, and cleared viewing links.
