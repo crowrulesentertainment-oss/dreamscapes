@@ -30,7 +30,7 @@ Deno.serve(async(req:Request)=>{
   const trackedEvents=["delivered","hardBounce","softBounce","blocked","spam","invalid","deferred","click","opened","uniqueOpened","unsubscribed","sent"];
   const eventCounts:Record<string,number>={};
   await Promise.all(trackedEvents.map(async event=>{const {count,error}=await db.from("ds_email_events").select("id",{count:"exact",head:true}).eq("event_type",event);if(error)throw error;eventCounts[event]=count??0;}));
-  const [{data:deliveries,error:listError},{data:runs,error:runError},{data:recentEvents,error:eventError},{data:suppressions,error:suppressionError},{data:performanceEvents,error:performanceError}]=await Promise.all([
+  const [{data:deliveries,error:listError},{data:runs,error:runError},{data:recentEvents,error:eventError},{data:performanceEvents,error:performanceError},{data:suppressions,error:suppressionError}]=await Promise.all([
    db.from("ds_email_deliveries").select("id,notification_id,recipient_id,status,attempt_count,next_attempt_at,provider_message_id,last_error,created_at,updated_at,sent_at,delivered_at,bounced_at,open_count,click_count,first_opened_at,last_opened_at,last_clicked_at,notification:ds_notifications(title,notification_type,body,created_at)").order("created_at",{ascending:false}).limit(100),
    db.from("ds_email_worker_runs").select("id,started_at,finished_at,outcome,processed,sent,skipped,failed,busy,unknown,error_message").order("started_at",{ascending:false}).limit(10),
    db.from("ds_email_events").select("id,event_type,recipient_email,provider_message_id,event_at,link,reason,delivery_id").order("event_at",{ascending:false}).limit(100),
