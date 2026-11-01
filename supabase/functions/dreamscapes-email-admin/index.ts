@@ -21,7 +21,7 @@ Deno.serve(async(req:Request)=>{
  let input:{action?:string;delivery_id?:string}={};try{input=await req.json()}catch{return reply({error:"Invalid request body."},400)}
  const action=input.action??"status";
  if(action==="status"){
-  const statuses=["queued","processing","sent","delivered","bounced","failed","disabled","unknown"];
+  const statuses=["queued","processing","sent","delivered","bounced","complained","failed","disabled","unknown"];
   const counts:Record<string,number>={};
   const countResults=await Promise.all(statuses.map(async status=>{
    const {count,error}=await db.from("ds_email_deliveries").select("id",{count:"exact",head:true}).eq("status",status);
