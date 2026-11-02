@@ -1,14 +1,69 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Submit an Idea | CrowRules Dreamscapes</title><link rel="stylesheet" href="assets/css/dreamscapes.css"><style>
-.intake-wrap{max-width:900px;margin:auto}.intake-panel{background:#111321;border:1px solid var(--line);border-radius:18px;padding:clamp(18px,4vw,32px)}.intake-panel h2{font:700 22px Orbitron}.intake-panel p{color:var(--muted);line-height:1.6}.intake-grid,.auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.intake-grid .wide,.auth-grid .wide{grid-column:1/-1}.intake-grid label,.auth-grid label{display:grid;gap:7px;color:#d8d9e7;font-size:13px}.intake-grid input,.intake-grid select,.intake-grid textarea,.auth-grid input{width:100%;background:#090b14;border:1px solid #ffffff2b;border-radius:9px;color:#fff;padding:12px;font:inherit}.intake-grid textarea{min-height:140px}.intake-actions{display:flex;gap:10px;flex-wrap:wrap}.intake-message{min-height:24px;color:var(--cyan)}.intake-message.error{color:#ff9b9b}.hidden{display:none!important}.hp{position:absolute;left:-10000px}@media(max-width:650px){.intake-grid,.auth-grid{grid-template-columns:1fr}.intake-grid .wide,.auth-grid .wide{grid-column:auto}}
-</style></head><body><div id="site-header"></div><header class="page-hero"><div class="container"><div class="eyebrow">Your idea starts here</div><h1>Submit a <span class="gradient-text">dream.</span></h1><p>Share an original story, character, fictional world, film, animation or television concept. Submissions enter a private CrowRules review queue.</p></div></header><main class="section"><div class="container intake-wrap"><div class="notice">Creator-first note: submitting an idea does not transfer ownership or give CrowRules permission to produce it. No development, option, purchase, compensation or production commitment is created by this submission. Any future collaboration or use requires a separate written agreement.</div>
-<section class="intake-panel" id="account-panel" style="margin-top:20px"><h2>Creator account</h2><p>Sign in or create a free account to submit and keep your idea associated with your account.</p><form id="auth-form" class="auth-grid"><label>Email address<input id="auth-email" type="email" autocomplete="email" required maxlength="254"></label><label>Password<input id="auth-password" type="password" autocomplete="current-password" minlength="8" required></label><div class="wide intake-actions"><button class="button primary" type="submit">Sign in</button><button class="button ghost" id="create-account" type="button">Create account</button><button class="button ghost" id="google-login" type="button">Continue with Google</button></div></form><p id="auth-message" class="intake-message" role="status"></p></section>
-<section class="intake-panel hidden" id="submission-panel" style="margin-top:20px"><div class="toolbar" style="justify-content:space-between"><span class="pill" id="signed-in-as"></span><button class="action" id="sign-out" type="button">Sign out</button></div><h2>Tell us what you're imagining.</h2><p>Do not include confidential information, sensitive personal data about others, or material you do not have the right to submit.</p><form id="submission-form"><div class="intake-grid">
-<label>Your name or creator handle *<input id="creator-name" required maxlength="100"></label><label>Working title *<input id="idea-title" required maxlength="140"></label>
-<label>Submission type *<select id="idea-type" required><option value="">Choose a format</option><option>Dream or concept</option><option>Television series</option><option>Feature film</option><option>Animated series or film</option><option>Short film</option><option>Character</option><option>Fictional world</option><option>Story or existing script</option><option>Other</option></select></label><label>Genre or tone<input id="idea-genre" maxlength="120" placeholder="Fantasy, thriller, comedy…"></label>
-<label class="wide">Tell us about your idea *<textarea id="idea-premise" required maxlength="10000" placeholder="Describe the premise, characters, world, conflict and what makes it exciting."></textarea></label>
-<label class="wide">Preferred involvement<select id="idea-involvement"><option value="collaborate">I'd like to collaborate</option><option value="creative_consultant">Creative consultant</option><option value="submit_and_step_back">Submit and step back</option><option value="keep_informed">Keep me informed</option><option value="not_sure">Not sure yet</option></select></label>
-<label class="wide">Additional notes<textarea id="idea-notes" maxlength="3000" placeholder="Optional context or questions."></textarea></label>
-<div class="hp" aria-hidden="true"><label>Leave blank<input id="website" tabindex="-1" autocomplete="off"></label></div>
-<label class="wide" style="display:flex;gap:10px;align-items:flex-start"><input id="rights-confirm" type="checkbox" required style="width:auto;margin-top:4px"><span>I confirm I created this material or have permission to submit it. I understand this is for review only, does not transfer ownership, and any future development or use requires a separate written agreement.</span></label>
-<div class="wide intake-actions"><button class="button primary" id="submit-button" type="submit">Send to Dreamscapes review ↗</button></div></div></form><p id="submission-message" class="intake-message" role="status"></p><p class="muted">Already submitted an idea? <a href="creator-dashboard.html">Open your Creator Dashboard ↗</a></p></section>
-<section class="intake-panel" style="margin-top:20px"><h2>What happens next?</h2><p>Your submission is marked <strong>Received</strong> and is visible only to your account and authorized CrowRules administrators. The team may review it, request more information, or close the review. Submission is not acceptance or a promise of a response by a particular date.</p><p><a href="rights.html">Read our creator-first principles ↗</a></p></section></div></main><div id="site-footer"></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script><script src="assets/js/layout.js"></script><script src="assets/js/dreamscapes.js"></script><script src="assets/js/submit.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070912">
+<meta name="description" content="Submit an original story, character, fictional world, film, animation or television concept to CrowRules Dreamscapes.">
+<title>Submit an Idea | CrowRules Dreamscapes</title>
+<link rel="stylesheet" href="assets/css/dreamscapes.css">
+</head>
+<body>
+<div id="site-header"></div>
+<header class="submission-hero">
+  <div class="submission-hero-image" aria-hidden="true"></div><div class="submission-stars" aria-hidden="true"></div>
+  <div class="container submission-hero-inner">
+    <div class="submission-orbit" aria-hidden="true"><div class="submission-planet"></div><span class="orbit orbit-a"></span><span class="orbit orbit-b"></span><span class="orbit orbit-c"></span><i class="orbit-moon"></i></div>
+    <div class="submission-hero-copy">
+      <div class="eyebrow"><span class="live-dot"></span>THE CREATIVE GATEWAY · CROWRULES DREAMSCAPES</div>
+      <p class="submission-kicker">Every universe begins with an idea.</p>
+      <h1>Bring your <span class="gradient-text">dream</span><br>into the light.</h1>
+      <p class="submission-lead">A world waiting to be discovered. A character who refuses to be forgotten. A story that deserves to exist. Tell us what you're imagining.</p>
+      <div class="submission-hero-actions"><a class="button primary" href="#begin-submission">Begin your submission <span aria-hidden="true">↘</span></a><a class="submission-text-link" href="rights.html">Creator-first principles ↗</a></div>
+      <div class="submission-traits"><span>ORIGINAL IDEAS</span><span>PRIVATE REVIEW</span><span>CREATOR-FIRST</span></div>
+    </div>
+  </div>
+  <div class="submission-caption">A NEW STORY IS TAKING SHAPE</div>
+</header>
+<main class="submission-main" id="begin-submission">
+  <section class="submission-intro container">
+    <div><div class="eyebrow">THE FIRST CHAPTER</div><h2>Make room for <span class="gradient-text">the impossible.</span></h2></div>
+    <p>Dreamscapes is a place for original entertainment concepts across film, television, animation, characters and imagined worlds. Start with the spark. The details can grow from there.</p>
+  </section>
+  <div class="container intake-wrap">
+    <div class="submission-flow" aria-label="Submission process"><div class="flow-step active"><span>01</span><div><strong>Sign in</strong><small>Your creator account</small></div></div><span class="flow-line"></span><div class="flow-step"><span>02</span><div><strong>Share your idea</strong><small>Tell us the story</small></div></div><span class="flow-line"></span><div class="flow-step"><span>03</span><div><strong>Review</strong><small>Private team review</small></div></div></div>
+    <div class="notice submission-rights"><span class="notice-symbol">✧</span><div><strong>Your idea remains yours.</strong><p>Submitting an idea does not transfer ownership or give CrowRules permission to produce it. No development, option, purchase, compensation or production commitment is created by this submission. Any future collaboration or use requires a separate written agreement.</p><a href="rights.html">Explore creator rights and principles ↗</a></div></div>
+    <section class="intake-panel submission-panel" id="account-panel">
+      <div class="panel-heading"><div><div class="eyebrow">YOUR CREATOR ACCESS</div><h2>Step into Dreamscapes.</h2><p>Sign in or create a free account to submit an idea and associate it with your creator profile.</p></div><div class="panel-emblem" aria-hidden="true">✦</div></div>
+      <form id="auth-form" class="auth-grid">
+        <label>Email address<input id="auth-email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></label>
+        <label>Password<input id="auth-password" type="password" autocomplete="current-password" minlength="8" required placeholder="At least 8 characters"></label>
+        <div class="wide intake-actions"><button class="button primary" type="submit">Sign in <span aria-hidden="true">↗</span></button><button class="button ghost" id="create-account" type="button">Create free account</button><button class="button google-button" id="google-login" type="button"><span class="google-g">G</span> Continue with Google</button></div>
+      </form>
+      <p id="auth-message" class="intake-message" role="status" aria-live="polite"></p>
+      <div class="secure-note"><span>◈</span> Account access is protected by Supabase authentication.</div>
+    </section>
+    <section class="intake-panel submission-panel hidden" id="submission-panel">
+      <div class="signed-in-bar"><span class="pill" id="signed-in-as"></span><button class="action" id="sign-out" type="button">Sign out</button></div>
+      <div class="panel-heading"><div><div class="eyebrow">YOUR CREATIVE BLUEPRINT</div><h2>Tell us what you're imagining.</h2><p>Start with the heart of your idea. You can keep the description simple and clear.</p></div><div class="panel-emblem" aria-hidden="true">✧</div></div>
+      <div class="form-guidance"><strong>Before you begin</strong><span>Share only material you have the right to submit. Avoid confidential information and sensitive personal details about others.</span></div>
+      <form id="submission-form"><div class="intake-grid">
+        <label>Your name or creator handle <em>*</em><input id="creator-name" required maxlength="100" placeholder="How should we credit you?"></label>
+        <label>Working title <em>*</em><input id="idea-title" required maxlength="140" placeholder="Give your idea a name"></label>
+        <label>What are you creating? <em>*</em><select id="idea-type" required><option value="">Choose a format</option><option>Dream or concept</option><option>Television series</option><option>Feature film</option><option>Animated series or film</option><option>Short film</option><option>Character</option><option>Fictional world</option><option>Story or existing script</option><option>Other</option></select></label>
+        <label>Genre or atmosphere<input id="idea-genre" maxlength="120" placeholder="Fantasy, thriller, heartfelt, surreal…"></label>
+        <label class="wide">The heart of your idea <em>*</em><textarea id="idea-premise" required maxlength="10000" placeholder="What is this story about? Who or what is at its center? What makes this world or idea different?"></textarea><small class="field-hint">A premise, a character sketch, a world description — begin wherever inspiration takes you.</small></label>
+        <label class="wide">How would you like to be involved?<select id="idea-involvement"><option value="collaborate">I'd like to collaborate</option><option value="creative_consultant">Creative consultant</option><option value="submit_and_step_back">Submit and step back</option><option value="keep_informed">Keep me informed</option><option value="not_sure">Not sure yet</option></select></label>
+        <label class="wide">Additional notes<textarea id="idea-notes" maxlength="3000" placeholder="Optional context, links to public work, or questions for the team."></textarea></label>
+        <div class="hp" aria-hidden="true"><label>Leave blank<input id="website" tabindex="-1" autocomplete="off"></label></div>
+        <label class="wide rights-check"><input id="rights-confirm" type="checkbox" required><span>I confirm I created this material or have permission to submit it. I understand this is for review only, does not transfer ownership, and any future development or use requires a separate written agreement.</span></label>
+        <div class="wide intake-actions"><button class="button primary" id="submit-button" type="submit">Send to Dreamscapes review <span aria-hidden="true">↗</span></button></div>
+      </div></form>
+      <p id="submission-message" class="intake-message" role="status" aria-live="polite"></p>
+      <p class="dashboard-link">Already submitted an idea? <a href="creator-dashboard.html">Open your Creator Dashboard ↗</a></p>
+    </section>
+    <section class="submission-aftercare"><div class="aftercare-icon">✦</div><div><div class="eyebrow">AFTER YOU SEND IT</div><h2>Your idea enters a <span class="gradient-text">private review.</span></h2><p>Your submission is marked <strong>Received</strong> and is visible only to your account and authorized CrowRules administrators. The team may review it, request more information, or close the review. Submission is not acceptance or a promise of a response by a particular date.</p></div><a class="button ghost" href="how-it-works.html">How Dreamscapes works ↗</a></section>
+  </div>
+</main>
+<div id="site-footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script><script src="assets/js/layout.js"></script><script src="assets/js/dreamscapes.js"></script><script src="assets/js/submit.js"></script>
+</body></html>
